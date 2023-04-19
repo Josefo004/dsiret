@@ -14,12 +14,43 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/home');
+    return redirect('/index');
 });
 
 Auth::routes();
 
+
+Route::get('/formulario', 'PersonController@create')->name('person.create');
+
+Route::post('formulario/store', 'PersonController@store')->name('registrarpersona');
+Route::get('formulario/store', function () {
+    return redirect('/index');
+});
+//Route::get('/view', 'PersonController@store')->name('personas.view2');
+
+Route::get('/formulario/info', 'WebController@info')->name('formulario.info');
+Route::get('/formulario/infoperson/{id}', 'WebController@infoperson')->name('formulario.infoperson');//->middleware('valperson');
+
+Route::post('/formulario/cerrar', 'WebController@cerrar')->name('formulario.cerrar');//formulario.cerrar
+
+
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('/formulario', 'PersonaController@create')->name('persona.create');
+
+Route::get('/index', 'WebController@index')->name('index');
+Route::get('/informacion', 'WebController@informacion')->name('informacion');
+
+
+
+Route::post('web/store','WebController@store')->name('web.store')->middleware('valperson');
+
+Route::post('web/register','WebController@register')->name('web.register');
+
+Route::group(['prefix' => 'adminweb'], function(){
+    Route::get('forms','FormController@index')->name('forms.index');//->middleware('permission:view-users');
+});
 
 /**
  * Rutas de prueba de plugins [borrar]
@@ -43,11 +74,11 @@ Route::post('empresa/{empresa}/upload','EmpresaController@upload')->name('empres
 Route::group(['prefix' => 'administracion'], function(){
     /**
      * Usuarios
-    */    
+    */
     Route::get('usuarios','UserController@index')->name('users.index')->middleware('permission:view-users');
     Route::get('usuarios/{id}/editar','UserController@edit')->name('users.edit')->middleware('permission:edit-users');
     Route::put('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('permission:edit-roles');
-    Route::get('usuarios/crear','UserController@create')->name('users.create')->middleware('permission:create-users');    
+    Route::get('usuarios/crear','UserController@create')->name('users.create')->middleware('permission:create-users');
     Route::post('usuarios/store','UserController@store')->name('users.store')->middleware('permission:create-users');
     Route::delete('usuarios/{id}/delete', 'UserController@destroy')->name('users.destroy')->middleware('permission:delete-users');
     Route::post('usuarios/{user}/upload','UserController@uploadphoto')->name('users.uploadphoto')->middleware('permission:photo-users');
