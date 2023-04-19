@@ -1,0 +1,57 @@
+FROM php:8.1-apache
+
+# Instalando dependencias
+RUN apt-get update && apt-get install -y \
+    zlib1g-dev \
+    libicu-dev \
+    libxml2-dev \
+    libpq-dev \
+    libpng-dev \
+    libonig-dev \
+    vim \
+    git \
+    curl \
+    zip \
+    unzip \
+    && rm -rf /var/lib/apt/lists 
+
+RUN apt-get update
+
+RUN docker-php-ext-install pdo pdo_mysql 
+
+# Añadimos el usuario y el grupo www-data y definimos los log de apache2
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+
+
+#Borrando archivos temporales
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Descargando e instalando NODEJS v16
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -- \
+    && apt-get install -y nodejs \
+    && apt-get autoremove -y
+
+#Descargando la Ultima version de composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+#Haciendo configuraciones en el server
+COPY dk/php/php.ini /usr/local/etc/php/
+COPY dk/apache/vhost_ideal.conf /etc/apache2/sites-available/000-default.conf
+COPY dk/apache/apache2.conf /etc/apache2/apache2.conf
+
+# Copiamos TODO el contenido de la carpeta actual a /var/www/html
+COPY . /var/www/html
+
+#habilitando ONWRTE en apache
+RUN a2enmod rewrite
+
+#Habilitando el host 
+RUN a2ensite 000-default.conf
+
+#reiniciano apache
+RUN service apache2 restart
+
+# Exponemos esta IMAGEN por el pouerto 80 de Docker
+EXPOSE 80

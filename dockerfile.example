@@ -1,0 +1,33 @@
+FROM php:8.1-apache
+
+# Instalamos algunos paquetes en linux
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip
+
+# Clear cache
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Clear cache
+RUN apt-get update
+
+# Instalar extensiones PHP
+RUN docker-php-ext-install pdo_mysql bcmath bz2 cli common curl fpm gd intl mbstring mcrypt mysql opcache pgsql phpdbg readline soap xml zip
+
+# Instalar el ultimo composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Copiamos TODO el contenido de la carpeta actual a /var/www/html
+COPY . /var/www
+
+# Copiamos TODO el contenido de la carpeta actual a /var/www/html
+COPY ./public /var/www/html
+
+EXPOSE 80
+
+
