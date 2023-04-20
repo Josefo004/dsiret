@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKD4N6PH2E"></script>
@@ -15,32 +15,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="theme-color" content="#33b5e5">
-
-
     <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
-
-
     <link rel="stylesheet" media="all" href="{{ asset('web/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/siret.css') }}">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
     <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <title>SIRET</title>
-
-
     <meta charset="utf-8">
-    <title></title>
-
-
-
 </head>
 
 <body class="mdb-skin-custom "  data-mdb-spy="scroll" data-mdb-target="#scrollspy" data-mdb-offset="250" >
 
-  <header>
-  </header>
 @if (!session()->has('0.nro_documento') && !session()->has('0.fecha_nac'))
 <div class="area" >
 
