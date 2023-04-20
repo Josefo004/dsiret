@@ -30,23 +30,17 @@ class WebController extends Controller
             ->with('forms.languages')
             ->with('forms.professions')
             ->first();
-        dd($person);
-
-
+        //dd($person);
           if(!is_null($person)){
-              $person->edad=Carbon::parse($person->fecha_nac)->age;
-
-              $f = Form::where('person_id', $person->id )->with('record')
+            $person->edad=Carbon::parse($person->fecha_nac)->age;
+            $f = Form::where('person_id', $person->id )
+                ->with('record')
                 ->with('languages')
                 ->with('professions')->first();
-
-                return view( 'personas.infoperson', compact('person', 'f') );
-
-
+            return view( 'personas.infoperson', compact('person', 'f') );
             }else{
               return redirect('/index');
             }
-
     }
 
     public function register(Request $request){

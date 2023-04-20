@@ -17,15 +17,12 @@
     <meta name="theme-color" content="#33b5e5">
 
 
-    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
 
 
     <link rel="stylesheet" media="all" href="{{ asset('web/css/style.css') }}" />
-    {{-- <script src="https://www.google.com/recaptcha/api.js?render=6LcDWXwlAAAAAEwFx_tRuGcOtdRpYRT6CteHayN7"></script> --}}
     <link rel="stylesheet" href="{{ asset('css/siret.css') }}">
 
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> ---->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
@@ -126,7 +123,7 @@
                 <div class="card-body px-4 py-5 px-md-5">
 
                   <!-- <form id="form-login"> -->
-                  {!! Form::open(array('route' => 'web.store', 'method'=>'POST', 'id' => 'form-login')) !!}
+                  {!! Form::open(array('route' => 'web.store', 'method'=>'POST', 'autocomplete'=>'off', 'id' => 'form-login')) !!}
                   {{-- <form action="https://siret.chuquisaca.gob.bo/web/store" method="POST"> --}}
                     @csrf
                     <!-- Email input -->
