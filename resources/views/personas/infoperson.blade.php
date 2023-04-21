@@ -3,35 +3,27 @@
 <div class="container">
     <nav class="navbar" style="background-color: #FFA500;">
         <div class="container-fluid">
-            <span class="navbar-brand" href="#">
-            SIRETE2
-            </span>
+            <span class="navbar-brand">SIRET</span>
         </div>
     </nav>
-<div class="container text-center text-lg-start ">
-    <div class="row">
-        <div class="col-md-12 text-center mt-2">
-            <h2>FORMULARIO REGISTRADO</h2>
+    <div class="container text-lg-start ">
+        <div class="row">
+            <div class="col-md-12 text-center mt-2">
+                <h2>FORMULARIO REGISTRADO</h2>
+            </div>
         </div>
-    </div>
         <div class="row">
             <div class="col-md-12 text-right">
                 <a href="/index" class="btn btn-info"> Volver Atrás</a>
             </div>
         </div>
-        <div class="row align-items-center">
-
         <div class="card bg-glass">
           <div class="card-body">
             <div class="row">
-                <div class ="col-md-3">
-                    <img src="https://siret.chuquisaca.gob.bo/images/logo_app_gadch.png" alt="">
+                <div class ="col-md-3 text-center ">
+                    <img src="{{ asset('images/logo1_1.png') }}" class="img-fluid" alt="">
                 </div>
-
-
                 <div class ="col-md-9">
-
-
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
@@ -39,11 +31,7 @@
                                 <h4><strong>Nombre:  </strong></h4>
                             </div>
                             <div class="col-md-8 text-left">
-
-                                    <h4>{{ $person->nombres }} {{ $person->paterno }} {{ $person->materno }}</h4>
-
-
-
+                                <h4>{{ $person->nombres }} {{ $person->paterno }} {{ $person->materno }}</h4>
                             </div>
                         </div>
                     </div>
@@ -154,8 +142,6 @@
             </div>
           </div>
         </div>
-      </div>
-
     </div>
 </div>
 

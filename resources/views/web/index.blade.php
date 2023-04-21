@@ -1,44 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKD4N6PH2E"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<x-layouts.app>
+    <x-slot name="google">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKD4N6PH2E"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-      gtag('config', 'G-SKD4N6PH2E');
-    </script>
+        gtag('config', 'G-SKD4N6PH2E');
+        </script>
+    </x-slot>
+<div class="mdb-skin-custom "  data-mdb-spy="scroll" data-mdb-target="#scrollspy" data-mdb-offset="250" >
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="theme-color" content="#33b5e5">
-    <link rel="stylesheet" href="{{ asset('web/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" media="all" href="{{ asset('web/css/style.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/siret.css') }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
-    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-    <title>SIRET</title>
-    <meta charset="utf-8">
-</head>
-
-<body class="mdb-skin-custom "  data-mdb-spy="scroll" data-mdb-target="#scrollspy" data-mdb-offset="250" >
-
-@if (!session()->has('0.nro_documento') && !session()->has('0.fecha_nac'))
 <div class="area" >
-
-
-
-
-
-      <section class="background-radial-gradient overflow-hidden">
-
+    <section class="background-radial-gradient overflow-hidden">
         <ul class="circles">
-
-
         <style>
           .background-radial-gradient {
           background-color: hsl(218, 41%, 15%);
@@ -188,85 +164,7 @@
 
     </section>
 
-
 </div >
-@else
-<script>
-  window.onload = function() {
-      window.location.replace("/formulario/infoperson");
-  }
-</script>
-@endif
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script> --}}
-</body>
+</div>
 
-</html>
-
-{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  --}}
-<script src="web/js/axios.min.js"></script>
-<script>
-  // $('#fecha_nac').datepicker({
-  //     uiLibrary: 'bootstrap5'
-
-  // });
-</script>
-<style>
-  @media (min-width:320px) { /* smartphones, iPhone, portrait 480x320 phones */
-  .imagen{
-  column-count: 1;
-  text-align: justify;
-  }
-  }
-  @media (min-width:481px) { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
-  .imagen{
-  column-count: 1;
-  text-align: justify;
-  }
-  ._img{
-  display:none;
-  }
-  }
-  @media (min-width:641px) { /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
-  .imagen{
-  column-count: 1;
-  text-align: center;
-  }
-  }
-  @media (min-width:961px) { /* tablet, landscape iPad, lo-res laptops ands desktops */
-  .imagen{
-  column-count: 1;
-  text-align: center;
-  }
-  ._img {
-  display: block;
-  text-align: center;
-  }
-  }
-  @media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */
-  .imagen{
-  column-count: 1;
-  text-align: center;
-  }
-  ._img {
-  display: block;
-  text-align: center;
-  }
-  }
-  @media (min-width:1281px) { /* hi-res laptops and desktops */
-
-  .imagen{
-  column-count: 1;
-  text-align: center;
-  }
-
-  ._img {
-  display: block;
-  text-align: center;
-  }
-
-
-  }
-  </style>
-<script src="web/js/index.js" type="module"></script>
-
-
+</x-layouts.app>
