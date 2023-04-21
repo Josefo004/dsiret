@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-<div class="container">
+<div class="container mb-5">
     <nav class="navbar" style="background-color: #FFA500;">
         <div class="container-fluid">
             <span class="navbar-brand">SIRET</span>

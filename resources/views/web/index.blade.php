@@ -113,15 +113,6 @@
                         </small>
 
                     </div>
-
-
-
-
-                    <!-- Submit button -->
-
-                    {{-- <button type="button" class="btn btn-primary btn-block mb-4" id="hello">
-                      Entrar
-                    </button> --}}
                     <div class="row">
                       <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-warning mb-2" style="width:100%" id="entrar">
@@ -134,27 +125,16 @@
 
                     <!-- Register buttons -->
                     <div class="text-center">
-
-                      <p><a href="{{ route('person.create') }}" class="" style="color:#D38118;">Registrarse</a></p>
-
-
-                      <a href="https://www.facebook.com/GobChuquisaca" style="color:#D38118;" type="button" class="btn btn-link btn-floating mx-1">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                      <a href="https://twitter.com/GobChuquisaca" style="color:#D38118;" type="button" class="btn btn-link btn-floating mx-1">
-                      <i class="fab fa-twitter"></i>
-                      </a>
-
+                        <p><a href="{{ route('person.create') }}" class="" style="color:#D38118;">Registrarse</a></p>
+                        <a href="https://www.facebook.com/GobChuquisaca" style="color:#D38118;" target="_blank" type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/GobChuquisaca" style="color:#D38118;" target="_blank" type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-twitter"></i>
+                        </a>
                     </div>
-
-
-
-                    <!-- </form> -->
-
                     {!! Form::close() !!}
-                  {{-- </form> --}}
                 </div>
-                <small><small class="p-1">&copy;2023 Todos los derechos reservados, desarrollado por <strong>GADCH - JSTI</strong></small></small>
               </div>
             </div>
           </div>

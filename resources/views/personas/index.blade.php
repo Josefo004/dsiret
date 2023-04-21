@@ -1,6 +1,6 @@
 <x-layouts.app>
 
-<div class="container">
+<div class="container mb-5">
     <nav class="navbar" style="background-color: #FFA500;">
         <div class="container-fluid">
             <span class="navbar-brand">SIRET</span>
@@ -27,22 +27,20 @@
           <div class="card-body px-4 py-5 px-md-5">
           {!! Form::open(array('route' => 'registrarpersona', 'method'=>'POST', 'autocomplete'=>'off')) !!}
             @csrf
-              <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group{{ $errors->has('nombres') ? ' has-error' : '' }}">
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="">Nombres</label>
-                            {{ Form::text('nombres',null,['class'=> 'form-control','id'=>'form_nombres', 'maxlength'=>'40','name'=>'nombres','placeholder'=>'NOMBRE COMPLETO']) }}
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group{{ $errors->has('nombres') ? ' has-error' : '' }}">
+                            <div class="form-outline mb-4">
+                                <label class="form-label" for="">Nombres</label>
+                                {{ Form::text('nombres',null,['class'=> 'form-control','id'=>'form_nombres', 'maxlength'=>'40','name'=>'nombres','placeholder'=>'NOMBRE COMPLETO']) }}
+                            </div>
+                            @if ($errors->has('nombres'))
+                            <span class="text-danger">
+                                <strong>{{ $errors->first('nombres') }}</strong>
+                            </span>
+                            @endif
                         </div>
-                        @if ($errors->has('nombres'))
-                        <span class="text-danger">
-                            <strong>{{ $errors->first('nombres') }}</strong>
-                        </span>
-                        @endif
                     </div>
-                  </div>
-
-
                     <div class="col-md-4">
                         <div class="form-group{{ $errors->has('paterno') ? ' has-error' : '' }}">
                             <div class="form-outline mb-4">
@@ -56,8 +54,6 @@
                             @endif
                         </div>
                     </div>
-
-
                     <div class="col-md-4">
                         <div class="form-group{{ $errors->has('materno') ? ' has-error' : '' }}">
                         <div class="form-outline mb-4">
@@ -71,114 +67,101 @@
                             @endif
                         </div>
                     </div>
-            </div>
-
-              <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group{{ $errors->has('nro_documento') ? ' has-error' : '' }}">
-                      <div class="form-outline mb-4">
-                        <label class="form-label" >Carnet de Identidad</label>
-                        {{ Form::text('nro_documento',null,[ 'class'=> 'form-control','id'=>'form_nro_documento', 'maxlength'=>'40', 'name'=>'nro_documento' ,'placeholder'=>'CARNET DE IDENTIDAD']) }}
-                      </div>
-                      @if ($errors->has('nro_documento'))
-                        <span class="text-danger">
-                            <strong>{{ $errors->first('nro_documento') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                      <div class="form-group{{ $errors->has('department_id') ? ' has-error' : '' }}">
-                        <label class="form-label" >Expedido</label>
-                        {{ Form::select('department_id', $departments, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_departamento_id','name'=>'department_id' ,'placeholder'=>'SELECCIONE EXPEDIDO', 'style'=>'width:100%;','required' => 'required']) }}
-                        @if ($errors->has('department_id'))
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group{{ $errors->has('nro_documento') ? ' has-error' : '' }}">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" >Carnet de Identidad</label>
+                            {{ Form::text('nro_documento',null,[ 'class'=> 'form-control','id'=>'form_nro_documento', 'maxlength'=>'40', 'name'=>'nro_documento' ,'placeholder'=>'CARNET DE IDENTIDAD']) }}
+                        </div>
+                        @if ($errors->has('nro_documento'))
                             <span class="text-danger">
-                                <strong>{{ $errors->first('department_id') }}</strong>
+                                <strong>{{ $errors->first('nro_documento') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group{{ $errors->has('department_id') ? ' has-error' : '' }}">
+                            <label class="form-label" >Expedido</label>
+                            {{ Form::select('department_id', $departments, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_departamento_id','name'=>'department_id' ,'placeholder'=>'SELECCIONE EXPEDIDO', 'style'=>'width:100%;','required' => 'required']) }}
+                            @if ($errors->has('department_id'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('department_id') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group{{ $errors->has('nro_celular') ? ' has-error' : '' }}">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" >Celular</label>
+                            {{ Form::text('nro_celular',null,[ 'type'=>'number', 'class'=> 'form-control' , 'maxlength'=>'10', 'id'=>'form_nro_celular', 'name'=>'nro_celular', 'pattern'=>'[0-9]+' ,'placeholder'=>'NUMERO DE CELULAR']) }}
+                        </div>
+                        @if ($errors->has('nro_celular'))
+                            <span class="text-danger">
+                                <strong>{{ $errors->first('nro_celular') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form3Example4">Direccion</label>
+                            {{ Form::text('direccion',null,[ 'class'=> 'form-control','id'=>'form_direccion', 'maxlength'=>'100', 'name'=>'direccion', 'placeholder'=>'DIRECCION']) }}
+                        </div>
+                        @if ($errors->has('direccion'))
+                            <span class="text-danger">
+                                <strong>{{ $errors->first('direccion') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" >Correo</label>
+                            {{ Form::text('email',null,[ 'class'=> 'form-control','id'=>'form_email', 'name'=>'email', 'placeholder'=>'CORREO']) }}
+                        </div>
+                        @if ($errors->has('email'))
+                            <span class="text-danger">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group{{ $errors->has('fecha_nac') ? ' has-error' : '' }}">
+                        <div class="form-outline mb-4">
+                            <label class="form-label" >Fecha de Nacimiento</label>
+                            {{ Form::date('fecha_nac',null,[ 'type' => 'date', 'class'=> 'form-control','id'=>'form_fecha_nac', 'min'=>'1941-01-01', 'max'=>'2006-12-31', 'name'=>'fecha_nac', 'placeholder'=>'FECHA DE NACIMIENTO']) }}
+                        </div>
+                        @if ($errors->has('fecha_nac'))
+                            <span class="text-danger">
+                                <strong>{{ $errors->first('fecha_nac') }}</strong>
                             </span>
                         @endif
-                      </div>
-
-                  </div>
-
-
-                  <div class="col-md-4">
-                    <div class="form-group{{ $errors->has('nro_celular') ? ' has-error' : '' }}">
-                      <div class="form-outline mb-4">
-                        <label class="form-label" >Celular</label>
-                        {{ Form::text('nro_celular',null,[ 'type'=>'number', 'class'=> 'form-control' , 'maxlength'=>'10', 'id'=>'form_nro_celular', 'name'=>'nro_celular', 'pattern'=>'[0-9]+' ,'placeholder'=>'NUMERO DE CELULAR']) }}
-                      </div>
-                      @if ($errors->has('nro_celular'))
-                        <span class="text-danger">
-                            <strong>{{ $errors->first('nro_celular') }}</strong>
-                        </span>
-                        @endif
+                        </div>
                     </div>
-                  </div>
-              </div>
-
-
-
-              <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
-                      <div class="form-outline mb-4">
-                        <label class="form-label" for="form3Example4">Direccion</label>
-                        {{ Form::text('direccion',null,[ 'class'=> 'form-control','id'=>'form_direccion', 'maxlength'=>'100', 'name'=>'direccion', 'placeholder'=>'DIRECCION']) }}
-                      </div>
-                      @if ($errors->has('direccion'))
-                        <span class="text-danger">
-                            <strong>{{ $errors->first('direccion') }}</strong>
-                        </span>
-                        @endif
+                    <div class="col-md-4">
+                        <div class="row">
+                        <div class="form-group{{ $errors->has('gender_id') ? ' has-error' : '' }}">
+                            <label class="form-label" >Sexo</label>
+                            {{ Form::select('gender_id', $genders, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_gender_id', 'name'=>'gender_id' ,'placeholder'=>'SEXO', 'style'=>'width:100%;','required' => 'required']) }}
+                            @if ($errors->has('gender_id'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('gender_id') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        </div>
                     </div>
-                  </div>
-              </div>
-
-
-
-              <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                      <div class="form-outline mb-4">
-                        <label class="form-label" >Correo</label>
-                        {{ Form::text('email',null,[ 'class'=> 'form-control','id'=>'form_email', 'name'=>'email', 'placeholder'=>'CORREO']) }}
-                      </div>
-                      @if ($errors->has('email'))
-                        <span class="text-danger">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="form-group{{ $errors->has('fecha_nac') ? ' has-error' : '' }}">
-                      <div class="form-outline mb-4">
-                        <label class="form-label" >Fecha de Nacimiento</label>
-                        {{ Form::date('fecha_nac',null,[ 'type' => 'date', 'class'=> 'form-control','id'=>'form_fecha_nac', 'min'=>'1941-01-01', 'max'=>'2006-12-31', 'name'=>'fecha_nac', 'placeholder'=>'FECHA DE NACIMIENTO']) }}
-                      </div>
-                      @if ($errors->has('fecha_nac'))
-                        <span class="text-danger">
-                            <strong>{{ $errors->first('fecha_nac') }}</strong>
-                        </span>
-                        @endif
-                    </div>
-                  </div>
-
-                  <div class="col-md-4">
-                    <div class="row">
-                      <div class="form-group{{ $errors->has('gender_id') ? ' has-error' : '' }}">
-                        <label class="form-label" >Sexo</label>
-                        {{ Form::select('gender_id', $genders, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_gender_id', 'name'=>'gender_id' ,'placeholder'=>'SEXO', 'style'=>'width:100%;','required' => 'required']) }}
-                        @if ($errors->has('gender_id'))
-                            <span class="text-danger">
-                                <strong>{{ $errors->first('gender_id') }}</strong>
-                            </span>
-                        @endif
-                      </div>
-                    </div>
-                  </div>
 
               </div>
                 <hr>
@@ -270,12 +253,6 @@
 </div>
 
 <footer>
-<div class="row">
-  <div class="col-md-12 text-right">
-    <p class="">&copy;2023 Gobierno Autónomo de Chuquisaca - Todos los derechos reservados <strong>JSTI.</strong></p>
-  </div>
-</div>
-
   @else
 <script>
   window.onload = function() {
