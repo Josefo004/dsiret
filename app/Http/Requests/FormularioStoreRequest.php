@@ -25,13 +25,13 @@ class FormularioStoreRequest extends FormRequest
     {
         return [
             "nro_documento" => "required|unique:persons",
-            "departamento_id" => "exists:departments,id",
+            "department_id" => "exists:departments,id",
             "genero_id" => "exists:genders,id",
             "nombres" => "required|string",
             "paterno" => "",
             "materno" => "",
             "fecha_nac" => "required|date",
-            "nro_celular" => "string",
+            "nro_celular" => "nullable",
             "direccion" => "string",
             "email" => "nullable|email",
             "profesion_id" => "exists:professions,id",
@@ -40,5 +40,20 @@ class FormularioStoreRequest extends FormRequest
         ];
     }
 
+    public function messages(){
+        return [
+            "nro_documento.required" => "El campo CI es obligatorio",
+            "nro_documento.unique" => "El campo CI ya esta registrado en la Base de Datos",
+            "department_id .required" => "El campo expedido es obligatorio",
+            "department_id .exists" => "El valor del campo expedido no esta en la Base de Datos",
+            "genero_id.required" => "El campo sexo es obligatorio",
+            "nombres.required" => "El campo nombres es obligatorio",
+            "fecha_nac:required" => "La fecha de nacimiento es obligatoria",
+            "fecha_nac:date" => "El formato de fecha es erroneo",
+            "profesion_id.exists" => "La profesion no esta en la Base de Datos",
+            "language_id.required" => "Debe al menos registrar un idioma",
+            "profession_id.required" => "Debe al menos registrar una ocupación"
+        ];
+    }
 
 }
