@@ -3,16 +3,16 @@
 @section('title', 'Siret')
 
 @section('content_header')
-<x-encabezado-pagina 
-	icono="fa fa-bank" 
-	titulo="SIRET" 
-	subtitulo="Sistema Informatico de Registro de Empleo Temporal" 
+<x-encabezado-pagina
+	icono="fa fa-bank"
+	titulo="SIRET"
+	subtitulo="Sistema Informatico de Registro de Empleo Temporal"
     modoTitulo='L'>
     {{-- {{ Breadcrumbs::render('forms/index') }} --}}
 </x-encabezado-pagina>
 @stop
 <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
- 
+
 <link rel="stylesheet" media="all" href="../../web/css/style.css" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -42,89 +42,89 @@
 
 
                 <div class="row">
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-right">
-                                <h4><strong>Nombre:  </strong></h4>                    
+                                <h4><strong>Nombre:  </strong></h4>
                             </div>
                             <div class="col-md-8">
-                                <h4>{{ $person->nombres }} {{ $person->paterno }} {{ $person->materno }} </h4>                    
+                                <h4>{{ $person->nombres }} {{ $person->paterno }} {{ $person->materno }} </h4>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-right">
-                            <h4><strong>Sexo: </strong></h4>                  
+                            <h4><strong>Sexo: </strong></h4>
                             </div>
                             <div class="col-md-8">
-                                <h4> ??? </h4>                    
+                                <h4> ??? </h4>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-right">
-                            <h4><strong>Canet de Identidad: </strong></h4>                  
+                            <h4><strong>Carnet de Identidad: </strong></h4>
                             </div>
                             <div class="col-md-8">
-                                <h4>{{ $person->nro_documento }} ???</h4>                    
+                                <h4>{{ $person->nro_documento }} ???</h4>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-right">
-                            <h4><strong>Fecha de nacimiento:  </strong></h4>                  
+                            <h4><strong>Fecha de nacimiento:  </strong></h4>
                             </div>
                             <div class="col-md-8">
-                                <h4>{{  $person->fecha_nac }} </h4>                    
+                                <h4>{{  $person->fecha_nac }} </h4>
                             </div>
-                        </div>                    
+                        </div>
                     </div>
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-right">
-                            <h4><strong>Celular:  </strong></h4>                  
+                            <h4><strong>Celular:  </strong></h4>
                             </div>
                             <div class="col-md-8">
-                                <h4>{{  $person->nro_celular }}</h4>                    
+                                <h4>{{  $person->nro_celular }}</h4>
                             </div>
-                        </div>                    
-                    </div>
-
-                    <div class="col-md-12"> 
-                        <div class="row">
-                            <div class="col-md-4 text-right">
-                            <h4><strong>Direccion:  </strong></h4>                  
-                            </div>
-                            <div class="col-md-8">
-                                <h4>{{  $person->direccion }}</h4>                    
-                            </div>
-                        </div>                    
+                        </div>
                     </div>
 
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-right">
-                            <h4><strong>Correo Electronico:  </strong></h4>                  
+                            <h4><strong>Direccion:  </strong></h4>
                             </div>
                             <div class="col-md-8">
-                                <h4>{{  $person->email }}</h4>                    
+                                <h4>{{  $person->direccion }}</h4>
                             </div>
-                        </div>                    
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4 text-right">
+                            <h4><strong>Correo Electronico:  </strong></h4>
+                            </div>
+                            <div class="col-md-8">
+                                <h4>{{  $person->email }}</h4>
+                            </div>
+                        </div>
                     </div>
                     <hr>
-                    <div class="col-md-12"> 
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 text-center">
                                 <u><strong><h3>Idiomas</h3></strong></u>
-                                    
+
                                 @foreach ( $person->forms as $forma )
                                     @foreach ( $forma->languages as $idiomas )
                                         <h4>{{ $idiomas->descripcion  }}</h4>
                                     @endforeach
-                                @endforeach  
+                                @endforeach
                             </div>
                             <div class="col-md-6 text-center">
                             <u><h3>Profesiones</h3></u>
@@ -132,26 +132,26 @@
                                     @foreach ( $forma->professions as $idiomas )
                                         <h4>{{ $idiomas->pro_descripcion  }}</h4>
                                     @endforeach
-                                @endforeach       
+                                @endforeach
                             </div>
-                        </div>                    
+                        </div>
                     </div>
                     <hr>
                 </div>
 
                 </div>
-            </div>  
+            </div>
 
-            
+
 
 
           </div>
         </div>
       </div>
-   
-  
-  
-  
+
+
+
+
     </div> --}}
 
 </div>
@@ -180,7 +180,7 @@
 <script src="../../web/js/index.js" type="module"></script>
 
 <script>
-   
+
 const variable = () =>{
     var x_incom = document.getElementById("ocultar_nav");
     x_incom.style.display = "none";

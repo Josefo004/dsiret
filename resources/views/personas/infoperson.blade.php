@@ -48,7 +48,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 text-left">
-                            <h4><strong>Canet de Identidad: </strong></h4>
+                            <h4><strong>Carnet de Identidad: </strong></h4>
                             </div>
                             <div class="col-md-8 text-left">
                                 <h4>{{$person->nro_documento}} {{$person->department->dep_codigo}}</h4>
