@@ -23,13 +23,13 @@ class UserController extends Controller
     {
         $query = User::query();
         $query->select(['id','name','username','estado']);
-        return datatables()                    
-                    ->eloquent($query)                    
-                    ->addIndexColumn() 
+        return datatables()
+                    ->eloquent($query)
+                    ->addIndexColumn()
                     ->editColumn('estado', function($user){
                         return $user->estado == 'A'
-                                    ? '<span class="badge badge-success"><b>'.$user->fullestado.'</b></span>'
-                                    : '<span class="badge badge-danger">'.$user->fullestado.'</span>';
+                            ? '<span class="badge badge-success"><b>'.$user->fullestado.'</b></span>'
+                            : '<span class="badge badge-danger">'.$user->fullestado.'</span>';
                     })
                     ->editColumn('rol', function($user){
                         $rol = '';
@@ -59,10 +59,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
         $roles =  Role::all()->pluck('name','id');
-        unset($roles[1]);//elimina rol de Super Administrador con ID=1        
-        return view('users.create', compact('roles'));        
+        unset($roles[1]);//elimina rol de Super Administrador con ID=1
+        return view('users.create', compact('roles'));
     }
 
     /**
@@ -72,17 +72,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(UserStoreRequest $request)
-    {   
+    {
         $user = User::create($request->all());
 
-
-
-        
         if($request->roles!=[])
         {
             $user->syncRoles($request->roles);
         }
-        Toastr::success('Usuario registrado con exito','Correcto!');        
+        Toastr::success('Usuario registrado con exito','Correcto!');
         return redirect()->route('users.edit',['id'=>$user->id]);
     }
 
@@ -108,16 +105,16 @@ class UserController extends Controller
         $user = User::find($id);
 
         //todos ls roles del sistema
-        //$roles = Role::orderBy('name','ASC')->pluck('name','id');        
+        //$roles = Role::orderBy('name','ASC')->pluck('name','id');
         $roles =  Role::all()->pluck('name','id');
-        unset($roles[1]);//elimina rol de Super Administrador con ID=1        
+        unset($roles[1]);//elimina rol de Super Administrador con ID=1
         //roles de usuario
         $roles_usuario = Role::orderBy('name','ASC')
         ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
         ->where('model_has_roles.model_id','=',$user->id)
         ->pluck('id');
         //->pluck('name','id');
-        
+
         return view('users.edit',compact('user','roles','roles_usuario'));
     }
 
@@ -129,7 +126,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user)
-    {        
+    {
         $user->fill($request->all());
         if($request->password){//actualiza password
             $user->fill([
@@ -137,8 +134,8 @@ class UserController extends Controller
             ])->save();
         }
         $user->save();//guarda cambios
-        
-        //actualiza roles        
+
+        //actualiza roles
         $request->roles!=[] ? $user->syncRoles($request->roles) : $user->syncRoles([]);
         //$request->permissions!=[] ? $role->syncPermissions($request->permissions) : $role->syncPermissions();
         Toastr::info('Usuario actualizado con exito','Actualizado!');
@@ -146,18 +143,18 @@ class UserController extends Controller
     }
 
     /**
-     * Actualizacion de password 
+     * Actualizacion de password
     */
     public function updatepassword(Request $request, User $user)//UserPasswordRequest
-    {        
+    {
         if($request->password==$request->password_confirmation){
             $user->password=$request->password;
-            $user->save();        
+            $user->save();
             Toastr::info('Su contraseña fue cambiado satisfactoriamente','Password!');
         }
         else{
             Toastr::info('Las contraseñas deben ser iguales. no se puede actualizar','Password!');
-        }                
+        }
         //roles de usuario
         $roles_usuario = Role::orderBy('name','ASC')
         ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
@@ -183,16 +180,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id)    
-    {        
+    public function destroy(Request $request, $id)
+    {
         if($request->ajax()){
-            $user = User::find($id);            
+            $user = User::find($id);
             $user->delete();
             return response()->json([
                 'status' => 'exito',
                 'title' => 'Atención!',
                 'message' => 'El usuario "' . $user->name . '" ha sido eliminado.'
-            ]);   
+            ]);
         }
     }
 
@@ -202,12 +199,12 @@ class UserController extends Controller
     */
     public function perfil()
     {
-        $user = auth()->user();        
-        //$roles = $user->getRoleNames();   
+        $user = auth()->user();
+        //$roles = $user->getRoleNames();
         $roles_usuario = Role::orderBy('name','ASC')
         ->join('model_has_roles','model_has_roles.role_id','=','roles.id')
         ->where('model_has_roles.model_id','=',$user->id)
-        ->pluck('longname');        
+        ->pluck('longname');
         return view('users.perfil',compact('user','roles_usuario'));
     }
 
@@ -215,10 +212,10 @@ class UserController extends Controller
 	{
 		$file = $request->file('file');
 		$carpeta = 'users';
-        $tipo = $file->guessExtension();        
-        $nombre = Str::slug($user->name);        
+        $tipo = $file->guessExtension();
+        $nombre = Str::slug($user->name);
 		Storage::disk('imagen')->put($carpeta.'/'.$nombre.'.'.$tipo,\File::get($file));
-        $user->imagen = $nombre.'.'.$tipo;        
+        $user->imagen = $nombre.'.'.$tipo;
 		$user->save();
 		Toastr::info('Su fotografia de perfil ha sido actuaizado con exito','Foto de Perfil!');
 		return response()->json();
@@ -233,7 +230,7 @@ class UserController extends Controller
         $image_base64 = base64_decode($image_parts[1]);
 
         $user = User::find($id);
-        $nombre = Str::slug($user->name);        
+        $nombre = Str::slug($user->name);
 
         $file = $folderPath . $nombre . '.png';
         file_put_contents($file, $image_base64);
@@ -243,18 +240,18 @@ class UserController extends Controller
             'status' => 'exito',
             'title' => 'Atención!',
             'message' => $user->imagen .'?'. rand(1, 1000)
-        ]);   
+        ]);
     }
 
     public function uploadcharacter(Request $request, $id){
         $user = User::find($id);
         $user->imagen = $request->image.'.png';
-        $user->save();        
+        $user->save();
         return response()->json([
             'status' => 'exito',
             'title' => 'Atención!',
             'message' => ''
-        ]);  
+        ]);
     }
 
 
@@ -262,19 +259,19 @@ class UserController extends Controller
      * Actividad
     */
     public function apiActivity(){
-        $query = Activity::query();  
+        $query = Activity::query();
         $query->orderBy('id','DESC');
-        return datatables()                    
-                    ->eloquent($query)                    
-                    ->addIndexColumn()                                         
+        return datatables()
+                    ->eloquent($query)
+                    ->addIndexColumn()
                     ->editColumn('created_at', function($q){
                         $fecha = Date::parse($q->created_at)->format('Y-m-d');
                         $hora = Date::parse($q->created_at)->format('h:i:s');
                         $html = '<div><span class="badge bg-info text-dark">'.$fecha.'</span></div>';
-                        $html .= '<div><span class="badge bg-info text-dark">'.$hora.'</span></div>';                        
-                        return $html;                        
-                    })    
-                    ->editColumn('event', function($q){                        
+                        $html .= '<div><span class="badge bg-info text-dark">'.$hora.'</span></div>';
+                        return $html;
+                    })
+                    ->editColumn('event', function($q){
                         $html='';
                         switch ($q->event) {
                             case 'login':
@@ -283,15 +280,15 @@ class UserController extends Controller
                             case 'logout':
                                 $html = '<div><span class="badge bg-danger">'.$q->event.'</span></div>';
                                 break;
-                            default: 
+                            default:
                                 $html = '<div><span class="badge bg-light text-dark">'.$q->event.'</span></div>';
                                 break;
                         }
                         return $html;
-                    })               
-                    ->editColumn('properties', function($q){                        
-                        return pretty_json( json_encode( $q->properties ), '<br/>','&ensp;&ensp;' );                        
-                    })                                        
+                    })
+                    ->editColumn('properties', function($q){
+                        return pretty_json( json_encode( $q->properties ), '<br/>','&ensp;&ensp;' );
+                    })
                     ->rawColumns(['properties','created_at','event'])
                     ->toJson();
     }
@@ -302,6 +299,6 @@ class UserController extends Controller
     public function indexActivity(){
         return view('users.indexactivity');
     }
-   
+
 
 }

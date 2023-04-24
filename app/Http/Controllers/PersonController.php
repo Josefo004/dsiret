@@ -11,7 +11,6 @@ use App\Models\Gender;
 use Illuminate\Http\Request;
 use App\Models\Language;
 use App\Models\Profession;
-use PhpParser\Node\Stmt\TryCatch;
 use Carbon\Carbon;
 use \stdClass;
 
@@ -54,30 +53,23 @@ class PersonController extends Controller
      */
     public function store(FormularioStoreRequest $request)//FormularioStoreRequest
     {
-        //dd($request);
-        //$cliente = [];
         $cliente['ip'] = $request->getClientIp(true);
         $cliente['agente'] = $request->userAgent();
         $info = json_encode($cliente);
 
-        // $navegador = get_browser($request->userAgent());
-        // dd($navegador);
-        //dd($info);
-
         try {
             $person = person::create($request->all());
-            
+
             $form = new Form();
             $form->person_id = $person->id;
             $form->record_id = $request->record_id;
             $form->cliente = $info;
             $form->save();
-            
+
             $form->languages()->attach($request->language_id);
             $form->professions()->attach($request->profession_id);
             //dd($form);
             $person = Person::where('nro_documento', $request->nro_documento)
-                //->where('fecha_nac', $request->fecha_nac)
                 ->with('department')->with('gender')
                 ->with('forms')
                 ->with('forms.record')
@@ -85,27 +77,20 @@ class PersonController extends Controller
                 ->with('forms.professions')
                 ->first();
             //dd($person);
-            if(!is_null($person)){         
+            if(!is_null($person)){
                 $person->edad=Carbon::parse($person->fecha_nac)->age;
-                //$id = $person->id;
-                //$persona = Person::where('')->first();
-                ///$request->session()->put([$person]);
-                // $request->session()->regenerate();
-                              
-                //return redirect()->route('formulario.infoperson',['id'=>$id]);                
-                
-                //$ocupaciones = $person->forms->professions;
+
                 $f = Form::where('person_id', $person->id )->with('record')
                 ->with('languages')
-                ->with('professions')->first();                
-                
+                ->with('professions')->first();
+
 
 
                 return view( 'personas.infoperson', compact('person', 'f') );
                 //return "Se registro";
             }else{
                 //return redirect('/index');
-                //return "no se registro";
+                return "no se registro";
             }
 
             //return view('personas.view', compact('person'));
@@ -114,29 +99,6 @@ class PersonController extends Controller
         }
 
 
-    }
-
-    public function LogIn(Request $request){
-        // $vv = $this->validarLG($request);
-        // if (is_object($vv)) {
-        //     return response()->json([
-        //         "error" => $vv
-        //     ], Response::HTTP_OK);
-        // }
-        // $persona = Person::where('nro_documento', $request->nro_documento)
-        //     ->where('fecha_nac', $request->fecha_nac)
-        //     ->first();
-        // if (!is_null($persona)) {
-        //     $persona->departamento;
-        //     $persona->genero;
-        // } else {
-        //     return response()->json([
-        //         "Error" => "Persona no encontrada"
-        //     ], Response::HTTP_OK);
-        // }
-        // return response()->json([
-        //     "data" => $persona
-        // ], Response::HTTP_OK);
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Formularios\FormularioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,6 +99,12 @@ Route::group(['prefix' => 'administracion'], function(){
      * Actividad
     */
     Route::get('actividad','UserController@indexActivity')->name('activity.index');// ->middleware('permission:view-activity');
+});
+
+Route::group(['prefix' => 'siret'], function () {
+    Route::get('formularios', [FormularioController::class, 'index'])->name(('formularios.index'));
+
+    Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name(('api.formularios'));
 });
 
 /**

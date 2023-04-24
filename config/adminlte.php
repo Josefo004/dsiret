@@ -241,16 +241,21 @@ return [
 
     'menu' => [
         [
-            'text' => 'search',
-            'search' => false,
-            'topnav' => false,
+            'text'    => 'REPORTES',
+            'icon'    => 'fa fa-info',
+            'submenu' => [
+                [
+                    'text' => 'personas',
+                    'icon' => 'fa fa-users',
+                    'url'  => 'siret/formularios'
+                ],
+                [
+                    'text' => 'Trabajos',
+                    'icon' => 'fa fa-folder',
+                    'url'  => 'administracion/roles'
+                ],
+            ],
         ],
-        [
-            'text' => 'Ejemplo item',
-            'url'  => '#',
-            'can'  => '',
-        ],        
-        ['header' => 'EJEMPLO ENCABEZADO'],
         [
             'text'    => 'CONFIGURACION',
             'icon'    => 'fa fa-cogs',
@@ -261,7 +266,7 @@ return [
                     'url'  => 'empresa',
                     'icon'    => 'fa fa-building',
                     'can'  => 'config-emp',
-                ],                                
+                ],
             ],
         ],
         [
@@ -274,7 +279,7 @@ return [
                     'icon' => 'fa fa-users',
                     'url'  => 'administracion/usuarios',
                     'can'  => 'view-users',
-                ],                
+                ],
                 [
                     'text' => 'Roles',
                     'icon' => 'fa fa-book',
@@ -289,7 +294,7 @@ return [
                 ],
             ],
         ],
-        
+
     ],
 
     /*
@@ -361,7 +366,7 @@ return [
                     'location' => 'plugins/searchbuilder100/css/searchBuilder.dataTables.min.css',
                 ],
             ],
-        ],                
+        ],
         'datatablesbutton' => [
             'active' => false,
             'files' => [
@@ -384,7 +389,7 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => 'plugins/buttons165/jszip/jszip.min.js',
-                ],                
+                ],
                 [
                     'type' => 'js',
                     'asset' => false,
@@ -394,7 +399,7 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => 'plugins/buttons165/js/buttons.print.min.js',
-                ],                
+                ],
                 [
                     'type' => 'css',
                     'asset' => false,
@@ -434,7 +439,7 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'plugins/sweetalert2/sweetalert2.all.min.js',
-                ],                
+                ],
                 [
                     'type' => 'css',
                     'asset' => true,
@@ -464,14 +469,14 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'plugins/toastr/toastr.min.css',
-                ],                
+                ],
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'plugins/toastr/toastr.min.js',
-                ],                
+                ],
             ],
-        ], 
+        ],
         'cropperjs' => [
             'active' => true,
             'files' => [
@@ -479,14 +484,14 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'plugins/cropperjs/cropper.min.css',
-                ],                
+                ],
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'plugins/cropperjs/cropper.min.js',
-                ],                
+                ],
             ],
-        ],   
+        ],
         'iCheck' => [
             'active' => true,
             'files' => [
@@ -494,24 +499,24 @@ return [
                     'type' => 'css',
                     'asset' => true,
                     'location' => 'plugins/iCheck/square/blue.css',
-                ],                
+                ],
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'plugins/iCheck/icheck.min.js',
-                ],                
+                ],
             ],
-        ],         
+        ],
         'axios' => [
             'active' => true,
-            'files' => [              
+            'files' => [
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'plugins/axios/axios.min.js',
-                ],                
+                ],
             ],
-        ],       
+        ],
         'bootstrap' => [
             'active' => true,
             'files' => [
@@ -519,14 +524,14 @@ return [
                     'type' => 'css',
                     'asset' =>true,
                     'location' => 'vendor/bootstrap5/css/bootstrap.min.css',
-                ],                   
+                ],
                 [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/bootstrap5/js/bootstrap.bundle.js',
-                ],                
+                ],
             ],
-        ],                 
+        ],
         'gadch' => [
             'active' => true,
             'files' => [
@@ -534,8 +539,8 @@ return [
                     'type' => 'js',
                     'asset' =>true,
                     'location' => 'js/script.js',
-                ],  
-                /* 
+                ],
+                /*
                 [
                     'type' => 'css',
                     'asset' => true,

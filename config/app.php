@@ -67,7 +67,8 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    //'timezone' => 'UTC',
+    'timezone' => 'America/La_Paz',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +94,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -106,7 +107,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'es_ES',
 
     /*
     |--------------------------------------------------------------------------
@@ -179,7 +180,7 @@ return [
          * Sistema de permisos y roles
         */
         Spatie\Permission\PermissionServiceProvider::class,
-        
+
         /**
          * AdminLTE
         */
@@ -279,10 +280,10 @@ return [
         /**
          * Date
         */
-        'Date' => Jenssegers\Date\Date::class,        
+        'Date' => Jenssegers\Date\Date::class,
 
         /**
-         * 
+         *
         */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
