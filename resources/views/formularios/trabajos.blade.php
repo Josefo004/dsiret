@@ -1,12 +1,12 @@
 @extends('adminlte::page')
 
-@section('title',  config('adminlte.title', 'nombre APP') . ' - Registros' )
+@section('title',  config('adminlte.title', 'nombre APP') . ' - Trabajos' )
 
 @section('content_header')
 <x-encabezado-pagina
     icono="fa fa-users"
     titulo="Registros"
-    subtitulo="Registros del sistema SIRET"
+    subtitulo="Buscar por Ocupación o Profesion SIRET"
     modoTitulo='L'>
 </x-encabezado-pagina>
 @stop
@@ -28,10 +28,7 @@
             <th>SEXO</th>
             <th>FECHA NAC.</th>
             <th>EDAD</th>
-            <th>CELULAR</th>
-            <th>DIRECCION</th>
-            <th>CORREO</th>
-            <th>REGISTRO</th>
+            <th>PROFESIÓN U OCUPACIÓN</th>
             <th>VER</th>
 		</tr>
 	</thead>
@@ -41,18 +38,15 @@
 <script>
         const dataUsers = [
             { data: 'id', orderable: false, searchable: false},
-            { data: 'cedula', name:'persons.nro_documento', orderable: false, searchable: true},
+            { data: 'cedula', name:'persons.nro_documento', orderable: false, searchable: false},
             { data: 'nombre_completo', searchable: false },
-            { data: 'sexo', orderable: false, searchable: false},
+            { data: 'sexo',  orderable: false, searchable: false},
             { data: 'birth', orderable: false, searchable: false},
             { data: 'edad', orderable: false, searchable: false},
-            { data: 'nro_celular', orderable: false, searchable: false},
-            { data: 'direccion', orderable: false, searchable: false},
-            { data: 'email', orderable: false, searchable: false},
-            { data: 'regis', orderable: false, searchable: false},
+            { data: 'profesion', name:'forms.professions.pro_descripcion', orderable: false, searchable: true},
             { data: 'ver', orderable: false, searchable: false},
         ];
-        const apiUsers = '{!! route('api.formularios') !!}';
+        const apiUsers = '{!! route('api.trabajos') !!}';
         let tabla = $('#formularios').DataTable({
             "serverSide" : true,
             "ajax" : apiUsers,

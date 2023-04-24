@@ -130,7 +130,6 @@
                                             <input class="form-check-input me-1" type="checkbox" value=""  checked id="firstCheckbox">
                                             <label class="form-check-label" for="firstCheckbox">{{ $item->pro_descripcion }}</label>
                                         </li>
-
                                     @endforeach
                                 </ul>
                             </div>

@@ -76,15 +76,14 @@ class PersonController extends Controller
                 ->with('forms.languages')
                 ->with('forms.professions')
                 ->first();
-            //dd($person);
+            dd($person);
             if(!is_null($person)){
                 $person->edad=Carbon::parse($person->fecha_nac)->age;
 
-                $f = Form::where('person_id', $person->id )->with('record')
-                ->with('languages')
-                ->with('professions')->first();
-
-
+                $f = Form::where('person_id', $person->id )
+                    ->with('record')
+                    ->with('languages')
+                    ->with('professions')->first();
 
                 return view( 'personas.infoperson', compact('person', 'f') );
                 //return "Se registro";
@@ -109,7 +108,26 @@ class PersonController extends Controller
      */
     public function show($id)
     {
-        //
+        // return "ID ".$id;
+        $person = Person::where('id', $id)
+            ->with('department')->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->first();
+        //dd($person);
+        if(!is_null($person)){
+            $person->edad=Carbon::parse($person->fecha_nac)->age;
+
+            $f = Form::where('person_id', $person->id )->with('record')
+            ->with('languages')
+            ->with('professions')->first();
+
+            return view( 'personas.infoperson', compact('person', 'f') );
+        }else{
+            return "no se registro";
+        }
     }
 
     /**

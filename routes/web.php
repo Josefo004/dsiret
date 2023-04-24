@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Formularios\FormularioController;
+use App\Http\Controllers\PersonController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Commands\Show;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,9 +105,12 @@ Route::group(['prefix' => 'administracion'], function(){
 
 Route::group(['prefix' => 'siret'], function () {
     Route::get('formularios', [FormularioController::class, 'index'])->name(('formularios.index'));
-
     Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name(('api.formularios'));
+
+    Route::get('trabajos', [FormularioController::class, 'trabajos'])->name(('formularios.trabajos'));
+    Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
 });
+Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 
 /**
  * Perfil de Usuario

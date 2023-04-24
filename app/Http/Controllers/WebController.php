@@ -30,7 +30,8 @@ class WebController extends Controller
             ->with('forms.languages')
             ->with('forms.professions')
             ->first();
-        //dd($person);
+        //@dump($person->department->dep_codigo);
+        @dump($person);
           if(!is_null($person)){
             $person->edad=Carbon::parse($person->fecha_nac)->age;
             $f = Form::where('person_id', $person->id )

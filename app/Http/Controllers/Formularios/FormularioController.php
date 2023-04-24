@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Formularios;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Form;
 use App\Models\Gender;
 use App\Models\Person;
 use Carbon\Carbon;
@@ -15,19 +16,20 @@ class FormularioController extends Controller
     public function apiFormularios()
     {
         $query = Person::query();
-        //$query = DB::table('persons')->get();
-        //$query->select(['id','nro_documento', 'department_id', 'paterno','materno','nombres']);
-        $query->select('*', DB::raw("CONCAT_WS('',paterno,' ',materno,' ',nombres) AS nombre_completo"));
+        $query->with('department');
+        $query->with('gender');
+        $query->select('*');
         $query->orderBy('paterno');
         return datatables()
             ->eloquent($query)
-            ->editColumn('exp', function($person){
-                $dd = Department::find($person->department_id);
-                return $dd->dep_codigo;
+            ->addColumn('nombre_completo', function($person){
+                return $person->paterno.' '.$person->materno.' '.$person->nombres;
             })
-            ->editColumn('sexo', function($person){
-                $dg = Gender::find($person->gender_id);
-                return $dg->gen_descripcion;
+            ->addColumn('cedula', function($person){
+                return $person->nro_documento.' '.$person->department->dep_codigo;
+            })
+            ->addColumn('sexo', function($person){
+                return $person->gender->gen_descripcion;
             })
             ->editColumn('birth', function($person){
                 return Carbon::parse($person->fecha_nac)->format('d-m-Y');
@@ -39,8 +41,53 @@ class FormularioController extends Controller
                 return Carbon::parse($person->created_at)->format('d-m-Y H:m');
             })
             ->editColumn('ver', function($person){
-                return '<i class="fa-solid fa-eye">{{ $person->id }}</i>';
+                return "<a href='". route("formularioMostrar", $person->id)."' target='_blank'><i class='fa fa-eye'></i></a>";
             })
+            ->rawColumns(['ver'])
+            ->toJson();
+    }
+
+    public function apiTrabajos()
+    {
+        $query = Person::query()
+            ->with('department')
+            ->with('gender')
+            ->with('forms')
+            ->with('forms.professions');
+        // $query->with('department');
+        // $query->with('gender');
+        //$query->select('*');
+        $query->orderBy('paterno');
+        return datatables()
+            ->eloquent($query)
+            ->addColumn('nombre_completo', function($person){
+                return $person->paterno.' '.$person->materno.' '.$person->nombres;
+            })
+            ->addColumn('cedula', function($person){
+                return $person->nro_documento.' '.$person->department->dep_codigo;
+            })
+            ->addColumn('sexo', function($person){
+                return $person->gender->gen_descripcion;
+            })
+            ->addColumn('birth', function($person){
+                return Carbon::parse($person->fecha_nac)->format('d-m-Y');
+            })
+            ->addColumn('edad', function($person){
+                return Carbon::parse($person->fecha_nac)->age;
+            })
+            ->addColumn('profesion', function($person){
+                $re = '';
+                foreach($person->forms as $form){
+                    foreach($form->professions as $pro){
+                        $re.=$pro->pro_descripcion.'<br>';
+                    }
+                }
+                return $re;
+            })
+            ->addColumn('ver', function($person){
+                return "<a href='". route("formularioMostrar", $person->id)."' target='_blank'><i class='fa fa-eye'></i></a>";
+            })
+            ->rawColumns(['ver','profesion'])
             ->toJson();
     }
 
@@ -52,6 +99,11 @@ class FormularioController extends Controller
     public function index()
     {
         return view('formularios.index');
+    }
+
+    public function trabajos()
+    {
+        return view('formularios.trabajos');
     }
 
     /**

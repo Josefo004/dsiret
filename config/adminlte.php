@@ -252,7 +252,7 @@ return [
                 [
                     'text' => 'Trabajos',
                     'icon' => 'fa fa-folder',
-                    'url'  => 'administracion/roles'
+                    'url'  => 'siret/trabajos'
                 ],
             ],
         ],
