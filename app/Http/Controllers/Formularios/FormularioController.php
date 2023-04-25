@@ -18,8 +18,9 @@ class FormularioController extends Controller
         $query = Person::query();
         $query->with('department');
         $query->with('gender');
-        $query->select('*');
-        $query->orderBy('paterno');
+        //$query->select('*');
+        $query->orderBy('paterno', 'ASC');
+        $query->orderBy('materno', 'ASC');
         return datatables()
             ->eloquent($query)
             ->addColumn('nombre_completo', function($person){
@@ -54,10 +55,9 @@ class FormularioController extends Controller
             ->with('gender')
             ->with('forms')
             ->with('forms.professions');
-        // $query->with('department');
-        // $query->with('gender');
         //$query->select('*');
-        $query->orderBy('paterno');
+        $query->orderBy('paterno', 'ASC');
+        $query->orderBy('materno', 'ASC');
         return datatables()
             ->eloquent($query)
             ->addColumn('nombre_completo', function($person){

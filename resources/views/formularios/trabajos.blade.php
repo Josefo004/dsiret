@@ -28,6 +28,8 @@
             <th>SEXO</th>
             <th>FECHA NAC.</th>
             <th>EDAD</th>
+            <th>CELULAR</th>
+            <th>EMAIL</th>
             <th>PROFESIÓN U OCUPACIÓN</th>
             <th>VER</th>
 		</tr>
@@ -38,11 +40,13 @@
 <script>
         const dataUsers = [
             { data: 'id', orderable: false, searchable: false},
-            { data: 'cedula', name:'persons.nro_documento', orderable: false, searchable: false},
+            { data: 'cedula', orderable: false, searchable: false},
             { data: 'nombre_completo', searchable: false },
-            { data: 'sexo',  orderable: false, searchable: false},
+            { data: 'sexo', name:'gender.gen_descripcion', orderable: false, searchable: true},
             { data: 'birth', orderable: false, searchable: false},
             { data: 'edad', orderable: false, searchable: false},
+            { data: 'nro_celular', orderable: false, searchable: false},
+            { data: 'email', orderable: false, searchable: false},
             { data: 'profesion', name:'forms.professions.pro_descripcion', orderable: false, searchable: true},
             { data: 'ver', orderable: false, searchable: false},
         ];
