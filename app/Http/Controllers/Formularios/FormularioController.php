@@ -54,6 +54,8 @@ class FormularioController extends Controller
             ->with('department')
             ->with('gender')
             ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
             ->with('forms.professions');
         //$query->select('*');
         $query->orderBy('paterno', 'ASC');
@@ -75,6 +77,15 @@ class FormularioController extends Controller
             ->addColumn('edad', function($person){
                 return Carbon::parse($person->fecha_nac)->age;
             })
+            ->addColumn('idiomas',function($person){
+                $re='';
+                foreach($person->forms as $form){
+                    foreach($form->languages as $lan){
+                        $re.=$lan->descripcion.'<br>';
+                    }
+                }
+                return $re;
+            })
             ->addColumn('profesion', function($person){
                 $re = '';
                 foreach($person->forms as $form){
@@ -87,7 +98,7 @@ class FormularioController extends Controller
             ->addColumn('ver', function($person){
                 return "<a href='". route("formularioMostrar", $person->id)."' target='_blank'><i class='fa fa-eye'></i></a>";
             })
-            ->rawColumns(['ver','profesion'])
+            ->rawColumns(['ver','idiomas','profesion'])
             ->toJson();
     }
 
