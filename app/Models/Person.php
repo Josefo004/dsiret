@@ -26,7 +26,7 @@ class Person extends Model
 
     public function forms()
     {
-        return $this->hasMany(Form::class);
+        return $this->hasOne(Form::class);
     }
 
 }

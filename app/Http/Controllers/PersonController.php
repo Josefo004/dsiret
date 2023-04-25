@@ -76,7 +76,7 @@ class PersonController extends Controller
                 ->with('forms.languages')
                 ->with('forms.professions')
                 ->first();
-            dd($person);
+            //dd($person);
             if(!is_null($person)){
                 $person->edad=Carbon::parse($person->fecha_nac)->age;
 

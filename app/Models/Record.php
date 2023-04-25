@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     use HasFactory;
-    public function persons()
+    public function forms()
     {
-        return $this->hasMany(Person::class);
+        return $this->hasMany(Form::class);
     }
 }

@@ -77,21 +77,20 @@ class FormularioController extends Controller
             ->addColumn('edad', function($person){
                 return Carbon::parse($person->fecha_nac)->age;
             })
+            ->addColumn('formacion', function($person){
+                return $person->forms->record->for_descripcion;
+            })
             ->addColumn('idiomas',function($person){
                 $re='';
-                foreach($person->forms as $form){
-                    foreach($form->languages as $lan){
-                        $re.=$lan->descripcion.'<br>';
-                    }
+                foreach($person->forms->languages as $lan){
+                    $re.=$lan->descripcion.'<br>';
                 }
                 return $re;
             })
             ->addColumn('profesion', function($person){
                 $re = '';
-                foreach($person->forms as $form){
-                    foreach($form->professions as $pro){
-                        $re.=$pro->pro_descripcion.'<br>';
-                    }
+                foreach($person->forms->professions as $pro){
+                    $re.=$pro->pro_descripcion.'<br>';
                 }
                 return $re;
             })

@@ -29,6 +29,7 @@
             <th>FECHA NAC.</th>
             <th>EDAD</th>
             <th>CELULAR</th>
+            <th>FORM. ACADEMICA</th>
             <th>IDIOMAS</th>
             <th>PROFESIÓN U OCUPACIÓN</th>
             <th>VER</th>
@@ -46,6 +47,7 @@
             { data: 'birth', orderable: false, searchable: false},
             { data: 'edad', orderable: false, searchable: false},
             { data: 'nro_celular', orderable: false, searchable: false},
+            { data: 'formacion', name:'forms.record.for_descripcion', orderable: false, searchable: true},
             { data: 'idiomas', name:'forms.languages.descripcion', orderable: false, searchable: true},
             { data: 'profesion', name:'forms.professions.pro_descripcion', orderable: false, searchable: true},
             { data: 'ver', orderable: false, searchable: false},
