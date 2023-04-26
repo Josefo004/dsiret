@@ -132,6 +132,9 @@
                         <a href="https://twitter.com/GobChuquisaca" style="color:#D38118;" target="_blank" type="button" class="btn btn-link btn-floating mx-1">
                         <i class="fab fa-twitter"></i>
                         </a>
+                        <a href="{{ asset('pdf/manual.pdf') }}" style="color:#D38118;" target="_blank" type="button" alt="manual" class="btn btn-link btn-floating mx-1">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
                     </div>
                     {!! Form::close() !!}
                 </div>
