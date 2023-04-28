@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Companies\CompanyController;
 use App\Http\Controllers\Formularios\FormularioController;
 use App\Http\Controllers\PersonController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +20,7 @@ Route::get('/', function () {
     return redirect('/index');
 });
 
-//Auth::routes();
+Auth::routes();
 
 
 Route::get('/formulario', 'PersonController@create')->name('person.create');
@@ -107,11 +106,9 @@ Route::group(['prefix' => 'administracion'], function(){
 Route::group(['prefix' => 'siret'], function () {
     Route::get('formularios', [FormularioController::class, 'index'])->name(('formularios.index'));
     Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name(('api.formularios'));
+
     Route::get('trabajos', [FormularioController::class, 'trabajos'])->name(('formularios.trabajos'));
     Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
-
-    Route::get('companies', [CompanyController::class, 'index'])->name(('companies.index'));
-    Route::get('api/companies', [CompanyController::class, 'apiCompanies'])->name(('api.companies'));
 });
 Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 

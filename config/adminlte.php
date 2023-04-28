@@ -257,22 +257,6 @@ return [
             ],
         ],
         [
-            'text'    => 'EMPRESAS',
-            'icon'    => 'fa fa-home',
-            'submenu' => [
-                [
-                    'text' => 'Empresas',
-                    'icon' => 'fa fa-home',
-                    'url'  => 'siret/companies'
-                ],
-                [
-                    'text' => 'Trabajos',
-                    'icon' => 'fa fa-folder',
-                    'url'  => 'siret/trabajos'
-                ],
-            ],
-        ],
-        [
             'text'    => 'CONFIGURACION',
             'icon'    => 'fa fa-cogs',
             'can'  => ['config-emp'],

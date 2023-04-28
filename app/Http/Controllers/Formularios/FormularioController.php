@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Formularios;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
+use App\Models\Form;
+use App\Models\Gender;
 use App\Models\Person;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FormularioController extends Controller
 {
