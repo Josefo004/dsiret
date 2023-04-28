@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Formularios\FormularioController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\Sempresas\SempresaController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Commands\Show;
 
@@ -35,8 +36,6 @@ Route::get('/formulario/info', 'WebController@info')->name('formulario.info');
 Route::get('/formulario/infoperson/{id}', 'WebController@infoperson')->name('formulario.infoperson');//->middleware('valperson');
 
 Route::post('/formulario/cerrar', 'WebController@cerrar')->name('formulario.cerrar');//formulario.cerrar
-
-
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -109,6 +108,8 @@ Route::group(['prefix' => 'siret'], function () {
 
     Route::get('trabajos', [FormularioController::class, 'trabajos'])->name(('formularios.trabajos'));
     Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
+
+    Route::get('empresas', [SempresaController::class, 'index'])->name(('empresas.index'));
 });
 Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 

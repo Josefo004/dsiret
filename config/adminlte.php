@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'title' => 'Nombre APP',
+    'title' => 'SIRET',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'logo' => '<b>Nombre</b>APP',
+    'logo' => '<b>SIRET</b>',
     'logo_img' => 'images/logo_app_gadch.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -248,6 +248,22 @@ return [
                     'text' => 'personas',
                     'icon' => 'fa fa-users',
                     'url'  => 'siret/formularios'
+                ],
+                [
+                    'text' => 'Trabajos',
+                    'icon' => 'fa fa-folder',
+                    'url'  => 'siret/trabajos'
+                ],
+            ],
+        ],
+        [
+            'text'    => 'EMPRESAS',
+            'icon'    => 'fa fa-home',
+            'submenu' => [
+                [
+                    'text' => 'Empresas',
+                    'icon' => 'fa fa-users',
+                    'url'  => 'siret/empresas'
                 ],
                 [
                     'text' => 'Trabajos',
