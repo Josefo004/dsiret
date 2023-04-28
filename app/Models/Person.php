@@ -29,4 +29,9 @@ class Person extends Model
         return $this->hasOne(Form::class);
     }
 
+    public function empresas()
+    {
+        return $this->hasOne(Sempresa::class);
+    }
+
 }

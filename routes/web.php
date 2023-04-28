@@ -110,6 +110,8 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
 
     Route::get('empresas', [SempresaController::class, 'index'])->name(('empresas.index'));
+    Route::get('api/formularios', [SempresaController::class, 'apieEmpresas'])->name(('api.empresas'));
+    Route::get('empresas/crear', [SempresaController::class], 'create')->name('empresas.create');
 });
 Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 

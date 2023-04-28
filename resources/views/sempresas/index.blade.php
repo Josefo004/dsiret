@@ -4,34 +4,33 @@
 
 @section('content_header')
 <x-encabezado-pagina
-    icono="fa fa-users"
+    icono="fa"
     titulo="Registros"
-    subtitulo="Registros del sistema SIRET"
+    subtitulo="Registros de Empresas en el SIRET"
     modoTitulo='L'>
 </x-encabezado-pagina>
 @stop
 
 @section('content')
-<x-encabezado-seccion
-    icono="fa fa-address-card"
-    titulo="LISTADO DE FORMULARIOS REGISTRADOS"
-    botontexto="NUEVO USUARIO"
-    ruta="#">
-</x-encabezado-seccion>
+<x-encabezado2-seccion
+    icono="fa home"
+    titulo="LISTADO DE EMPRESAS"
+    botontexto="NUEVA EMPRESA"
+    ruta="{{ route('empresas.create') }}">
+</x-encabezado2-seccion>
 
 <table id="formularios" class="table table-responsive table-bordered table-striped table-hover table-sm" style="width:100%">
 	<thead>
 		<tr>
-			<th width="10px">#</th>
-			<th>CI</th>
-			<th>NOMBRE COMPLETO</th>
-            <th>SEXO</th>
-            <th>FECHA NAC.</th>
-            <th>EDAD</th>
-            <th>CELULAR</th>
-            <th>DIRECCION</th>
-            <th>CORREO</th>
-            <th>REGISTRO</th>
+			<th>id</th>
+            <th>MUNICIPIO</th>
+			<th>DIRECCIÓN</th>
+            <th>RAZON SOCIAL</th>
+            <th>REGIMEN</th>
+            <th>ACTIVIDAD ECONOMICA</th>
+            <th>NRO. ROE</th>
+            <th>TELEFONO</th>
+            <th>REPRENSENTANTE LEG.</th>
             <th>VER</th>
 		</tr>
 	</thead>
@@ -41,18 +40,17 @@
 <script>
         const dataUsers = [
             { data: 'id', orderable: false, searchable: false},
-            { data: 'cedula', name:'persons.nro_documento', orderable: false, searchable: true},
-            { data: 'nombre_completo', searchable: false },
-            { data: 'sexo', name:'gender.gen_descripcion', orderable: false, searchable: true},
-            { data: 'birth', orderable: false, searchable: false},
-            { data: 'edad', orderable: false, searchable: false},
-            { data: 'nro_celular', orderable: false, searchable: false},
-            { data: 'direccion', orderable: false, searchable: false},
-            { data: 'email', orderable: false, searchable: false},
-            { data: 'regis', orderable: false, searchable: false},
+            { data: 'municipio',  orderable: false, searchable: false},
+            { data: 'emp_direccion',  orderable: false, searchable: false},
+            { data: 'razon_social',  orderable: false, searchable: false},
+            { data: 'regimen',  orderable: false, searchable: false},
+            { data: 'eactividad',  orderable: false, searchable: false},
+            { data: 'nro_roe',  orderable: false, searchable: false},
+            { data: 'emp_telefono',  orderable: false, searchable: false},
+            { data: 'representante',  orderable: false, searchable: false},
             { data: 'ver', orderable: false, searchable: false},
         ];
-        const apiUsers = '{!! route('api.formularios') !!}';
+        const apiUsers = '{!! route('api.empresas') !!}';
         let tabla = $('#formularios').DataTable({
             "serverSide" : true,
             "ajax" : apiUsers,
