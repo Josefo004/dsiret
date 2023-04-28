@@ -66,13 +66,14 @@ class SempresaController extends Controller
      */
     public function create()
     {
+        //return "jose";
         $municipios = Municipio::all()->pluck('mun_descripcion','id');
         $regimenes = Regime::all()->pluck('reg_descripcion','id');
         $eactividades = Eactividade::all()->pluck('act_descripcion','id');
         $departments = Department::get()->pluck('dep_descripcion', 'id');
         $genders = Gender::get()->pluck('gen_descripcion', 'id');
 
-        return view('sempresas.index', compact('municipios','regimenes','eactividades','departments','departments', 'genders'));
+        return view('sempresas.create', compact('municipios','regimenes','eactividades','departments','departments', 'genders'));
 
         // return view('users.create', compact('roles'));
     }
@@ -85,7 +86,9 @@ class SempresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $empresa = Sempresa::create($request->all());
+        return view('sempresas.index');
     }
 
     /**

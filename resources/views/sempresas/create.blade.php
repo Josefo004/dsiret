@@ -5,7 +5,7 @@
 @section('content_header')
 <x-encabezado-pagina
     icono="fa fa-users"
-    titulo="Crear Usuario"
+    titulo="Crear Empresa"
     subtitulo="Gestión de empresas SIRET"
     modoTitulo='L'>
 </x-encabezado-pagina>
@@ -19,7 +19,8 @@
     ruta="#">
 </x-encabezado2-seccion>
 
-    {!! Form::open(['route' => 'users.store']) !!}
+    {!! Form::open(['route' => 'sempresas.store']) !!}
+        @csrf
 		@include('sempresas.partials.form')
 	{!! Form::close() !!}
 @stop

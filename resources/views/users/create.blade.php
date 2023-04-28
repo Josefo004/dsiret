@@ -3,20 +3,20 @@
 @section('title',  config('adminlte.title', 'nombre APP') . ' - Creación de usuarios' )
 
 @section('content_header')
-<x-encabezado-pagina 
-    icono="fa fa-users" 
-    titulo="Crear Usuario" 
-    subtitulo="Gestión de usuarios del sistema" 
+<x-encabezado-pagina
+    icono="fa fa-users"
+    titulo="Crear Usuario"
+    subtitulo="Gestión de usuarios del sistema"
     modoTitulo='L'>
     {{ Breadcrumbs::render('userscreate') }}
 </x-encabezado-pagina>
 @stop
 
 @section('content')
-<x-encabezado-seccion 
-    icono="fa fa-user-circle" 
+<x-encabezado-seccion
+    icono="fa fa-user-circle"
     titulo="FORMULARIO DE CREACION"
-    botontexto="" 
+    botontexto=""
     ruta="#">
 </x-encabezado-seccion>
 

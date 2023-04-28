@@ -7,176 +7,81 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h5>DATOS DE ACCESO</h5>
+				<h5>DATOS FORMULARIO</h5>
 				<div class="form-group">
-					{{ Form::label('roles','Rol') }}
-					{{ Form::select('roles[]',$roles, null ,['class'=>'form-control select sel2w', 'id'=>'roles','multiple' => 'multiple']) }}
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-					{{ Form::label('password', 'Contraseña') }} <i>(*)</i>
-					{{ Form::text('password','',['class'=> 'form-control', 'placeholder'=>'**********', 'id'=>'password']) }}
-					@if ($errors->has('password'))
+					{{ Form::label('municipio_id','Municipio') }}
+					{{ Form::select('municipio_id', $municipios, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_municipio_id', 'placeholder'=>'MUNICIPIO', 'required' => 'required']) }}
+                    @if ($errors->has('municipio_id'))
 						<span class="help-block">
-							<strong>{{ $errors->first('password') }}</strong>
-						</span>
-					@endif
-
-					<br/>
-					<!-- Generador de contraseñas -->
-					<p>
-						<a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-							Generador de contraseñas
-						</a>
-					</p>
-					<div class="collapse" id="collapseExample">
-						<div class="card card-body">
-							<div class="form-group row">
-								<label for="staticEmail" class="col-sm-3 col-form-label">Longitud : </label>
-								<div class="col-sm-2">
-									<input value="6" name="plength" class="lp-custom-range__number" step="1" id="plength" type="number" min="6" max="16" />
-								</div>
-								<div class="col-sm-7">
-									<input type="range" id="points" value="6" name="points" min="6" max="16" style="width: 100%;">
-								</div>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="ABC" id="chABC" checked>
-								<label class="form-check-label" for="chABC">
-								Mayúsculas (ej. ABCDEFG)
-								</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="chabc" checked>
-								<label class="form-check-label" for="chabc">
-								Minúsculas (ej. abcdefg)
-								</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="ch123" checked>
-								<label class="form-check-label" for="ch123">
-								Números (ej. 123456)
-								</label>
-							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="chsim" checked>
-								<label class="form-check-label" for="chsim">
-								Símbolos (ej. @#$% )
-								</label>
-							</div>
-							<br/>
-							<div class="form-group row">
-								<div class="col-sm-12">
-									<a href="#" onclick="generatePass(); return false;" class="btn btn-danger">Generar contraseña</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Generador de contraseñas:end -->
-
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('estado') ? ' has-error' : '' }} text-center">
-					<div class="row">
-						<div class="col-md-6">
-							<label>
-								{{ Form::radio('estado','A') }} ACTIVAR CUENTA
-							</label>
-						</div>
-						<div class="col-md-6">
-							<label>
-								{{ Form::radio('estado','D') }} DESACTIVAR CUENTA
-							</label>
-						</div>
-					</div>
-					@if ($errors->has('estado'))
-						<span class="help-block">
-							<strong>{{ $errors->first('estado') }}</strong>
+							<strong>{{ $errors->first('municipio_id') }}</strong>
 						</span>
 					@endif
 				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-6">
-		<div class="row">
-			<h5>DATOS PERSONALES</h5>
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-					{{ Form::label('name', 'Nombre') }} <i>(*)</i>
-					{{ Form::text('name',null,['class'=> 'form-control text-uppercase', 'placeholder'=>'NOMBRE COMPLETO']) }}
-					@error('name')
+                <div class="form-group">
+					{{ Form::label('eactividade_id ','Actividad Economica') }}
+					{{ Form::select('eactividade_id', $eactividades, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_eactividade_id', 'placeholder'=>'ACTIVIDAD ECONOMICA', 'required' => 'required']) }}
+                    @if ($errors->has('eactividade_id'))
 						<span class="help-block">
-							<strong>{{ $message }}</strong>
-						</span>
-					@enderror
-				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-					{{ Form::label('username', 'Usuario') }} <i>(*)</i>
-					{{ Form::text('username', null,['class'=> 'form-control', 'placeholder'=>'NOMBRE DE USUARIO']) }}
-					@if ($errors->has('username'))
-						<span class="help-block">
-							<strong>{{ $errors->first('username') }}</strong>
+							<strong>{{ $errors->first('eactividade_id') }}</strong>
 						</span>
 					@endif
 				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('ci') ? ' has-error' : '' }}">
-					{{ Form::label('ci', 'Carnet de Identidad') }}
-					{{ Form::text('ci', null,['class'=> 'form-control', 'placeholder'=>'DOCUMENTO DE IDENTIDAD']) }}
-					@if ($errors->has('ci'))
+                <div class="form-group">
+					{{ Form::label('regime_id', 'TIPO DE REGIMEN') }}
+					{{ Form::select('regime_id', $regimenes, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_regime_id', 'placeholder'=>'REGIMEN IMPÓSITIVO', 'required' => 'required']) }}
+                    @if ($errors->has('regime_id'))
 						<span class="help-block">
-							<strong>{{ $errors->first('ci') }}</strong>
+							<strong>{{ $errors->first('regime_id') }}</strong>
 						</span>
 					@endif
 				</div>
-			</div>
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-					{{ Form::label('email', 'Correo Electronico') }}
-					{{ Form::text('email', null,['class'=> 'form-control', 'placeholder'=>'CORREO ELECTRONICO']) }}
-					@if ($errors->has('email'))
+                <div class="form-group">
+					{{ Form::label('emp_direccion', 'DIRECCION DE LA EMPRESA') }}
+					{{ Form::text('emp_direccion','',['class'=> 'form-control text-uppercase', 'id'=>'form_emp_direccion', 'placeholder'=>'DIRECCION ENPRESA']) }}
+                    @if ($errors->has('emp_direccion'))
 						<span class="help-block">
-							<strong>{{ $errors->first('email') }}</strong>
+							<strong>{{ $errors->first('emp_direccion') }}</strong>
 						</span>
 					@endif
 				</div>
-			</div>
-
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
-					{{ Form::label('telefono', 'Telefono') }}
-					{{ Form::text('telefono', null,['class'=> 'form-control', 'placeholder'=>'NUMERO DE TELEFONO']) }}
-					@if ($errors->has('telefono'))
+                <div class="form-group">
+					{{ Form::label('razon_social', 'RAZON SOCIAL') }}
+					{{ Form::text('razon_social','',['class'=> 'form-control text-uppercase', 'id'=>'form_razon_social', 'placeholder'=>'RAZON SOCIAL']) }}
+                    @if ($errors->has('razon_social'))
 						<span class="help-block">
-							<strong>{{ $errors->first('telefono') }}</strong>
+							<strong>{{ $errors->first('razon_social') }}</strong>
 						</span>
 					@endif
 				</div>
-			</div>
-
-			<div class="col-md-12">
-				<div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
-					{{ Form::label('direccion', 'Domicilio') }}
-					{{ Form::text('direccion', null,['class'=> 'form-control', 'placeholder'=>'DIRECCION']) }}
-					@if ($errors->has('direccion'))
+                <div class="form-group">
+					{{ Form::label('NIT', 'NIT') }}
+					{{ Form::text('NIT','',['class'=> 'form-control text-uppercase', 'id'=>'form_NIT', 'placeholder'=>'NIT']) }}
+                    @if ($errors->has('razon_social'))
 						<span class="help-block">
-							<strong>{{ $errors->first('direccion') }}</strong>
+							<strong>{{ $errors->first('razon_social') }}</strong>
 						</span>
 					@endif
 				</div>
-			</div>
-
-		</div>
-
-
-
+                <div class="form-group">
+					{{ Form::label('emp_email', 'CORREO ELECTRONICO') }}
+					{{ Form::text('emp_email','',['class'=> 'form-control text-uppercase', 'id'=>'form_emp_email', 'placeholder'=>'NIT']) }}
+                    @if ($errors->has('emp_email'))
+						<span class="help-block">
+							<strong>{{ $errors->first('emp_email') }}</strong>
+						</span>
+					@endif
+				</div>
+                <div class="form-group">
+					{{ Form::label('person_id', 'PERSONA ID') }}
+					{{ Form::text('person_id','',['class'=> 'form-control text-uppercase', 'id'=>'form_person_id', 'placeholder'=>'ID']) }}
+                    @if ($errors->has('person_id'))
+						<span class="help-block">
+							<strong>{{ $errors->first('person_id') }}</strong>
+						</span>
+					@endif
+				</div>
+            </div>
+        </div>
 	</div>
 </div>
 

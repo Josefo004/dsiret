@@ -8,8 +8,8 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'host' => $_SERVER['SERVER_NAME'] ,
-    //'host' => 'http://localhost/template_app9/public/', //Habilitar en local (revisar luego JOSE)
+    //'host' => $_SERVER['SERVER_NAME'] ,
+    'host' => 'http://localhost/template_app9/public/', //Habilitar en local (revisar luego JOSE)
     //'host' => 'http://192.168.14.49/archivos/public/', //Habilitar para subir a la red GADCH y cambiar IP + nombre de aplicacion
     /*
     |--------------------------------------------------------------------------

@@ -1,47 +1,47 @@
 <div class="row">
-	<div class="col-md-6">	
+	<div class="col-md-6">
 		<div class="row">
 			<div class="col-md-12">
-				<div class="text-center">						
+				<div class="text-center">
 					<h5>FOTO DE PERFIL</h5>
 					@if(isset($user))
 						@if($user->imagen!=null)
-							<img id="userpic" class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/'.$user->imagen) }}" alt="{{ $user->name }}">                        						
+							<img id="userpic" class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/'.$user->imagen) }}" alt="{{ $user->name }}">
 						@else
 							<img id="userpic" class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/user.png') }}" alt="">
-						@endif                        
+						@endif
 					@else
 						<img id="userpic" class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/user.png') }}" alt="">
 					@endif
-				</div>	
+				</div>
 				@if(isset($user))
 				<div class="row" style="margin-top: 16px;">
 					<div class="col-md-6">
-						@can('photo-users') 
+						@can('photo-users')
 						<input type="file" name="image" class="image btn btn-dark" style="width: 250px;">
 						@endcan
 					</div>
 					<div class="col-md-6">
-						@can('character-users') 
+						@can('character-users')
 						<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#cmodal"><i class="fa fa-camera"></i> Seleccionar personaje</button>
 						@endcan
 					</div>
-				</div>				
+				</div>
 				@endif
 				<hr/>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12">	
-				<h5>DATOS DE ACCESO</h5>			
+			<div class="col-md-12">
+				<h5>DATOS DE ACCESO</h5>
 				<div class="form-group">
 					{{ Form::label('roles','Rol') }}
 					{{ Form::select('roles[]',$roles, null ,['class'=>'form-control select sel2w', 'id'=>'roles','multiple' => 'multiple']) }}
-				</div>				
+				</div>
 			</div>
 			<div class="col-md-12">
 				<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-					{{ Form::label('password', 'Contraseña') }} <i>(*)</i>					
+					{{ Form::label('password', 'Contraseña') }} <i>(*)</i>
 					{{ Form::text('password','',['class'=> 'form-control', 'placeholder'=>'**********', 'id'=>'password']) }}
 					@if ($errors->has('password'))
 						<span class="help-block">
@@ -51,7 +51,7 @@
 
 					<br/>
 					<!-- Generador de contraseñas -->
-					<p>	
+					<p>
 						<a class="" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 							Generador de contraseñas
 						</a>
@@ -61,7 +61,7 @@
 							<div class="form-group row">
 								<label for="staticEmail" class="col-sm-3 col-form-label">Longitud : </label>
 								<div class="col-sm-2">
-									<input value="6" name="plength" class="lp-custom-range__number" step="1" id="plength" type="number" min="6" max="16" />									
+									<input value="6" name="plength" class="lp-custom-range__number" step="1" id="plength" type="number" min="6" max="16" />
 								</div>
 								<div class="col-sm-7">
 									<input type="range" id="points" value="6" name="points" min="6" max="16" style="width: 100%;">
@@ -90,9 +90,9 @@
 								<label class="form-check-label" for="chsim">
 								Símbolos (ej. @#$% )
 								</label>
-							</div>		
-							<br/>					
-							<div class="form-group row">								
+							</div>
+							<br/>
+							<div class="form-group row">
 								<div class="col-sm-12">
 									<a href="#" onclick="generatePass(); return false;" class="btn btn-danger">Generar contraseña</a>
 								</div>
@@ -113,7 +113,7 @@
 						</div>
 						<div class="col-md-6">
 							<label>
-								{{ Form::radio('estado','D') }} DESACTIVAR CUENTA	
+								{{ Form::radio('estado','D') }} DESACTIVAR CUENTA
 							</label>
 						</div>
 					</div>
@@ -135,7 +135,7 @@
 					{{ Form::label('name', 'Nombre') }} <i>(*)</i>
 					{{ Form::text('name',null,['class'=> 'form-control text-uppercase', 'placeholder'=>'NOMBRE COMPLETO']) }}
 					@error('name')
-						<span class="help-block">							
+						<span class="help-block">
 							<strong>{{ $message }}</strong>
 						</span>
 					@enderror
@@ -198,7 +198,7 @@
 					@endif
 				</div>
 			</div>
-			
+
 		</div>
 
 
@@ -207,7 +207,7 @@
 </div>
 
 <div class="form-group text-center">
-	{{ Form::submit('GUARDAR', ['class'=>'btn btn-primary']) }}
+	{{ Form::submit('GUARDAR EMPRESA', ['class'=>'btn btn-primary']) }}
 	<a href="{{ route('users.index') }}" class="btn btn-danger">CANCELAR</a>
 </div>
 
@@ -216,41 +216,41 @@
 
 @section('js')
 <script>
-	
+
 	var p = document.getElementById("points");
-	p.addEventListener("input", function() {		
+	p.addEventListener("input", function() {
 		$('#plength').val(p.value);
-	}, false); 
+	}, false);
 
 	const generatePass = () => {
 		generatePassword(
-						document.getElementById("chABC").checked, 
+						document.getElementById("chABC").checked,
 						document.getElementById("chabc").checked,
 						document.getElementById("ch123").checked,
 						document.getElementById("chsim").checked,
 						$('#plength').val(),
 						$('#password')
 						);
-    };  
+    };
 
 
 	$('.select').select2({
 		placeholder: "Seleccione rol"
 	});
-	
+
 	@if(isset($user))
 		//Si tiene valores anteriores, carga en el select
 		//$('.select').val($roles_usuario);
-		//$('.select').trigger('change');	
+		//$('.select').trigger('change');
 	@endif
-	
+
 	$('input').iCheck({
 		checkboxClass: 'icheckbox_square-blue',
 		radioClass: 'iradio_square-blue',
 		increaseArea: '20%' // optional
-	}); 
+	});
 
-	@if(isset($user))	
+	@if(isset($user))
 	/**
 	* Crop and Upload Image
 	*/
@@ -267,10 +267,10 @@
 		var reader;
 		var file;
 		var url;
-	
+
 		if (files && files.length > 0) {
 		  file = files[0];
-	
+
 		  if (URL) {
 			done(URL.createObjectURL(file));
 		  } else if (FileReader) {
@@ -287,7 +287,7 @@
 		cropper = new Cropper(image, {
 		  aspectRatio: 1,
 		  viewMode: 3,
-		  preview: '.preview',      
+		  preview: '.preview',
 		});
 	}).on('hidden.bs.modal', function () {
 	   cropper.destroy();
@@ -300,14 +300,14 @@
 			width: 260,
 			height: 260,
 		  });
-	
+
 		canvas.toBlob(function(blob) {
 			url = URL.createObjectURL(blob);
 			var reader = new FileReader();
-			 reader.readAsDataURL(blob); 
+			 reader.readAsDataURL(blob);
 			 reader.onloadend = function() {
-				var base64data = reader.result;	
-	
+				var base64data = reader.result;
+
 				$.ajax({
 					type: "POST",
 					dataType: "json",
@@ -316,7 +316,7 @@
 					success: function(data){
 						$modal.modal('hide');
 						if(data.status=='exito'){
-							$('#userpic').attr('src', `${direccion}/images/users/`+data.message);							
+							$('#userpic').attr('src', `${direccion}/images/users/`+data.message);
 						}else{
 							//error
 						}
@@ -330,27 +330,27 @@
 	* personajes
 	*/
 	var $modalc = $('#cmodal');
-	$("#upcharacter").click(function(){			
-		
+	$("#upcharacter").click(function(){
+
 		let ruta = `${direccion}/administracion/usuarios/{{$user->id}}/uploadcharacter`
 		var pic = document.querySelector('input[name="personajes"]:checked').value;
-		
+
 		$.ajax({
 			type: "POST",
 			dataType: "json",
 			url: ruta,
 			data: {'_token': '{{csrf_token()}}', 'image': pic},
-			success: function(data){								
+			success: function(data){
 				if(data.status=='exito'){
 					$('#userpic').attr('src', `${direccion}/images/users/`+pic+'.png');
 				}
-				$('#cmodal').modal('hide');		
-				//$("[data-dismiss=modal]").trigger({ type: "click" });						
+				$('#cmodal').modal('hide');
+				//$("[data-dismiss=modal]").trigger({ type: "click" });
 			}
-			});			 
+			});
 		});
-	
 
-	@endif	
+
+	@endif
 </script>
 @stop

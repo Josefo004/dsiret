@@ -16,7 +16,7 @@
     icono="fa home"
     titulo="LISTADO DE EMPRESAS"
     botontexto="NUEVA EMPRESA"
-    ruta="{{ route('empresas.create') }}">
+    ruta="{{ route('sempresas.crear') }}">
 </x-encabezado2-seccion>
 
 <table id="formularios" class="table table-responsive table-bordered table-striped table-hover table-sm" style="width:100%">
