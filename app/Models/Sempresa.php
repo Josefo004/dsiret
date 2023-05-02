@@ -34,4 +34,9 @@ class Sempresa extends Model
         return $this->belongsTo(Person::class);
     }
 
+    public function requerimientos()
+    {
+        return $this->hasMany(Requerimiento::class);
+    }
+
 }

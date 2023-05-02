@@ -19,7 +19,7 @@
     ruta="#">
 </x-encabezado2-seccion>
 
-    {!! Form::open(['route' => 'sempresas.store']) !!}
+    {!! Form::open(['route' => 'sempresas.store', 'autocomplete'=>'off']) !!}
         @csrf
 		@include('sempresas.partials.form')
 	{!! Form::close() !!}

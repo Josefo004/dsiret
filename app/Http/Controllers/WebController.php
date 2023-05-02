@@ -30,7 +30,7 @@ class WebController extends Controller
             ->with('forms.languages')
             ->with('forms.professions')
             ->first();
-        @dump($person->forms[0]->record->for_descripcion);
+        //@dump($person->forms[0]->record->for_descripcion);
         //@dump($person);
           if(!is_null($person)){
             $person->edad=Carbon::parse($person->fecha_nac)->age;

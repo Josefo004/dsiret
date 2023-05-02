@@ -18,7 +18,6 @@ class FormularioController extends Controller
         $query = Person::query();
         $query->with('department');
         $query->with('gender');
-        //$query->select('*');
         $query->orderBy('paterno', 'ASC');
         $query->orderBy('materno', 'ASC');
         return datatables()
@@ -42,7 +41,7 @@ class FormularioController extends Controller
                 return Carbon::parse($person->created_at)->format('d-m-Y H:m');
             })
             ->editColumn('ver', function($person){
-                return "<a href='". route("formularioMostrar", $person->id)."' target='_blank'><i class='fa fa-eye'></i></a>";
+                return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a>";
             })
             ->rawColumns(['ver'])
             ->toJson();
@@ -95,7 +94,7 @@ class FormularioController extends Controller
                 return $re;
             })
             ->addColumn('ver', function($person){
-                return "<a href='". route("formularioMostrar", $person->id)."' target='_blank'><i class='fa fa-eye'></i></a>";
+                return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a>";
             })
             ->rawColumns(['ver','idiomas','profesion'])
             ->toJson();
@@ -145,7 +144,26 @@ class FormularioController extends Controller
      */
     public function show($id)
     {
-        //
+        // return "ID ".$id;
+        $person = Person::where('id', $id)
+            ->with('department')->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->first();
+        //dd($person);
+        if(!is_null($person)){
+            $person->edad=Carbon::parse($person->fecha_nac)->age;
+
+            $f = Form::where('person_id', $person->id )->with('record')
+            ->with('languages')
+            ->with('professions')->first();
+
+            return view( 'formularios.infoperson', compact('person', 'f') );
+        }else{
+            return "no se registro";
+        }
     }
 
     /**

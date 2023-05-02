@@ -44,8 +44,8 @@ class FormularioStoreRequest extends FormRequest
         return [
             "nro_documento.required" => "El campo CI es obligatorio",
             "nro_documento.unique" => "El campo CI ya esta registrado en la Base de Datos",
-            "department_id .required" => "El campo expedido es obligatorio",
-            "department_id .exists" => "El valor del campo expedido no esta en la Base de Datos",
+            "department_id.required" => "El campo expedido es obligatorio",
+            "department_id.exists" => "El valor del campo expedido no esta en la Base de Datos",
             "genero_id.required" => "El campo sexo es obligatorio",
             "nombres.required" => "El campo nombres es obligatorio",
             "fecha_nac:required" => "La fecha de nacimiento es obligatoria",

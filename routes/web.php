@@ -105,16 +105,19 @@ Route::group(['prefix' => 'administracion'], function(){
 Route::group(['prefix' => 'siret'], function () {
     Route::get('formularios', [FormularioController::class, 'index'])->name(('formularios.index'));
     Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name(('api.formularios'));
+    Route::get('formularios/show/{id}', [FormularioController::class, 'show'])->name(('formularioMostrar'));
 
     Route::get('trabajos', [FormularioController::class, 'trabajos'])->name(('formularios.trabajos'));
     Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
 
     Route::get('empresas', [SempresaController::class, 'index'])->name(('sempresas.index'));
-    Route::get('api/formularios', [SempresaController::class, 'apieEmpresas'])->name(('api.empresas'));
+    Route::get('api/empresas', [SempresaController::class, 'apiEmpresas'])->name(('api.empresas'));
     Route::get('sempresas/crear', [SempresaController::class, 'create'])->name('sempresas.crear');
+    Route::get('sempresas/show/{id}', [SempresaController::class, 'show'])->name('sempresasMostrar');
+    Route::get('sempresas/requ/{id}', [SempresaController::class, 'requ'])->name('sempresasRequerimiento');
     Route::post('sempresas/store', [SempresaController::class, 'store'])->name('sempresas.store');
 });
-Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
+//Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 
 /**
  * Perfil de Usuario

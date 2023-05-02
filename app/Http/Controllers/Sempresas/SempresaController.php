@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\Sempresas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SempresaStoreRequest;
 use App\Models\Department;
 use App\Models\Eactividade;
 use App\Models\Gender;
 use App\Models\Municipio;
+use App\Models\Person;
 use App\Models\Regime;
+use App\Models\Requerimiento;
 use App\Models\Sempresa;
 use Illuminate\Http\Request;
 
 class SempresaController extends Controller
 {
-    public function apieEmpresas()
+    public function apiEmpresas()
     {
         $query = Sempresa::query();
         $query->with('municipio');
@@ -21,7 +24,7 @@ class SempresaController extends Controller
         $query->with('eactividade');
         $query->with('person');
         //$query->select('*');
-        $query->orderBy('razon_social', 'ASC');
+        $query->orderBy('id', 'DESC');
         return datatables()
             ->eloquent($query)
             ->addColumn('municipio', function($sempresa){
@@ -37,7 +40,7 @@ class SempresaController extends Controller
                 return $sempresa->person->nombres.' '.$sempresa->person->paterno.' '.$sempresa->person->materno.' ('.$sempresa->person->nro_celular.')';
             })
             ->editColumn('ver', function($sempresa){
-                return "<a href='". route("formularioMostrar", $sempresa->id)."' target='_blank'><i class='fa fa-eye'></i></a>";
+                return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> ver</a> <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i> Req.</a>";
             })
             ->rawColumns(['ver'])
             ->toJson();
@@ -66,14 +69,20 @@ class SempresaController extends Controller
      */
     public function create()
     {
-        //return "jose";
+        //return "jose"
         $municipios = Municipio::all()->pluck('mun_descripcion','id');
         $regimenes = Regime::all()->pluck('reg_descripcion','id');
         $eactividades = Eactividade::all()->pluck('act_descripcion','id');
         $departments = Department::get()->pluck('dep_descripcion', 'id');
         $genders = Gender::get()->pluck('gen_descripcion', 'id');
+        $municipios->prepend('','0');
+        $regimenes->prepend('','0');
+        $eactividades->prepend('','0');
+        $departments->prepend('','0');
+        $genders->prepend('','0');
+        //@dump($municipios);
 
-        return view('sempresas.create', compact('municipios','regimenes','eactividades','departments','departments', 'genders'));
+        return view('sempresas.create', compact('municipios','regimenes','eactividades','departments', 'genders'));
 
         // return view('users.create', compact('roles'));
     }
@@ -84,10 +93,32 @@ class SempresaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SempresaStoreRequest $request)
     {
+        //@dump($request);
         //dd($request);
-        $empresa = Sempresa::create($request->all());
+        $responsable = new Person();
+        $responsable->nro_documento = strtoupper($request->nro_documento);
+        $responsable->department_id = $request->department_id;
+        $responsable->gender_id = $request->gender_id;
+        $responsable->nro_celular = $request->nro_celular;
+        $responsable->nombres = strtoupper($request->nombres);
+        $responsable->paterno = strtoupper($request->paterno);
+        $responsable->materno = strtoupper($request->materno);
+        $responsable->save();
+
+        $empresa = new Sempresa();
+        $empresa->municipio_id = $request->municipio_id;
+        $empresa->eactividade_id = $request->eactividade_id;
+        $empresa->regime_id = $request->regime_id;
+        $empresa->person_id = $responsable->id;
+        $empresa->razon_social = strtoupper($request->razon_social);
+        $empresa->NIT = $request->NIT;
+        $empresa->nro_roe = $request->nro_roe;
+        $empresa->emp_direccion = strtoupper($request->emp_direccion);
+        $empresa->emp_telefono = $request->emp_telefono;
+        $empresa->save();
+
         return view('sempresas.index');
     }
 
@@ -99,7 +130,37 @@ class SempresaController extends Controller
      */
     public function show($id)
     {
-        //
+        $empresa = Sempresa::where('id', $id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->with('person')
+            ->with('person.department')
+            ->with('person.gender')
+            ->first();
+        return view( 'sempresas.info', compact('empresa') );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function requ($id)
+    {
+        $empresa = Sempresa::where('id', $id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->first();
+
+        $requerimientos = Requerimiento::where('sempresa_id', $empresa->id )
+            ->with('profession')
+            ->get();
+        //@dump($empresa);
+        //@dump($requerimientos);
+        return view( 'sempresas.requerimiento', compact('empresa','requerimientos') );
     }
 
     /**

@@ -12,4 +12,9 @@ class Profession extends Model
         return $this->belongsToMany(Form::class, 'forms_professions','profession_id','form_id')
         ->withTimestamps();
     }
+
+    public function requerimiento()
+    {
+        return $this->hasMany(Requerimiento::class);
+    }
 }
