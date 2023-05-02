@@ -28,7 +28,6 @@
             <th>RAZON SOCIAL</th>
             <th>REGIMEN</th>
             <th>ACTIVIDAD ECONOMICA</th>
-            <th>NRO. ROE</th>
             <th>TELEFONO</th>
             <th>REPRENSENTANTE LEGAL</th>
             <th>VER</th>
@@ -45,7 +44,6 @@
             { data: 'razon_social', name:'sempresas.razon_social', orderable: false, searchable: true},
             { data: 'regimen',  orderable: false, searchable: false},
             { data: 'eactividad', name:'eactividade.act_descripcion', orderable: false, searchable: true},
-            { data: 'nro_roe',  orderable: false, searchable: false},
             { data: 'emp_telefono',  orderable: false, searchable: false},
             { data: 'representante',  orderable: false, searchable: false},
             { data: 'ver', orderable: false, searchable: false},
