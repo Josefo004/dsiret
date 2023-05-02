@@ -9,7 +9,7 @@ class Requerimiento extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id', 'sempresa_id', 'profession_id', 'cantidad', 'cliente'
+        'id', 'sempresa_id', 'profession_id', 'cantidad'
     ];
 
     public function profession()

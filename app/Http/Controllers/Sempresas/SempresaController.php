@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Sempresas;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RequerimientoStoreRequest;
 use App\Http\Requests\SempresaStoreRequest;
 use App\Models\Department;
 use App\Models\Eactividade;
 use App\Models\Gender;
 use App\Models\Municipio;
 use App\Models\Person;
+use App\Models\Profession;
 use App\Models\Regime;
 use App\Models\Requerimiento;
 use App\Models\Sempresa;
@@ -40,7 +42,7 @@ class SempresaController extends Controller
                 return $sempresa->person->nombres.' '.$sempresa->person->paterno.' '.$sempresa->person->materno.' ('.$sempresa->person->nro_celular.')';
             })
             ->editColumn('ver', function($sempresa){
-                return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> ver</a> <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i> Req.</a>";
+                return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> </a> | <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i> </a>";
             })
             ->rawColumns(['ver'])
             ->toJson();
@@ -158,9 +160,56 @@ class SempresaController extends Controller
         $requerimientos = Requerimiento::where('sempresa_id', $empresa->id )
             ->with('profession')
             ->get();
-        //@dump($empresa);
-        //@dump($requerimientos);
-        return view( 'sempresas.requerimiento', compact('empresa','requerimientos') );
+
+        $profesions = Profession::get()->pluck('pro_descripcion','id');
+        $profesions->prepend('','0');
+        return view( 'sempresas.requerimiento', compact('empresa','requerimientos','profesions') );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function requStore(RequerimientoStoreRequest $request)
+    {
+        //dd($request);
+        $requerimiento = Requerimiento::create($request->all());
+
+        return redirect()->route('sempresasRequerimiento', ['id' => $requerimiento->sempresa_id]);
+
+        // $empresa = Sempresa::where('id', $request->sempresa_id)
+        //     ->with('municipio')
+        //     ->with('regime')
+        //     ->with('eactividade')
+        //     ->first();
+
+        // $requerimientos = Requerimiento::where('sempresa_id', $request->sempresa_id)
+        //     ->with('profession')
+        //     ->get();
+
+        // $profesions = Profession::get()->pluck('pro_descripcion','id');
+        // $profesions->prepend('','0');
+        // return view( 'sempresas.requerimiento', compact('empresa','requerimientos','profesions') );
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function requDelete($id)
+    {
+        //dd($request);
+        $requerimiento = Requerimiento::where('id', $id)->first();
+        $sempresa_id = $requerimiento->sempresa_id;
+        $requerimiento = Requerimiento::where('id', $id)->delete();
+        //dd($sempresa_id);
+
+        return redirect()->route('sempresasRequerimiento', ['id' => $sempresa_id]);
+
     }
 
     /**

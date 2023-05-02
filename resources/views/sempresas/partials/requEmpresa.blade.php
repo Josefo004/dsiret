@@ -55,24 +55,55 @@
                 <div class="card-header"><strong>Requerimientos</strong></div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Requerimiento</th>
-                                    <th>Cantidad</th>
-                                    <th>Ver</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($requerimientos as $item)
+                        @if(count($requerimientos) > 0)
+                            <table class="table table-hover">
+                                <thead>
                                     <tr>
-                                        <td>{{ $item->profession->pro_descripcion }}</td>
-                                        <td>{{ $item->cantidad }}</td>
-                                        <td></td>
+                                        <th>Profesiones / ocupaciones</th>
+                                        <th>Cantidad</th>
+                                        <th>Ver</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($requerimientos as $item)
+                                        <tr>
+                                            <td>{{ $item->profession->pro_descripcion }}</td>
+                                            <td>{{ $item->cantidad }}</td>
+                                            <td><a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-trash'></i></a> | <a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-search'></i></a></td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                        <div class="card">
+                            <div class="card-header"><strong>Nuevo Requerimiento</strong></div>
+                            <div class="card-body">
+                                {!! Form::open(['route' => 'sempresasNuevoRequerimiento', 'autocomplete'=>'off']) !!}
+                                    @csrf
+                                    <input id="sempresa_id" name="sempresa_id" type="hidden" value="{{ $empresa->id }}">
+                                    <div class="row">
+                                        <div class="form-group col-md-8">
+                                            {{ Form::label('profession_id','Profesiones') }}
+                                            {{ Form::select('profession_id', $profesions, null,[ 'class'=>'form-control js-example-basic-multiple', 'required'=>'required' ]) }}
+                                            @error('profession_id')
+                                                <br><small class="text-danger">*{{$message}}</small><br>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            {{ Form::label('cantidad', 'Cantidad') }}
+                                            {{ Form::number('cantidad',null,[ 'type'=>'number', 'class'=> 'form-control', 'maxlength'=>'20', 'pattern'=>'[0-9]+']) }}
+                                            @error('cantidad')
+                                                <small class="text-danger">*{{$message}}</small><br>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-md-1">
+                                            {{ Form::label('', '.') }}
+                                            {{ Form::submit('+', ['class'=>'btn btn-primary']) }}
+                                        </div>
+                                    </div>
+                                {!! Form::close() !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

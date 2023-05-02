@@ -16,3 +16,10 @@
 	@include('sempresas.partials.requEmpresa')
 
 @stop
+@section('js')
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+</script>
+@stop

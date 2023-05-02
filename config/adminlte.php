@@ -265,12 +265,7 @@ return [
                     'text' => 'Empresas',
                     'icon' => 'fa fa-users',
                     'url'  => 'siret/empresas'
-                ],
-                [
-                    'text' => 'Trabajos',
-                    'icon' => 'fa fa-folder',
-                    'url'  => 'siret/trabajos'
-                ],
+                ]
             ],
         ],
         [
