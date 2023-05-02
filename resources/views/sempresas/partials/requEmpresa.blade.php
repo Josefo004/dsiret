@@ -40,10 +40,10 @@
                                     <th>NIT</th>
                                     <td>: <small>{{ $empresa->NIT }}</small></td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th>Numero ROE</th>
                                     <td>: <small>{{ $empresa->nro_roe }}</small></td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>

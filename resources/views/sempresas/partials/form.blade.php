@@ -34,21 +34,17 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-3">
                         {{ Form::label('NIT', 'NIT') }}
                         {{ Form::text('NIT',null,[ 'type'=>'number', 'class'=> 'form-control' , 'maxlength'=>'20', 'pattern'=>'[0-9]+']) }}
                         @error('NIT')
                             <small class="text-danger">*{{$message}}</small><br>
                         @enderror
                     </div>
-                    <div class="form-group col-md-2">
-                        {{ Form::label('nro_roe', 'Nro ROE') }}
-                        {{ Form::text('nro_roe',null,[ 'type'=>'number', 'class'=> 'form-control' , 'maxlength'=>'10', 'pattern'=>'[0-9]+']) }}
-                        @error('nro_roe')
-                            <small class="text-danger">*{{$message}}</small><br>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-5">
+
+                    {{-- aqui estaba ek nro_ROE --}}
+
+                    <div class="form-group col-md-6">
                         {{ Form::label('emp_direccion', 'Dirección') }}
                         {{ Form::text('emp_direccion',null,[ 'type'=>'text', 'class'=> 'form-control text-uppercase']) }}
                         @error('emp_direccion')

@@ -116,7 +116,7 @@ class SempresaController extends Controller
         $empresa->person_id = $responsable->id;
         $empresa->razon_social = strtoupper($request->razon_social);
         $empresa->NIT = $request->NIT;
-        $empresa->nro_roe = $request->nro_roe;
+        //$empresa->nro_roe = $request->nro_roe;
         $empresa->emp_direccion = strtoupper($request->emp_direccion);
         $empresa->emp_telefono = $request->emp_telefono;
         $empresa->save();
