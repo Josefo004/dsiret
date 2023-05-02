@@ -69,7 +69,7 @@
                                         <tr>
                                             <td>{{ $item->profession->pro_descripcion }}</td>
                                             <td>{{ $item->cantidad }}</td>
-                                            <td><a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-trash'></i></a> | <a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-search'></i></a></td>
+                                            <td><a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-trash'></i></a> | <a href="{{ route("sempresasBuscarRequerimiento", $item->id )}}"><i class='fa fa-search'></i></a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>

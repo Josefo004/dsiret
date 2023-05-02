@@ -213,6 +213,37 @@ class SempresaController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function requSearch($id)
+    {
+        //dd($request);
+        $requerimiento = Requerimiento::where('id', $id)
+            ->with('profession')
+            ->first();
+
+        $sempresa = Sempresa::where('id', $requerimiento->sempresa_id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->first();
+
+        $personas = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
+            ->with('department')
+            ->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->get();
+
+        return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','personas') );
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

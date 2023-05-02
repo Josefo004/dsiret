@@ -119,6 +119,7 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('sempresas/requ/{id}', [SempresaController::class, 'requ'])->name('sempresasRequerimiento');
     Route::post('sempresas/requ/store', [SempresaController::class, 'requStore'])->name('sempresasNuevoRequerimiento');
     Route::get('sempresas/requ/delete/{id}', [SempresaController::class, 'requDelete'])->name('sempresasEliminarRequerimiento');
+    Route::get('sempresas/requ/search/{id}', [SempresaController::class, 'requSearch'])->name('sempresasBuscarRequerimiento');
 });
 //Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 
