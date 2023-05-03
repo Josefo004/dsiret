@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Formularios\FormularioController;
+use App\Http\Controllers\Fpdf\PdfController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Sempresas\SempresaController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,16 @@ use Spatie\Permission\Commands\Show;
 Route::get('/', function () {
     return redirect('/index');
 });
+
+// Route::get('/pdf2', function (Codedge\Fpdf\Fpdf\Fpdf $fpdf) {
+
+//     $fpdf->AddPage();
+//     $fpdf->SetFont('Courier', 'B', 18);
+//     $fpdf->Cell(50, 25, 'Hello World!');
+//     $fpdf->Output();
+//     exit;
+
+// });
 
 Auth::routes();
 
@@ -110,7 +121,6 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('trabajos', [FormularioController::class, 'trabajos'])->name(('formularios.trabajos'));
     Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
 
-
     Route::get('empresas', [SempresaController::class, 'index'])->name(('sempresas.index'));
     Route::get('api/empresas', [SempresaController::class, 'apiEmpresas'])->name(('api.empresas'));
     Route::get('sempresas/crear', [SempresaController::class, 'create'])->name('sempresas.crear');
@@ -120,6 +130,9 @@ Route::group(['prefix' => 'siret'], function () {
     Route::post('sempresas/requ/store', [SempresaController::class, 'requStore'])->name('sempresasNuevoRequerimiento');
     Route::get('sempresas/requ/delete/{id}', [SempresaController::class, 'requDelete'])->name('sempresasEliminarRequerimiento');
     Route::get('sempresas/requ/search/{id}', [SempresaController::class, 'requSearch'])->name('sempresasBuscarRequerimiento');
+
+    Route::get('fpdf', [PdfController::class, 'index'])->name(('mipdf'));
+    Route::get('fpdf/seleccionados/{req_id}', [PdfController::class, 'seleccionados'])->name(('mipdf'));
 });
 //Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 

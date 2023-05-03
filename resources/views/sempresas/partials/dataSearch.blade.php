@@ -6,7 +6,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <div class="card">
                     <div class="card-header"><strong>Datos de la Empresa</strong></div>
                     <div class="card-body">
@@ -15,7 +15,7 @@
                                 <tbody>
                                     <tr>
                                         <th>Direcion y Razon Social</th>
-                                        <td>: {{ $sempresa->municipio->mun_descripcion }}, {{ $sempresa->emp_direccion }} </td>
+                                        <td>: {{ $sempresa->municipio->mun_descripcion }}, {{ $sempresa->emp_direccion }} | {{ $sempresa->razon_social }}</td>
                                     </tr>
                                     <tr>
                                         <th>NIT, Telefno</th>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-header"><strong>Datos del Requerimiento</strong></div>
                     <div class="card-body">
@@ -39,7 +39,7 @@
                             <table class="table table-sm">
                                 <tbody>
                                     <tr>
-                                        <th>ID Requerimento</th>
+                                        <th>ID Req.</th>
                                         <td>: {{ $requerimiento->id }} </td>
                                     </tr>
                                     <tr>
@@ -58,11 +58,11 @@
             </div>
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><strong>CANDIDATOS QUE CUMPLEN CON EL REQUERIMIENTO "{{ $requerimiento->profession->pro_descripcion }}"</strong> </div>
+                    <div class="card-header"><strong>CANDIDATOS QUE CUMPLEN CON EL REQUERIMIENTO "{{ $requerimiento->profession->pro_descripcion }}" {{ count($candidatos) }}</strong> </div>
                     <div class="card-body">
                         @if(count($candidatos)>0)
                             <div class="table-responsive">
-                                <table class="table table-responsive table-bordered table-striped table-sm">
+                                <table class="table table-responsive table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th><small>ID Form.</small></th>
@@ -75,10 +75,11 @@
                                             <th><small>Niv. Academico</small></th>
                                             <th><small>Idiomas</small></th>
                                             <th><small>Profeciones</small></th>
+                                            <th><small>Registrado en</small></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($candidatos as $candidato )
+                                        @foreach ($candidatos as $key => $candidato )
                                         <tr>
                                             <td> <small>{{ $candidato->forms->id }}</small> </td>
                                             <td> <small>{{ $candidato->nro_documento }} {{ $candidato->department->dep_codigo }}</small> </td>
@@ -106,7 +107,7 @@
                                                     </ul>
                                                 </small>
                                             </td>
-
+                                            <td> <small>{{ date('d-m-Y H:m',strtotime($candidato->forms->created_at)) }}</small> </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
