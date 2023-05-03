@@ -155,6 +155,7 @@ class SempresaController extends Controller
             ->with('municipio')
             ->with('regime')
             ->with('eactividade')
+            ->with('person')
             ->first();
 
         $requerimientos = Requerimiento::where('sempresa_id', $empresa->id )
@@ -231,7 +232,7 @@ class SempresaController extends Controller
             ->with('eactividade')
             ->first();
 
-        $personas = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
+        $candidatos = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
             ->with('department')
             ->with('gender')
             ->with('forms')
@@ -239,8 +240,9 @@ class SempresaController extends Controller
             ->with('forms.languages')
             ->with('forms.professions')
             ->get();
+        //$candidatos->edad=Carbon::parse($candidatos->fecha_nac)->age;
 
-        return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','personas') );
+        return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','candidatos') );
     }
 
     /**
