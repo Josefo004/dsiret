@@ -61,6 +61,9 @@
                     <div class="card-header"><strong>CANDIDATOS QUE CUMPLEN CON EL REQUERIMIENTO "{{ $requerimiento->profession->pro_descripcion }}" {{ count($candidatos) }}</strong> </div>
                     <div class="card-body">
                         @if(count($candidatos)>0)
+                        {!! Form::open(['route' => 'fpdf.seleccionados', 'autocomplete'=>'off']) !!}
+                            @csrf
+                            <input id="requerimiento_id" name="requerimiento_id" type="hidden" value="{{ $requerimiento->id }}">
                             <div class="table-responsive">
                                 <table class="table table-responsive table-bordered table-striped">
                                     <thead>
@@ -81,7 +84,12 @@
                                     <tbody>
                                         @foreach ($candidatos as $key => $candidato )
                                         <tr>
-                                            <td> <small>{{ $candidato->forms->id }}</small> </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" name="seleccionados[]" value="{{ $candidato->forms->id }}">
+                                                    <label class="form-check-label" for="seleccionados[]"><small>{{ $candidato->forms->id }}</small></label>
+                                                </div>
+                                            </td>
                                             <td> <small>{{ $candidato->nro_documento }} {{ $candidato->department->dep_codigo }}</small> </td>
                                             <td> <small>{{ $candidato->paterno }} {{ $candidato->manterno }} {{ $candidato->nombres }}</small> </td>
                                             <td> <small>{{ $candidato->gender->gen_descripcion }}</small> </td>
@@ -112,7 +120,12 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="form-group text-center">
+                                    {{ Form::submit('IMPRIMIR', ['class'=>'btn btn-primary']) }}
+                                    <a href="{{ route('sempresas.index') }}" class="btn btn-danger">CANCELAR</a>
+                                </div>
                             </div>
+                        {!! Form::close() !!}
                         @else
                             <h3>NO HAY RESULTADOS</h3>
                         @endif

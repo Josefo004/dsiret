@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Fpdf;
 
 use App\Http\Controllers\Controller;
+use App\Models\Person;
+use App\Models\Requerimiento;
+use App\Models\Sempresa;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
@@ -26,13 +30,45 @@ class PdfController extends Controller
         exit;
     }
 
-    public function seleccionados($req_id){
-        $this->fpdf->SetFont('Arial', 'B', 15);
-        $this->fpdf->AddPage("L", ['100', '100']);
-        $this->fpdf->Text(10, 10, $req_id);
+    public function seleccionados(Request $request){
 
-        $this->fpdf->Output();
+        //$permas = DB::table('persons')->select('id')->where('gender_id', 1)->get();
+        @dump($request->seleccionados);
 
-        exit;
+        //dd($request);
+        $requerimiento = Requerimiento::where('id', $request->requerimiento_id)
+            ->with('profession')
+            ->first();
+        @dump($requerimiento);
+
+        $sempresa = Sempresa::where('id', $requerimiento->sempresa_id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->first();
+        @dump($sempresa);
+
+        $candidatos = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
+            ->with('department')
+            ->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->get();
+        dd($candidatos);
+        //$candidatos->edad=Carbon::parse($candidatos->fecha_nac)->age;
+
+        return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','candidatos') );
+
+
+
+        // $this->fpdf->SetFont('Arial', 'B', 15);
+        // $this->fpdf->AddPage("L", ['100', '100']);
+        // $this->fpdf->Text(10, 10, $req_id);
+
+        // $this->fpdf->Output();
+
+        // exit;
     }
 }

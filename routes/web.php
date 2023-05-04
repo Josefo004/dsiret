@@ -132,7 +132,7 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('sempresas/requ/search/{id}', [SempresaController::class, 'requSearch'])->name('sempresasBuscarRequerimiento');
 
     Route::get('fpdf', [PdfController::class, 'index'])->name(('mipdf'));
-    Route::get('fpdf/seleccionados/{req_id}', [PdfController::class, 'seleccionados'])->name(('mipdf'));
+    Route::post('fpdf/seleccionados', [PdfController::class, 'seleccionados'])->name(('fpdf.seleccionados'));
 });
 //Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 
