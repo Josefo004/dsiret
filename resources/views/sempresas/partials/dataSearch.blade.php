@@ -58,17 +58,24 @@
             </div>
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header"><strong>CANDIDATOS QUE CUMPLEN CON EL REQUERIMIENTO "{{ $requerimiento->profession->pro_descripcion }}" {{ count($candidatos) }}</strong> </div>
+                    <div class="card-header"><strong>CANDIDATOS QUE CUMPLEN CON EL REQUERIMIENTO "{{ $requerimiento->profession->pro_descripcion }}" {{ count($candidatos) }}</strong>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" onclick="seleccion(this);">
+                            <label class="form-check-label"><small>SELECCIONAR TODOS.</small></label>
+                        </div>
+                    </div>
                     <div class="card-body">
                         @if(count($candidatos)>0)
-                        {!! Form::open(['route' => 'fpdf.seleccionados', 'autocomplete'=>'off']) !!}
+                        {!! Form::open(['route' => 'fpdf.seleccionados', 'autocomplete'=>'off', 'target'=>'_blank', 'name'=>'formulario']) !!}
                             @csrf
                             <input id="requerimiento_id" name="requerimiento_id" type="hidden" value="{{ $requerimiento->id }}">
                             <div class="table-responsive">
                                 <table class="table table-responsive table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th><small>ID Form.</small></th>
+                                            <th>
+                                                <small>ID FM.</small>
+                                            </th>
                                             <th><small>CI</small></th>
                                             <th><small>Nombre Completo</small></th>
                                             <th><small>Sexo</small></th>
@@ -135,3 +142,12 @@
         </div>
     </div>
 </div>
+<script>
+    function seleccion(vc) {
+        for (let i = 0; i < document.formulario.elements.length; i++) {
+            if (document.formulario.elements[i].type === "checkbox") {
+                document.formulario.elements[i].checked = !document.formulario.elements[i].checked;
+            }
+        }
+    }
+</script>

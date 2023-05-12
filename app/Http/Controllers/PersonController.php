@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Models\Language;
 use App\Models\Profession;
 use Carbon\Carbon;
-use \stdClass;
 
 class PersonController extends Controller
 {
