@@ -280,24 +280,31 @@ class PdfController extends Controller
         $this->fpdf->AddPage();
         $this->fpdf->SetFont('Arial','',6);
         $this->fpdf->SetWidths(array(8,15,37,15,13,7,15,20,25,25,15));
-        foreach ($candidatos as $candidato) {
-            if (in_array($candidato->forms->id, $request->seleccionados)) {
-                $idfm = $candidato->forms->id;
-                $ci = $candidato->nro_documento.' '.$candidato->department->dep_codigo;
-                $noc = $candidato->paterno.' '.$candidato->materno.' '.$candidato->nombres;
-                $sex = $candidato->gender->gen_descripcion;
-                $fen = date('d-m-Y', strtotime($candidato->fecha_nac));
-                $eda = Carbon::parse($candidato->fecha_nac)->age;
-                $cel = $candidato->nro_celular;
-                $nac = $candidato->forms->record->for_descripcion;
-                $idi = '';
-                foreach ($candidato->forms->languages as $idioma) {$idi.=$idioma->descripcion."\n";}
-                $prf = '';
-                foreach ($candidato->forms->professions as $profesion) {$prf.=$profesion->pro_descripcion."\n";}
-                $frg = date('d-m-Y H:i', strtotime($candidato->forms->created_at));
-                $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$nac,$idi,$prf,$frg));
+        if (!is_null($request->seleccionados)) {
+            foreach ($candidatos as $candidato) {
+                if (in_array($candidato->forms->id, $request->seleccionados)) {
+                    $idfm = $candidato->forms->id;
+                    $ci = $candidato->nro_documento.' '.$candidato->department->dep_codigo;
+                    $noc = $candidato->paterno.' '.$candidato->materno.' '.$candidato->nombres;
+                    $sex = $candidato->gender->gen_descripcion;
+                    $fen = date('d-m-Y', strtotime($candidato->fecha_nac));
+                    $eda = Carbon::parse($candidato->fecha_nac)->age;
+                    $cel = $candidato->nro_celular;
+                    $nac = $candidato->forms->record->for_descripcion;
+                    $idi = '';
+                    foreach ($candidato->forms->languages as $idioma) {$idi.=$idioma->descripcion."\n";}
+                    $prf = '';
+                    foreach ($candidato->forms->professions as $profesion) {$prf.=$profesion->pro_descripcion."\n";}
+                    $frg = date('d-m-Y H:i', strtotime($candidato->forms->created_at));
+                    $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$nac,$idi,$prf,$frg));
+                }
             }
         }
+        else{
+            $this->fpdf->SetFont('Arial', 'B', 20);
+            $this->fpdf->Cell(195,20,"DEBE SELECCIONAR UN CANDIDATO",0,0,"C");
+        }
+
         $this->fpdf->Output();
 
         exit;
