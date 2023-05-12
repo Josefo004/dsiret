@@ -135,7 +135,7 @@ class PDF extends PDF_MC_Table
         $this->SetLineWidth(.1);
         $this->SetFont('Arial','B',7);
         $this->Cell($w1,5,$t1,1,0,'L',true);
-        $this->SetFont('Arial','',6);
+        $this->SetFont('Arial','',7);
         $this->Cell($w2,5,$t2,1,0,'L');
     }
 
@@ -145,7 +145,7 @@ class PDF extends PDF_MC_Table
         $this->SetTextColor(0);
         $this->SetDrawColor(10,10,10);
         $this->SetLineWidth(.1);
-        $this->SetFont('Arial','B',5);
+        $this->SetFont('Arial','B',7);
         $this->Cell($w1,5,$t1,1,0,'L',true);
     }
 
@@ -168,7 +168,7 @@ class PDF extends PDF_MC_Table
         $this->SetFont('Arial','B',14);
         // Calculamos ancho y posición del título.
         $w = $this->GetStringWidth($title)+6;
-        $this->SetX((216-$w)/2);
+        $this->SetX((280-$w)/2);
         // Colores de los bordes, fondo y texto
         $this->SetDrawColor(255,255,255);
         $this->SetFillColor(255,255,255);
@@ -180,27 +180,28 @@ class PDF extends PDF_MC_Table
         $this->Ln(3);
         // $this->cabecera($cas);
         // Salto de línea
-        $this->celda(25,90,'EMPRESA',$this->empresa->municipio->mun_descripcion.', '.$this->empresa->emp_direccion.', '.$this->empresa->razon_social);
-        $this->celda(30,50,'ID REQUERIMIENTO ',$this->requerimiento->id);
+        $this->celda(25,30,'MUNICIPIO',$this->empresa->municipio->mun_descripcion);
+        $this->celda(25,107,'EMPRESA',$this->empresa->razon_social.', '.$this->empresa->emp_direccion.', ');
+        $this->celda(10,25,'NIT',$this->empresa->NIT);
+        $this->celda(18,20,'TELEFONO',$this->empresa->emp_telefono);
         $this->Ln();
-        $this->celda(25,90,'NIT / TELEFONO',$this->empresa->NIT.', '.$this->empresa->emp_telefono);
-        $this->celda(30,50,'REQUERIMIENTO ',$this->requerimiento->profession->pro_descripcion );
-        $this->Ln();
-        $this->celda(25,90,'RESPONSABLE',$this->empresa->person->paterno.' '.$this->empresa->person->materno.' '.$this->empresa->person->nombres.' ('.$this->empresa->person->nro_celular.')');
-        $this->celda(30,50,'CANTIDAD ',$this->requerimiento->cantidad );
+        $this->celda(40,70,'REPRESENTANTE LEGAL',$this->empresa->person->paterno.' '.$this->empresa->person->materno.' '.$this->empresa->person->nombres.' ('.$this->empresa->person->nro_celular.')');
+        $this->celda(30,65,'REQUERIMIENTO',$this->requerimiento->profession->pro_descripcion );
+        $this->celda(17,13,'CANTIDAD ',$this->requerimiento->cantidad );
+        $this->celda(15,10,'ID REQ.',$this->requerimiento->id );
         $this->Ln();
         $this->Ln(1);
-        $this->cabecera(8,'ID FM.');
-        $this->cabecera(15,'CARNET');
-        $this->cabecera(37,'NOMBRE COMPLETO');
-        $this->cabecera(15,'SEXO');
-        $this->cabecera(13,'FECH. NAC.');
-        $this->cabecera(7,'EDAD');
-        $this->cabecera(15,'CELULAR');
-        $this->cabecera(20,'NIV. ACADÉMICO');
-        $this->cabecera(25,'IDIOMAS');
-        $this->cabecera(25,'PROFESIONES');
-        $this->cabecera(15,'FECH. REG.');
+        $this->cabecera(10,'ID FRM.');
+        $this->cabecera(20,'CARNET');
+        $this->cabecera(50,'NOMBRE COMPLETO');
+        $this->cabecera(17,'SEXO');
+        $this->cabecera(18,'FECH. NAC.');
+        $this->cabecera(10,'EDAD');
+        $this->cabecera(20,'CELULAR');
+        $this->cabecera(30,'NIV. ACADÉMICO');
+        $this->cabecera(30,'IDIOMAS');
+        $this->cabecera(37,'PROFESIONES');
+        $this->cabecera(18,'FECH. REG.');
         $this->Ln();
     }
 
@@ -218,9 +219,9 @@ class PDF extends PDF_MC_Table
         $f = date('d-m-Y H:i:s',$hoy);
 
         //$f = " 20-01-2019 11:53:32";
-        $this->Cell(40,4,$this->empresa->razon_social,0,0,'L');
+        $this->Cell(72,4,$this->empresa->razon_social,0,0,'L');
         $this->Cell(116,4,'Fecha Impresion: '.$f,0,0,'C');
-        $this->Cell(40,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
+        $this->Cell(72,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
     }
 }
 
@@ -238,7 +239,7 @@ class PdfController extends Controller
 
     public function index()
     {
-        $this->fpdf = new PDF('P','mm','Letter');
+        $this->fpdf = new PDF('L','mm','Letter');
         $this->fpdf->SetMargins(10,7,10);
         $this->fpdf->AliasNbPages();
         $this->fpdf->AddPage();
@@ -273,13 +274,13 @@ class PdfController extends Controller
 
         //return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','candidatos') );
 
-        $this->fpdf = new PDF('P','mm','Letter');
+        $this->fpdf = new PDF('L','mm','Letter');
         $this->fpdf->inicio($sempresa, $requerimiento);
         $this->fpdf->SetMargins(10,7,10);
         $this->fpdf->AliasNbPages();
         $this->fpdf->AddPage();
-        $this->fpdf->SetFont('Arial','',6);
-        $this->fpdf->SetWidths(array(8,15,37,15,13,7,15,20,25,25,15));
+        $this->fpdf->SetFont('Arial','',7);
+        $this->fpdf->SetWidths(array(10,20,50,17,18,10,20,30,30,37,18));
         if (!is_null($request->seleccionados)) {
             foreach ($candidatos as $candidato) {
                 if (in_array($candidato->forms->id, $request->seleccionados)) {
