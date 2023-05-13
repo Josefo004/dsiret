@@ -21,20 +21,22 @@
     <div class="wrapper">
 
         {{-- Top Navbar --}}
-        @if($layoutHelper->isLayoutTopnavEnabled())        
+        @if($layoutHelper->isLayoutTopnavEnabled())
             @include('adminlte::partials.navbar.navbar-layout-topnav')
-        @else        
+        @else
             @include('adminlte::partials.navbar.navbar')
         @endif
 
         {{-- Left Main Sidebar --}}
-        @if(!$layoutHelper->isLayoutTopnavEnabled())
-            @include('adminlte::partials.sidebar.left-sidebar')
+        @if (Auth::user()->estado!='D')
+            @if(!$layoutHelper->isLayoutTopnavEnabled())
+                @include('adminlte::partials.sidebar.left-sidebar')
+            @endif
         @endif
 
         {{-- Content Wrapper --}}
         <div class="content-wrapper {{ config('adminlte.classes_content_wrapper') ?? '' }}">
-                        
+
             {{-- Content Header --}}
             <div class="content-header">
                 <div class="{{ config('adminlte.classes_content_header') ?: $def_container_class }}">
@@ -44,14 +46,14 @@
 
             <div class="shadow-sm p-3 mb-5 bg-white border-top border-primary" style="margin :10px ">
             {{-- Main Content --}}
-            <div class="content">                
+            <div class="content">
                 <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
                     @yield('content')
                 </div>
             </div>
             </div>
         </div>
-        
+
         {{-- Footer --}}
         @hasSection('footer')
             @include('adminlte::partials.footer.footer')

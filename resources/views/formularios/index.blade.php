@@ -42,7 +42,7 @@
         const dataUsers = [
             { data: 'id', orderable: false, searchable: false},
             { data: 'cedula', name:'persons.nro_documento', orderable: false, searchable: true},
-            { data: 'nombre_completo', searchable: false },
+            { data: 'nombre_completo', name:'persons.paterno', searchable: true },
             { data: 'sexo', name:'gender.gen_descripcion', orderable: false, searchable: true},
             { data: 'birth', orderable: false, searchable: false},
             { data: 'edad', orderable: false, searchable: false},
