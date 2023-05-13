@@ -120,9 +120,6 @@
                         </button>
                       </div>
                     </div>
-
-
-
                     <!-- Register buttons -->
                     <div class="text-center">
                         <p><a href="{{ route('person.create') }}" class="" style="color:#D38118;">Registrarse</a></p>
@@ -134,6 +131,9 @@
                         </a>
                         <a href="{{ asset('pdf/manual.pdf') }}" style="color:#D38118;" target="_blank" type="button" alt="manual" class="btn btn-link btn-floating mx-1">
                             <i class="fas fa-file-pdf"></i>
+                        </a>
+                        <a href="{{ route('login') }}" style="color:#D38118;" type="button" alt="manual" class="btn btn-link btn-floating mx-1">
+                            <i class="fas fa-sign-in-alt"></i>
                         </a>
                     </div>
                     {!! Form::close() !!}

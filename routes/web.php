@@ -114,25 +114,25 @@ Route::group(['prefix' => 'administracion'], function(){
 });
 
 Route::group(['prefix' => 'siret'], function () {
-    Route::get('formularios', [FormularioController::class, 'index'])->name(('formularios.index'));
-    Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name(('api.formularios'));
-    Route::get('formularios/show/{id}', [FormularioController::class, 'show'])->name(('formularioMostrar'));
+    Route::get('formularios', [FormularioController::class, 'index'])->name('formularios.index')->middleware('auth');
+    Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name('api.formularios')->middleware('auth');
+    Route::get('formularios/show/{id}', [FormularioController::class, 'show'])->name('formularioMostrar')->middleware('auth');
 
-    Route::get('trabajos', [FormularioController::class, 'trabajos'])->name(('formularios.trabajos'));
-    Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name(('api.trabajos'));
+    Route::get('trabajos', [FormularioController::class, 'trabajos'])->name('formularios.trabajos')->middleware('auth');
+    Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name('api.trabajos')->middleware('auth');
 
-    Route::get('empresas', [SempresaController::class, 'index'])->name(('sempresas.index'));
-    Route::get('api/empresas', [SempresaController::class, 'apiEmpresas'])->name(('api.empresas'));
-    Route::get('sempresas/crear', [SempresaController::class, 'create'])->name('sempresas.crear');
-    Route::get('sempresas/show/{id}', [SempresaController::class, 'show'])->name('sempresasMostrar');
-    Route::post('sempresas/store', [SempresaController::class, 'store'])->name('sempresas.store');
-    Route::get('sempresas/requ/{id}', [SempresaController::class, 'requ'])->name('sempresasRequerimiento');
-    Route::post('sempresas/requ/store', [SempresaController::class, 'requStore'])->name('sempresasNuevoRequerimiento');
-    Route::get('sempresas/requ/delete/{id}', [SempresaController::class, 'requDelete'])->name('sempresasEliminarRequerimiento');
-    Route::get('sempresas/requ/search/{id}', [SempresaController::class, 'requSearch'])->name('sempresasBuscarRequerimiento');
+    Route::get('empresas', [SempresaController::class, 'index'])->name('sempresas.index')->middleware('auth');
+    Route::get('api/empresas', [SempresaController::class, 'apiEmpresas'])->name('api.empresas')->middleware('auth');
+    Route::get('sempresas/crear', [SempresaController::class, 'create'])->name('sempresas.crear')->middleware('auth');
+    Route::get('sempresas/show/{id}', [SempresaController::class, 'show'])->name('sempresasMostrar')->middleware('auth');
+    Route::post('sempresas/store', [SempresaController::class, 'store'])->name('sempresas.store')->middleware('auth');
+    Route::get('sempresas/requ/{id}', [SempresaController::class, 'requ'])->name('sempresasRequerimiento')->middleware('auth');
+    Route::post('sempresas/requ/store', [SempresaController::class, 'requStore'])->name('sempresasNuevoRequerimiento')->middleware('auth');
+    Route::get('sempresas/requ/delete/{id}', [SempresaController::class, 'requDelete'])->name('sempresasEliminarRequerimiento')->middleware('auth');
+    Route::get('sempresas/requ/search/{id}', [SempresaController::class, 'requSearch'])->name('sempresasBuscarRequerimiento')->middleware('auth');
 
-    Route::get('fpdf', [PdfController::class, 'index'])->name(('mipdf'));
-    Route::post('fpdf/seleccionados', [PdfController::class, 'seleccionados'])->name(('fpdf.seleccionados'));
+    Route::get('fpdf', [PdfController::class, 'index'])->name('mipdf')->middleware('auth');
+    Route::post('fpdf/seleccionados', [PdfController::class, 'seleccionados'])->name('fpdf.seleccionados')->middleware('auth');
 });
 //Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 
