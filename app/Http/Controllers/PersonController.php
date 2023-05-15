@@ -52,7 +52,7 @@ class PersonController extends Controller
      */
     public function store(FormularioStoreRequest $request)//FormularioStoreRequest
     {
-        dd($request);
+        //dd($request);
         $cliente['ip'] = $request->getClientIp(true);
         $cliente['agente'] = $request->userAgent();
         $info = json_encode($cliente);
