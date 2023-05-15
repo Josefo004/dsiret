@@ -120,10 +120,13 @@ class PDF extends PDF_MC_Table
 {
     private $empresa;
     private $requerimiento;
+    private $usuario;
 
     function inicio(object $emp, object $req){
         $this->empresa = $emp;
         $this->requerimiento = $req;
+        $this->usuario = ucwords(strtolower( auth()->user()->name ));
+        //ucwords(strtolower($texto3));
     }
 
     function celda($w1,$w2,$txt1,$txt2){
@@ -219,7 +222,7 @@ class PDF extends PDF_MC_Table
         $f = date('d-m-Y H:i:s',$hoy);
 
         //$f = " 20-01-2019 11:53:32";
-        $this->Cell(72,4,$this->empresa->razon_social,0,0,'L');
+        $this->Cell(72,4,'Usuario: '.$this->usuario,0,0,'L');
         $this->Cell(116,4,'Fecha Impresion: '.$f,0,0,'C');
         $this->Cell(72,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
     }

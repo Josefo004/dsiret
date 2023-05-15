@@ -19,7 +19,7 @@
     ruta="#">
 </x-encabezado-seccion>
 
-<table id="formularios" class="table table-responsive table-bordered table-striped table-hover table-sm" style="width:100%">
+<table id="formularios" class="table table-responsive table-bordered table-striped table-hover" style="width:100%">
 	<thead>
 		<tr>
 			<th width="10px">#</th>
@@ -40,7 +40,7 @@
 @section('js')
 <script>
         const dataUsers = [
-            { data: 'id', orderable: false, searchable: false},
+            { data: 'idf', orderable: false, searchable: false},
             { data: 'cedula', orderable: false, searchable: false},
             { data: 'nombre_completo', searchable: false },
             { data: 'sexo', name:'gender.gen_descripcion', orderable: false, searchable: true},

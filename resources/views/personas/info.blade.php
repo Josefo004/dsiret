@@ -50,13 +50,5 @@
         </div>
     </div>
 
-
-    <footer>
-        <div class="bg-light py-4">
-            <div class="container text-right ">
-            <p class="text-muted mb-0 py-2">&copy;2023 Gobierno Autónomo de Chuquisaca - Todos los derechos reservados <strong>JSTI.</strong> </p>
-            </div>
-        </div>
-    </footer>
 </div>
 </x-layouts.app>

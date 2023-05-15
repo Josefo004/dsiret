@@ -155,14 +155,7 @@
     </div> --}}
 
 </div>
-<footer>
-    <div class="bg-light py-4">
-        <div class="container text-right ">
-        <p class="text-muted mb-0 py-2">&copy;2022 Gobierno Autónomo de Chuquisaca - Todos los derechos reservados <br> Desarrollado por JSTI. ""</p>
 
-        </div>
-    </div>
-</footer>
 
 
 @stop

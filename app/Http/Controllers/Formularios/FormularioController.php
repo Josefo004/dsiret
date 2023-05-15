@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Formularios;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FormulariosEditRequest;
 use App\Models\Department;
 use App\Models\Form;
 use App\Models\Gender;
+use App\Models\Language;
 use App\Models\Person;
+use App\Models\Profession;
+use App\Models\Record;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class FormularioController extends Controller
 {
@@ -18,10 +21,14 @@ class FormularioController extends Controller
         $query = Person::query();
         $query->with('department');
         $query->with('gender');
+        $query->with('forms');
         $query->orderBy('paterno', 'ASC');
         $query->orderBy('materno', 'ASC');
         return datatables()
             ->eloquent($query)
+            ->addColumn('idf', function($person){
+                return $person->forms->id;
+            })
             ->addColumn('nombre_completo', function($person){
                 return $person->paterno.' '.$person->materno.' '.$person->nombres;
             })
@@ -41,7 +48,7 @@ class FormularioController extends Controller
                 return Carbon::parse($person->created_at)->format('d-m-Y H:m');
             })
             ->editColumn('ver', function($person){
-                return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a>";
+                return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a> | <a href='". route("formularioEditar", $person->id)."'><i class='fa fa-pen'></i></a>";
             })
             ->rawColumns(['ver'])
             ->toJson();
@@ -61,6 +68,9 @@ class FormularioController extends Controller
         $query->orderBy('materno', 'ASC');
         return datatables()
             ->eloquent($query)
+            ->addColumn('idf', function($person){
+                return $person->forms->id;
+            })
             ->addColumn('nombre_completo', function($person){
                 return $person->paterno.' '.$person->materno.' '.$person->nombres;
             })
@@ -174,7 +184,26 @@ class FormularioController extends Controller
      */
     public function edit($id)
     {
-        //
+        // return "ID ".$id;
+        $records = Record::get()->pluck('for_descripcion','id');
+        $languages = Language::get()->pluck('descripcion','id');
+        $profesions = Profession::get()->pluck('pro_descripcion','id');
+        $departments = Department::get()->pluck('dep_descripcion', 'id');
+        $genders = Gender::get()->pluck('gen_descripcion', 'id');
+
+        $person = Person::where('id', $id)
+            ->with('department')->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->first();
+        $selectlanguages = $person->forms->languages->pluck('id');
+        $selectprofessions = $person->forms->professions->pluck('id');
+        // @dump($ff);
+        // @dump($f);
+
+        return view( 'formularios.editar', compact('person','selectlanguages','selectprofessions','records','languages','profesions','departments','genders'));
     }
 
     /**
@@ -184,9 +213,32 @@ class FormularioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(FormulariosEditRequest $request)
     {
-        //
+        $id = $request->id;
+        //@dump($request);
+        $persona = Person::find($id);
+        //dd($persona);
+        $persona->department_id = $request->department_id;
+        $persona->gender_id = $request->gender_id;
+        $persona->nombres = strtoupper($request->nombres);
+        $persona->paterno = strtoupper($request->paterno);
+        $persona->materno = strtoupper($request->materno);
+        $persona->fecha_nac = $request->fecha_nac;
+        $persona->nro_celular = $request->nro_celular;
+        $persona->direccion = strtoupper($request->direccion);
+        $persona->email = $request->email;
+        $persona->save();
+
+        $form = Form::where('person_id', $id)->first();
+        $form->record_id = $request->record_id;
+        $form->save();
+
+        $form->languages()->sync($request->language_id);
+        $form->professions()->sync($request->profesion_id);
+
+        return redirect()->route('formularioMostrar', ['id' => $id]);
+
     }
 
     /**

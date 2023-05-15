@@ -180,19 +180,6 @@ class SempresaController extends Controller
 
         return redirect()->route('sempresasRequerimiento', ['id' => $requerimiento->sempresa_id]);
 
-        // $empresa = Sempresa::where('id', $request->sempresa_id)
-        //     ->with('municipio')
-        //     ->with('regime')
-        //     ->with('eactividade')
-        //     ->first();
-
-        // $requerimientos = Requerimiento::where('sempresa_id', $request->sempresa_id)
-        //     ->with('profession')
-        //     ->get();
-
-        // $profesions = Profession::get()->pluck('pro_descripcion','id');
-        // $profesions->prepend('','0');
-        // return view( 'sempresas.requerimiento', compact('empresa','requerimientos','profesions') );
     }
 
     /**

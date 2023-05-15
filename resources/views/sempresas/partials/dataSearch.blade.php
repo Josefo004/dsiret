@@ -69,6 +69,10 @@
                         {!! Form::open(['route' => 'fpdf.seleccionados', 'autocomplete'=>'off', 'target'=>'_blank', 'name'=>'formulario']) !!}
                             @csrf
                             <input id="requerimiento_id" name="requerimiento_id" type="hidden" value="{{ $requerimiento->id }}">
+                            <div class="form-group text-right">
+                                {{ Form::submit('IMPRIMIR', ['class'=>'btn btn-primary']) }}
+                                <a href="{{ route('sempresas.index') }}" class="btn btn-danger">CANCELAR</a>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-responsive table-bordered table-striped">
                                     <thead>
@@ -127,7 +131,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <div class="form-group text-center">
+                                <div class="form-group text-right">
                                     {{ Form::submit('IMPRIMIR', ['class'=>'btn btn-primary']) }}
                                     <a href="{{ route('sempresas.index') }}" class="btn btn-danger">CANCELAR</a>
                                 </div>

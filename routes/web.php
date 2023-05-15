@@ -117,6 +117,8 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('formularios', [FormularioController::class, 'index'])->name('formularios.index')->middleware('auth');
     Route::get('api/formularios', [FormularioController::class, 'apiFormularios'])->name('api.formularios')->middleware('auth');
     Route::get('formularios/show/{id}', [FormularioController::class, 'show'])->name('formularioMostrar')->middleware('auth');
+    Route::get('formularios/editar/{id}', [FormularioController::class, 'edit'])->name('formularioEditar')->middleware('auth');
+    Route::post('formularios/editar', [FormularioController::class, 'actualizar'])->name('formularioUpdate')->middleware('auth');
 
     Route::get('trabajos', [FormularioController::class, 'trabajos'])->name('formularios.trabajos')->middleware('auth');
     Route::get('api/trabajos', [FormularioController::class, 'apiTrabajos'])->name('api.trabajos')->middleware('auth');
@@ -134,7 +136,6 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('fpdf', [PdfController::class, 'index'])->name('mipdf')->middleware('auth');
     Route::post('fpdf/seleccionados', [PdfController::class, 'seleccionados'])->name('fpdf.seleccionados')->middleware('auth');
 });
-//Route::get('formulario/show/{id}', [PersonController::class, 'show'])->name('formularioMostrar');
 
 /**
  * Perfil de Usuario
