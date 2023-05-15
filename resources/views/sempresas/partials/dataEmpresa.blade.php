@@ -78,7 +78,7 @@
                                     <td>: <small>{{ $empresa->person->paterno }}</small></td>
                                 </tr>
                                 <tr>
-                                    <th>Apellido Paterno</th>
+                                    <th>Apellido Materno</th>
                                     <td>: <small>{{ $empresa->person->materno }}</small></td>
                                 </tr>
                                 <tr>

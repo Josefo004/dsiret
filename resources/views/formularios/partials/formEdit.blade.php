@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     {{ Form::label('nro_celular','Número de Celular') }}
-                    {{ Form::text('nro_celular',$person->nro_documento,['class'=> 'form-control text-uppercase']) }}
+                    {{ Form::text('nro_celular',$person->nro_celular,['class'=> 'form-control text-uppercase']) }}
                     @error('nro_celular')
                         <small class="text-danger">*{{$message}}</small><br>
                     @enderror

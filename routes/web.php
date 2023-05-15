@@ -127,7 +127,10 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('api/empresas', [SempresaController::class, 'apiEmpresas'])->name('api.empresas')->middleware('auth');
     Route::get('sempresas/crear', [SempresaController::class, 'create'])->name('sempresas.crear')->middleware('auth');
     Route::get('sempresas/show/{id}', [SempresaController::class, 'show'])->name('sempresasMostrar')->middleware('auth');
+    Route::get('sempresas/editar/{id}', [SempresaController::class, 'edit'])->name('sempresasEditar')->middleware('auth');
     Route::post('sempresas/store', [SempresaController::class, 'store'])->name('sempresas.store')->middleware('auth');
+    Route::post('sempresas/editar', [SempresaController::class, 'actualizar'])->name('sempresas.actualizar')->middleware('auth');
+
     Route::get('sempresas/requ/{id}', [SempresaController::class, 'requ'])->name('sempresasRequerimiento')->middleware('auth');
     Route::post('sempresas/requ/store', [SempresaController::class, 'requStore'])->name('sempresasNuevoRequerimiento')->middleware('auth');
     Route::get('sempresas/requ/delete/{id}', [SempresaController::class, 'requDelete'])->name('sempresasEliminarRequerimiento')->middleware('auth');

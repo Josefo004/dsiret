@@ -42,7 +42,7 @@ class SempresaController extends Controller
                 return $sempresa->person->nombres.' '.$sempresa->person->paterno.' '.$sempresa->person->materno.' ('.$sempresa->person->nro_celular.')';
             })
             ->editColumn('ver', function($sempresa){
-                return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> </a> | <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i> </a>";
+                return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> </a> | <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i></a> | <a href='". route("sempresasEditar", $sempresa->id)."'><i class='fa fa-pen'></i></a>";
             })
             ->rawColumns(['ver'])
             ->toJson();
@@ -240,7 +240,23 @@ class SempresaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $municipios = Municipio::all()->pluck('mun_descripcion','id');
+        $regimenes = Regime::all()->pluck('reg_descripcion','id');
+        $eactividades = Eactividade::all()->pluck('act_descripcion','id');
+        $departments = Department::get()->pluck('dep_descripcion', 'id');
+        $genders = Gender::get()->pluck('gen_descripcion', 'id');
+
+        $empresa = Sempresa::where('id', $id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->with('person')
+            ->with('person.department')
+            ->with('person.gender')
+            ->first();
+
+        return view('sempresas.edit', compact('empresa', 'municipios', 'regimenes', 'eactividades', 'departments', 'genders'));
+
     }
 
     /**
@@ -264,5 +280,38 @@ class SempresaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function actualizar(Request $request)
+    {
+        //dd($request);
+        $persona = Person::find($request->person_id);
+
+        $persona->department_id = $request->department_id;
+        $persona->gender_id = $request->department_id;
+        $persona->nro_celular = $request->nro_celular;
+        $persona->nombres = strtoupper($request->nombres);
+        $persona->paterno = strtoupper($request->paterno);
+        $persona->materno = strtoupper($request->materno);
+        $persona->save();
+
+        $empresa = Sempresa::find($request->id);
+        $empresa->municipio_id = $request->municipio_id;
+        $empresa->eactividade_id = $request->eactividade_id;
+        $empresa->regime_id = $request->regime_id;
+        $empresa->razon_social = strtoupper($request->razon_social);
+        $empresa->emp_direccion = strtoupper($request->emp_direccion);
+        $empresa->emp_telefono = strtoupper($request->emp_telefono);
+        $empresa->save();
+
+        return redirect()->route('sempresasMostrar', ['id' => $request->id]);
+
     }
 }
