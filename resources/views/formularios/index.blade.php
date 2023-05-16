@@ -32,7 +32,7 @@
             <th>DIRECCION</th>
             <th>CORREO</th>
             <th>REGISTRO</th>
-            <th>VER</th>
+            <th></th>
 		</tr>
 	</thead>
 </table>
@@ -50,7 +50,8 @@
             { data: 'direccion', orderable: false, searchable: false},
             { data: 'email', orderable: false, searchable: false},
             { data: 'regis', orderable: false, searchable: false},
-            { data: 'ver', orderable: false, searchable: false},
+            // { data: 'ver', orderable: false, searchable: false},
+            { data: 'action', orderable: false, searchable: false},
         ];
         const apiUsers = '{!! route('api.formularios') !!}';
         let tabla = $('#formularios').DataTable({

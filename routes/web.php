@@ -4,6 +4,7 @@ use App\Http\Controllers\Formularios\FormularioController;
 use App\Http\Controllers\Fpdf\PdfController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Sempresas\SempresaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Commands\Show;
 
@@ -152,5 +153,5 @@ Route::post('perfil/{user}/upload','UserController@upload')->name('users.upload'
  * API
 */
 Route::get('api/roles','RoleController@apiRoles')->name('roles.apiRoles');
-Route::get('api/users','UserController@apiUsers')->name('users.apiUsers');
+Route::get('api/users', [UserController::class, 'apiUsers'] )->name('users.apiUsers');
 Route::get('api/activity','UserController@apiActivity')->name('users.apiActivity');

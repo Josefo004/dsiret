@@ -207,8 +207,12 @@
 </div>
 
 <div class="form-group text-center">
-	{{ Form::submit('GUARDAR EMPRESA', ['class'=>'btn btn-primary']) }}
+	{{ Form::submit('GUARDAR USUARIO', ['class'=>'btn btn-primary']) }}
+    @can('permiso_prueba')
+
 	<a href="{{ route('users.index') }}" class="btn btn-danger">CANCELAR</a>
+    @endcan
+
 </div>
 
 @include('users.partials.cropmodal')

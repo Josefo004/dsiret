@@ -13,6 +13,7 @@ use App\Models\Profession;
 use App\Models\Record;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 
 class FormularioController extends Controller
 {
@@ -47,10 +48,14 @@ class FormularioController extends Controller
             ->editColumn('regis', function($person){
                 return Carbon::parse($person->created_at)->format('d-m-Y H:m');
             })
-            ->editColumn('ver', function($person){
-                return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a> | <a href='". route("formularioEditar", $person->id)."'><i class='fa fa-pen'></i></a>";
+            ->addColumn('action', function($person){
+                $person_id = $person->id;
+                return Blade::render('formularios.partials.acciones',compact('person_id'));
             })
-            ->rawColumns(['ver'])
+            // ->editColumn('ver', function($person){
+            //     return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a> | <a href='". route("formularioEditar", $person->id)."'><i class='fa fa-pen'></i></a>";
+            // })
+            ->rawColumns(['action'])
             ->toJson();
     }
 
@@ -103,10 +108,14 @@ class FormularioController extends Controller
                 }
                 return $re;
             })
-            ->addColumn('ver', function($person){
-                return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a>";
+            ->addColumn('action', function($person){
+                $person_id = $person->id;
+                return Blade::render('formularios.partials.acciones',compact('person_id'));
             })
-            ->rawColumns(['ver','idiomas','profesion'])
+            // ->addColumn('ver', function($person){
+            //     return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a>";
+            // })
+            ->rawColumns(['action','idiomas','profesion'])
             ->toJson();
     }
 
