@@ -30,7 +30,7 @@
             <th>ACTIVIDAD ECONOMICA</th>
             <th>TELEFONO</th>
             <th>REPRENSENTANTE LEGAL</th>
-            <th>VER</th>
+            <th></th>
 		</tr>
 	</thead>
 </table>
@@ -46,7 +46,7 @@
             { data: 'eactividad', name:'eactividade.act_descripcion', orderable: false, searchable: true},
             { data: 'emp_telefono',  orderable: false, searchable: false},
             { data: 'representante',  orderable: false, searchable: false},
-            { data: 'ver', orderable: false, searchable: false},
+            { data: 'action', orderable: false, searchable: false},
         ];
         const apiUsers = '{!! route('api.empresas') !!}';
         let tabla = $('#formularios').DataTable({

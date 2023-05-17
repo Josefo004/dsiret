@@ -15,6 +15,7 @@ use App\Models\Regime;
 use App\Models\Requerimiento;
 use App\Models\Sempresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 
 class SempresaController extends Controller
 {
@@ -41,10 +42,14 @@ class SempresaController extends Controller
             ->addColumn('representante', function($sempresa){
                 return $sempresa->person->nombres.' '.$sempresa->person->paterno.' '.$sempresa->person->materno.' ('.$sempresa->person->nro_celular.')';
             })
-            ->editColumn('ver', function($sempresa){
-                return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> </a> | <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i></a> | <a href='". route("sempresasEditar", $sempresa->id)."'><i class='fa fa-pen'></i></a>";
+            ->addColumn('action', function($sempresa){
+                $empresa_id = $sempresa->id;
+                return Blade::render('sempresas.partials.acciones',compact('empresa_id'));
             })
-            ->rawColumns(['ver'])
+            // ->editColumn('ver', function($sempresa){
+            //     return "<a href='". route("sempresasMostrar", $sempresa->id)."'><i class='fa fa-eye'></i> </a> | <a href='". route("sempresasRequerimiento", $sempresa->id)."'><i class='fa fa-briefcase'></i></a> | <a href='". route("sempresasEditar", $sempresa->id)."'><i class='fa fa-pen'></i></a>";
+            // })
+            ->rawColumns(['action'])
             ->toJson();
     }
 
