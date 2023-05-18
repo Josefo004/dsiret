@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Fpdf;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lista;
 use App\Models\Person;
 use App\Models\Requerimiento;
 use App\Models\Sempresa;
@@ -121,11 +122,13 @@ class PDF extends PDF_MC_Table
     private $empresa;
     private $requerimiento;
     private $usuario;
+    private $fecha_hora;
 
-    function inicio(object $emp, object $req){
+    function inicio(object $emp, object $req, string $fh, string $usua){
         $this->empresa = $emp;
         $this->requerimiento = $req;
-        $this->usuario = ucwords(strtolower( auth()->user()->name ));
+        $this->usuario = $usua;
+        $this->fecha_hora = $fh;
         //ucwords(strtolower($texto3));
     }
 
@@ -155,7 +158,6 @@ class PDF extends PDF_MC_Table
     // Cabecera de página
     function Header()
     {
-        global $cas;
         // Logo
         $this->Image('images/escudo.png',10,5,20);
         // Arial bold 15
@@ -211,19 +213,19 @@ class PDF extends PDF_MC_Table
     // Pie de página
     function Footer()
     {
-        global $usuario;
+
         // Posición: a 1 cm del final
         $this->SetY(-10);
         // Arial italic 8
         $this->SetFont('Arial','',6);
         // Número de página
         //$hoy = time() - (6 * 60 * 60);
-        $hoy = time();
-        $f = date('d-m-Y H:i:s',$hoy);
+        // $hoy = time();
+        // $f = date('d-m-Y H:i:s',$hoy);
 
         //$f = " 20-01-2019 11:53:32";
         $this->Cell(72,4,'Usuario: '.$this->usuario,0,0,'L');
-        $this->Cell(116,4,'Fecha Impresion: '.$f,0,0,'C');
+        $this->Cell(116,4,'Fecha Impresion: '.$this->fecha_hora,0,0,'C');
         $this->Cell(72,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
     }
 }
@@ -233,29 +235,9 @@ class PdfController extends Controller
 
     protected $fpdf;
 
-    public function __construct()
+    public function seleccionados(Request $request)
     {
-        // $this->jmvpdf = new selecionadosPDF('P','mm','Letter');
-        // $this->jmvpdf->SetMargins(10,10,10);
-        // $this->jmvpdf->AliasNbPages();
-    }
-
-    public function index()
-    {
-        $this->fpdf = new PDF('L','mm','Letter');
-        $this->fpdf->SetMargins(10,7,10);
-        $this->fpdf->AliasNbPages();
-        $this->fpdf->AddPage();
-        $this->fpdf->Output();
-
-        exit;
-    }
-
-    public function seleccionados(Request $request){
-
-        //@dump($request->seleccionados);
-
-        //dd($request);
+        //dd($request->seleccionados);
         $requerimiento = Requerimiento::where('id', $request->requerimiento_id)
             ->with('profession')
             ->first();
@@ -275,16 +257,30 @@ class PdfController extends Controller
             ->with('forms.professions')
             ->get();
 
-        //return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','candidatos') );
+        $hoy = time();
+        $f = date('d-m-Y H:i:s',$hoy);
 
+        $usr = ucwords(strtolower( auth()->user()->name ));
+
+        // Imprimimos la lista
         $this->fpdf = new PDF('L','mm','Letter');
-        $this->fpdf->inicio($sempresa, $requerimiento);
+        $this->fpdf->inicio($sempresa, $requerimiento, $f, $usr);
         $this->fpdf->SetMargins(10,7,10);
         $this->fpdf->AliasNbPages();
         $this->fpdf->AddPage();
         $this->fpdf->SetFont('Arial','',7);
         $this->fpdf->SetWidths(array(10,20,50,17,18,10,20,30,30,37,18));
         if (!is_null($request->seleccionados)) {
+            // Guardamos la lista
+
+            $lista = new Lista();
+            $lista->requerimiento_id = $request->requerimiento_id;
+            $lista->usuario = $usr;
+            $lista->fecha_hora = $f;
+            $lista->ids_form = json_encode($request->seleccionados);
+            $lista->save();
+
+            //Imprimimos los seleccionados
             foreach ($candidatos as $candidato) {
                 if (in_array($candidato->forms->id, $request->seleccionados)) {
                     $idfm = $candidato->forms->id;
@@ -313,5 +309,63 @@ class PdfController extends Controller
 
         exit;
 
+    }
+
+    public function lista($id)
+    {
+        $lista = Lista::find($id);
+
+        $requerimiento = Requerimiento::where('id', $lista->requerimiento_id)
+            ->with('profession')
+            ->first();
+
+        $sempresa = Sempresa::where('id', $requerimiento->sempresa_id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->first();
+
+        $candidatos = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
+            ->with('department')
+            ->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->get();
+
+        $f = $lista->fecha_hora;
+        $usr = $lista->usuario;
+        $seleccionados = json_decode($lista->ids_form);
+
+        $this->fpdf = new PDF('L','mm','Letter');
+        $this->fpdf->inicio($sempresa, $requerimiento, $f, $usr);
+        $this->fpdf->SetMargins(10,7,10);
+        $this->fpdf->AliasNbPages();
+        $this->fpdf->AddPage();
+        $this->fpdf->SetFont('Arial','',7);
+        $this->fpdf->SetWidths(array(10,20,50,17,18,10,20,30,30,37,18));
+
+        foreach ($candidatos as $candidato) {
+            if (in_array($candidato->forms->id, $seleccionados)) {
+                $idfm = $candidato->forms->id;
+                $ci = $candidato->nro_documento.' '.$candidato->department->dep_codigo;
+                $noc = $candidato->paterno.' '.$candidato->materno.' '.$candidato->nombres;
+                $sex = $candidato->gender->gen_descripcion;
+                $fen = date('d-m-Y', strtotime($candidato->fecha_nac));
+                $eda = Carbon::parse($candidato->fecha_nac)->age;
+                $cel = $candidato->nro_celular;
+                $nac = $candidato->forms->record->for_descripcion;
+                $idi = '';
+                foreach ($candidato->forms->languages as $idioma) {$idi.=$idioma->descripcion."\n";}
+                $prf = '';
+                foreach ($candidato->forms->professions as $profesion) {$prf.=$profesion->pro_descripcion."\n";}
+                $frg = date('d-m-Y H:i', strtotime($candidato->forms->created_at));
+                $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$nac,$idi,$prf,$frg));
+            }
+        }
+
+        $this->fpdf->Output();
+        exit;
     }
 }

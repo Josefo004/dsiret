@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class="card">
                 <div class="card-header"><strong>Datos de la Empresa</strong></div>
                 <div class="card-body">
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header"><strong>Requerimientos</strong></div>
                 <div class="card-body">
@@ -60,16 +60,25 @@
                                 <thead>
                                     <tr>
                                         <th>Profesiones / ocupaciones</th>
-                                        <th>Cantidad</th>
-                                        <th>Ver</th>
+                                        <th>Cantidad Requerida</th>
+                                        <th>Listas Generadas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($requerimientos as $item)
                                         <tr>
-                                            <td>{{ $item->profession->pro_descripcion }}</td>
-                                            <td>{{ $item->cantidad }}</td>
-                                            <td><a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-trash'></i></a> | <a href="{{ route("sempresasBuscarRequerimiento", $item->id )}}"><i class='fa fa-search'></i></a></td>
+                                            <td>
+                                                @include('sempresas.partials.accionesReq', $item)
+                                            </td>
+                                            <td>
+                                                {{ $item->cantidad }}
+                                            </td>
+                                            <td>
+                                                @if (count($item->listas)>0)
+                                                    @include('sempresas.partials.accionesLis', $item)
+                                                @endif
+                                            </td>
+                                            {{-- <td><a href="{{ route("sempresasEliminarRequerimiento", $item->id )}}"><i class='fa fa-trash'></i></a> | <a href="{{ route("sempresasBuscarRequerimiento", $item->id )}}"><i class='fa fa-search'></i></a></td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>

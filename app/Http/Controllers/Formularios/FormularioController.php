@@ -112,9 +112,6 @@ class FormularioController extends Controller
                 $person_id = $person->id;
                 return Blade::render('formularios.partials.acciones',compact('person_id'));
             })
-            // ->addColumn('ver', function($person){
-            //     return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a>";
-            // })
             ->rawColumns(['action','idiomas','profesion'])
             ->toJson();
     }

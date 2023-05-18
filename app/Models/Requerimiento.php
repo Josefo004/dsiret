@@ -21,4 +21,9 @@ class Requerimiento extends Model
     {
         return $this->belongsTo(Profession::class);
     }
+
+    public function listas()
+    {
+        return $this->hasMany(Lista::class);
+    }
 }

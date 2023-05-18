@@ -165,7 +165,9 @@ class SempresaController extends Controller
 
         $requerimientos = Requerimiento::where('sempresa_id', $empresa->id )
             ->with('profession')
+            ->with('listas')
             ->get();
+        //dd($requerimientos);
 
         $profesions = Profession::get()->pluck('pro_descripcion','id');
         $profesions->prepend('','0');

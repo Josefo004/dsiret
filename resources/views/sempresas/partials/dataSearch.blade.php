@@ -70,7 +70,7 @@
                             @csrf
                             <input id="requerimiento_id" name="requerimiento_id" type="hidden" value="{{ $requerimiento->id }}">
                             <div class="form-group text-right">
-                                {{ Form::submit('IMPRIMIR', ['class'=>'btn btn-primary']) }}
+                                {{ Form::submit('IMPRIMIR Y GUARDAR SELECCIÓN', ['class'=>'btn btn-primary']) }}
                                 <a href="{{ route('sempresas.index') }}" class="btn btn-danger">CANCELAR</a>
                             </div>
                             <div class="table-responsive">
@@ -88,7 +88,7 @@
                                             <th><small>Celular</small></th>
                                             <th><small>Niv. Academico</small></th>
                                             <th><small>Idiomas</small></th>
-                                            <th><small>Profeciones</small></th>
+                                            <th><small>Profesiones</small></th>
                                             <th><small>Registrado en</small></th>
                                         </tr>
                                     </thead>
@@ -132,7 +132,7 @@
                                     </tbody>
                                 </table>
                                 <div class="form-group text-right">
-                                    {{ Form::submit('IMPRIMIR', ['class'=>'btn btn-primary']) }}
+                                    {{ Form::submit('IMPRIMIR Y GUARDAR SELECCIÓN', ['class'=>'btn btn-primary']) }}
                                     <a href="{{ route('sempresas.index') }}" class="btn btn-danger">CANCELAR</a>
                                 </div>
                             </div>
