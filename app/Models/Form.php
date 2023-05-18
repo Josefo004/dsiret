@@ -35,4 +35,9 @@ class Form extends Model
         //->withPivot('estado')
         ->withTimestamps();
     }
+
+    public function contrato()
+    {
+        return $this->hasOne(Contrato::class);
+    }
 }

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Contratos\ContratoController;
 use App\Http\Controllers\Formularios\FormularioController;
 use App\Http\Controllers\Fpdf\PdfController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\Sempresas\SempresaController;
 use App\Http\Controllers\UserController;
+use App\Models\Contrato;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Commands\Show;
 
@@ -140,6 +142,9 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('fpdf', [PdfController::class, 'index'])->name('mipdf')->middleware('auth');
     Route::get('fpdf/seleccionados/{id}', [PdfController::class, 'lista'])->name('fpdf.seleccionadosById')->middleware('auth');
     Route::post('fpdf/seleccionados', [PdfController::class, 'seleccionados'])->name('fpdf.seleccionados')->middleware('auth');
+
+    Route::get('contratos', [ContratoController::class, 'index'])->name('contratos.index')->middleware('auth');
+    Route::get('api/contratos', [ContratoController::class, 'apiContratos'])->name('api.contratos')->middleware('auth');
 });
 
 /**

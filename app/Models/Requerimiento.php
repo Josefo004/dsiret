@@ -19,11 +19,16 @@ class Requerimiento extends Model
 
     public function sempresa()
     {
-        return $this->belongsTo(Profession::class);
+        return $this->belongsTo(Sempresa::class);
     }
 
     public function listas()
     {
         return $this->hasMany(Lista::class);
+    }
+
+    public function contratos()
+    {
+        return $this->hasMany(Contrato::class);
     }
 }

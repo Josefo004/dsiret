@@ -269,6 +269,17 @@ return [
             ],
         ],
         [
+            'text'    => 'CONTRATOS',
+            'icon'    => 'fa fa-file-import',
+            'submenu' => [
+                [
+                    'text' => 'Registrar Contratos',
+                    'icon' => 'fa fa-handshake',
+                    'url'  => 'siret/contratos'
+                ]
+            ],
+        ],
+        [
             'text'    => 'CONFIGURACION',
             'icon'    => 'fa fa-cogs',
             'can'  => ['config-emp'],
