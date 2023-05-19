@@ -98,7 +98,7 @@ class ContratoController extends Controller
      */
     public function create()
     {
-        //
+        return view('contratos.create');
     }
 
     /**

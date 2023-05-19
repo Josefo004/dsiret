@@ -16,7 +16,7 @@
     icono="fa home"
     titulo="LISTADO DE CONTRATOS"
     botontexto="NUEVO CONTRATO"
-    ruta="{{ route('sempresas.crear') }}">
+    ruta="{{ route('contratos.crear') }}">
 </x-encabezado2-seccion>
 
 <table id="formularios" class="table table-responsive table-bordered table-striped table-hover table-sm" style="width:100%">
