@@ -59,7 +59,7 @@
             "ajax" : apiUsers,
             "columns": dataUsers,
             "responsivle" :true,
-            "autoWidth":false,
+            "autoWidth":true,
             language: {
                 url: `${direccion}/plugins/datatables.net/Spanish.json`,
                 searchPlaceholder: `Buscar...`

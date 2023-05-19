@@ -24,7 +24,9 @@
 		<tr>
 			<th>ID</th>
             <th>BENEFICIARIO</th>
-			<th>EMPRESA</th>
+			<th>CI</th>
+            <th>EMPRESA</th>
+            <th>NIT</th>
             <th>FECHA INICIO</th>
             <th>FECHA FIN</th>
             <th></th>
@@ -34,26 +36,28 @@
 @stop
 @section('js')
 <script>
-        const dataUsers = [
-            { data: 'id', orderable: false, searchable: false},
-            { data: 'beneficiario',  orderable: false, searchable: false},
-            { data: 'empresa',  orderable: false, searchable: false},
-            { data: 'fecha_inicio', orderable: false, searchable: true},
-            { data: 'fecha_fin',  orderable: false, searchable: false},
-            { data: 'action', orderable: false, searchable: false},
-        ];
-        const apiUsers = '{!! route('api.contratos') !!}';
-        let tabla = $('#formularios').DataTable({
-            "serverSide" : true,
-            "ajax" : apiUsers,
-            "columns": dataUsers,
-            "responsivle" :true,
-            "autoWidth":false,
-            language: {
-                url: `${direccion}/plugins/datatables.net/Spanish.json`,
-                searchPlaceholder: `Buscar...`
-            },
-        });
+    const dataUsers = [
+        { data: 'id', orderable: false, searchable: false},
+        { data: 'beneficiario',  orderable: false, searchable: false},
+        { data: 'ci',  orderable: false, searchable: false},
+        { data: 'empresa',  orderable: false, searchable: false},
+        { data: 'nit',  orderable: false, searchable: false},
+        { data: 'fech_i',  orderable: false, searchable: false},
+        { data: 'fech_f',  orderable: false, searchable: false},
+        // { data: 'action', orderable: false, searchable: false},
+    ];
+    const apiUsers = '{!! route('api.contratos') !!}';
+    let tabla = $('#formularios').DataTable({
+        "serverSide" : true,
+        "ajax" : apiUsers,
+        "columns": dataUsers,
+        "responsivle" :true,
+        "autoWidth":true,
+        language: {
+            url: `${direccion}/plugins/datatables.net/Spanish.json`,
+            searchPlaceholder: `Buscar...`
+        },
+    });
 
     const eliminarUsuario = id => {
 		let ruta = `${direccion}/administracion/usuarios/${id}/delete`
