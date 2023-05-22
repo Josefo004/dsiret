@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sempresas;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequerimientoStoreRequest;
 use App\Http\Requests\SempresaStoreRequest;
+use App\Models\Contrato;
 use App\Models\Department;
 use App\Models\Eactividade;
 use App\Models\Form;
@@ -257,7 +258,12 @@ class SempresaController extends Controller
             ->get();
         //$candidatos->edad=Carbon::parse($candidatos->fecha_nac)->age;
 
-        return view( 'sempresas.resultadoSeaarch', compact('requerimiento','sempresa','candidatos') );
+        $contratados = Contrato::all()->pluck('form_id');
+        //@dump($contratados);
+        // $contratados = json_encode($contratados, true);
+        // @dump($contratados);
+
+        return view('sempresas.resultadoSeaarch', compact('requerimiento','sempresa','candidatos','contratados') );
     }
 
     /**

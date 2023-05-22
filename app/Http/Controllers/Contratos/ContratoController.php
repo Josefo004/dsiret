@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Contratos;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contrato;
-use App\Models\Form;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 
 class ContratoController extends Controller
 {
@@ -40,6 +40,11 @@ class ContratoController extends Controller
             ->addColumn('fech_f', function($contrato){
                 return Carbon::parse($contrato->fecha_fin)->format('d-m-Y');
             })
+            ->addColumn('action', function($contrato){
+                $contrato_id = $contrato->id;
+                return Blade::render('contratos.partials.acciones',compact('contrato_id'));
+            })
+            ->rawColumns(['action'])
             ->toJson();
     }
 
@@ -51,17 +56,6 @@ class ContratoController extends Controller
      */
     public function index()
     {
-        // $f = Contrato::where('id','1')
-        //     ->with('formulario')
-        //     ->with('formulario.person')
-        //     ->with('requerimiento')
-        //     ->with('requerimiento.sempresa')
-        //     ->first();
-        //     //->get();
-        // @dump($f);
-
-        // $formulario1 = Form::where('id', $f->form_id)->get();
-        // @dump($formulario1);
 
         return view('contratos.index');
 
@@ -139,6 +133,9 @@ class ContratoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //dd($request);
+        $contrato = Contrato::where('id', $id)->delete();
+
+        return view('contratos.index');
     }
 }

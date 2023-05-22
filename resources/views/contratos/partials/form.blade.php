@@ -15,7 +15,7 @@
                 <div class="form-group row">
                     <label for="id_formulario" class="col-sm-4 col-form-label">ID Formulario</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="id_formulario" placeholder="ID Formulario">
+                        <input type="number" class="form-control" id="id_formulario" placeholder="ID Formulario">
                     </div>
                     <div class="col-sm-3">
                         <button id="buscar_formulario" type="button" class="btn btn-block btn-success">Buscar</button>

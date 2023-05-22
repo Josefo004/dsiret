@@ -44,7 +44,7 @@
         { data: 'nit',  orderable: false, searchable: false},
         { data: 'fech_i',  orderable: false, searchable: false},
         { data: 'fech_f',  orderable: false, searchable: false},
-        // { data: 'action', orderable: false, searchable: false},
+        { data: 'action', orderable: false, searchable: false},
     ];
     const apiUsers = '{!! route('api.contratos') !!}';
     let tabla = $('#formularios').DataTable({

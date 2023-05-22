@@ -150,6 +150,7 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('api/contratos', [ContratoController::class, 'apiContratos'])->name('api.contratos')->middleware('auth');
     Route::get('contratos/crear', [ContratoController::class, 'create'])->name('contratos.crear')->middleware('auth');
     Route::post('contratos', [ContratoController::class, 'store'])->name('contratos.store')->middleware('auth');
+    Route::get('contratos/delete/{id}', [ContratoController::class, 'destroy'])->name('contratosEliminar')->middleware('auth');
 });
 
 /**

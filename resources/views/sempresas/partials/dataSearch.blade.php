@@ -96,10 +96,14 @@
                                         @foreach ($candidatos as $key => $candidato )
                                         <tr>
                                             <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" name="seleccionados[]" value="{{ $candidato->forms->id }}">
-                                                    <label class="form-check-label" for="seleccionados[]"><small>{{ $candidato->forms->id }}</small></label>
-                                                </div>
+                                                @if($contratados->contains($candidato->forms->id))
+                                                    <label class="form-check-label"><small>{{ $candidato->forms->id }}</small></label>
+                                                @else
+                                                    <div class="form-check">
+                                                        <input type="checkbox" class="form-check-input" name="seleccionados[]" value="{{ $candidato->forms->id }}">
+                                                        <label class="form-check-label" for="seleccionados[]"><small>{{ $candidato->forms->id }}</small></label>
+                                                    </div>
+                                                @endif
                                             </td>
                                             <td> <small>{{ $candidato->nro_documento }} {{ $candidato->department->dep_codigo }}</small> </td>
                                             <td> <small>{{ $candidato->paterno }} {{ $candidato->manterno }} {{ $candidato->nombres }}</small> </td>
