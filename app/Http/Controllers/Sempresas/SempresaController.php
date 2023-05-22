@@ -7,6 +7,7 @@ use App\Http\Requests\RequerimientoStoreRequest;
 use App\Http\Requests\SempresaStoreRequest;
 use App\Models\Department;
 use App\Models\Eactividade;
+use App\Models\Form;
 use App\Models\Gender;
 use App\Models\Municipio;
 use App\Models\Person;
@@ -19,6 +20,26 @@ use Illuminate\Support\Facades\Blade;
 
 class SempresaController extends Controller
 {
+    public function apiRequerimiento($id)
+    {
+        $requerimiento = Requerimiento::where('id', $id)
+            ->with('profession')
+            ->with('sempresa')
+            ->with('sempresa.municipio')
+            ->first();
+        return response(json_encode($requerimiento),200);
+    }
+
+    public function apiFormulario($id)
+    {
+        //return "JOSE";
+        $formulario = Form::where('id', $id)
+            ->with('person')
+            ->with('person.department')
+            ->first();
+        return response(json_encode($formulario),200);
+    }
+
     public function apiEmpresas()
     {
         $query = Sempresa::query();

@@ -40,30 +40,6 @@ class ContratoController extends Controller
             ->addColumn('fech_f', function($contrato){
                 return Carbon::parse($contrato->fecha_fin)->format('d-m-Y');
             })
-
-            // ->addColumn('cedula', function($person){
-            //     return $person->nro_documento.' '.$person->department->dep_codigo;
-            // })
-            // ->addColumn('sexo', function($person){
-            //     return $person->gender->gen_descripcion;
-            // })
-            // ->editColumn('birth', function($person){
-            //     return Carbon::parse($person->fecha_nac)->format('d-m-Y');
-            // })
-            // ->editColumn('edad', function($person){
-            //     return Carbon::parse($person->fecha_nac)->age;
-            // })
-            // ->editColumn('regis', function($person){
-            //     return Carbon::parse($person->created_at)->format('d-m-Y H:m');
-            // })
-            // ->addColumn('action', function($person){
-            //     $person_id = $person->id;
-            //     return Blade::render('formularios.partials.acciones',compact('person_id'));
-            // })
-            // ->editColumn('ver', function($person){
-            //     return "<a href='". route("formularioMostrar", $person->id)."'><i class='fa fa-eye'></i></a> | <a href='". route("formularioEditar", $person->id)."'><i class='fa fa-pen'></i></a>";
-            // })
-            //->rawColumns(['action'])
             ->toJson();
     }
 
@@ -109,7 +85,16 @@ class ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $this->validate($request, [
+            "form_id" => "required|unique:contratos",
+            "fecha_inicio" => "required|date",
+            "fecha_fin" =>"required|date"
+        ]);
+
+        $contrato = Contrato::create($request->all());
+
+        return view('contratos.index');
     }
 
     /**

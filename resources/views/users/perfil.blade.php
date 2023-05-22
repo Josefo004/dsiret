@@ -3,10 +3,10 @@
 @section('title',  config('adminlte.title', 'nombre APP') . ' - Mi Perfil' )
 
 @section('content_header')
-<x-encabezado-pagina 
-icono="fa fa-address-card" 
-    titulo="Perfil" 
-    subtitulo="Gestiona tus datos personales y de acceso" 
+<x-encabezado-pagina
+icono="fa fa-address-card"
+    titulo="Perfil"
+    subtitulo="Gestiona tus datos personales y de acceso"
     modoTitulo='L'>
     {{ Breadcrumbs::render('perfil') }}
 </x-encabezado-pagina>
@@ -20,7 +20,7 @@ icono="fa fa-address-card"
             <div class="box-body box-profile">
                 <div class="text-center">
                     @if($user->imagen!=null)
-                        <img class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/'.$user->imagen) }}" alt="{{ $user->name }}">                        
+                        <img class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/'.$user->imagen) }}" alt="{{ $user->name }}">
                     @else
                         <img class="profile-user-img img-responsive img-circle" src="{{ asset('images/users/user.png') }}" alt="">
                     @endif
@@ -33,21 +33,21 @@ icono="fa fa-address-card"
                 @can('up-perfil')
                 <div>
                     <button type="button" id='upload' class="btn bg-black btn-sm btn-block"><i class="fa fa-camera"></i></button>
-                </div>      
+                </div>
                 @endcan
-                
+
 
               	<ul class="list-group list-group-unbordered">
                 	<li class="list-group-item">
                   		<b>Usuario</b> <a class="pull-right">{{ auth()->user()->username }}</a>
 					</li>
 					<li class="list-group-item">
-						<b>Roles</b> 
+						<b>Roles</b>
 						<p class="pull-right">
-							@foreach($roles_usuario as $role)                                
+							@foreach($roles_usuario as $role)
                                 <div><span class="badge badge-pill badge-primary">{{ $role }}</span></div>
                             @endforeach
-                            
+
 						</p>
                 	</li>
               	</ul>
@@ -79,7 +79,7 @@ icono="fa fa-address-card"
                     @endif
                     </div>
 
-                    <div class="form-group{{ $errors->has('ci') ? ' has-error' : '' }}">
+                    {{-- <div class="form-group{{ $errors->has('ci') ? ' has-error' : '' }}">
                         {{ Form::label('ci', 'Carnet de Identidad') }}
                         {{ Form::text('ci', null,['class'=> 'form-control', 'placeholder'=>'Documento de Identidad', 'maxlength' => 10]) }}
                         @if ($errors->has('ci'))
@@ -87,9 +87,9 @@ icono="fa fa-address-card"
                                 <strong>{{ $errors->first('ci') }}</strong>
                             </span>
                         @endif
-                    </div>
+                    </div> --}}
 
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                    {{-- <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         {{ Form::label('email', 'Correo Electronico') }}
                         {{ Form::text('email', null,['class'=> 'form-control', 'placeholder'=>'CORREO ELECTRONICO', 'maxlength' => 120]) }}
                         @if ($errors->has('email'))
@@ -97,7 +97,7 @@ icono="fa fa-address-card"
                                 <strong>{{ $errors->first('email') }}</strong>
                             </span>
                         @endif
-                    </div>
+                    </div> --}}
 
                     <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
                         {{ Form::label('telefono', 'Telefono') }}
@@ -109,7 +109,7 @@ icono="fa fa-address-card"
                         @endif
                     </div>
 
-                    <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
+                    {{-- <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
                         {{ Form::label('direccion', 'Domicilio') }}
                         {{ Form::text('direccion', null,['class'=> 'form-control', 'placeholder'=>'DIRECCION', 'maxlength' => 190]) }}
                         @if ($errors->has('direccion'))
@@ -117,13 +117,13 @@ icono="fa fa-address-card"
                                 <strong>{{ $errors->first('direccion') }}</strong>
                             </span>
                         @endif
-                    </div>
+                    </div> --}}
                     @can('edit-perfil')
                     <div class="box-footer">
                         <div class="form-group text-center">
-                            {{ Form::submit('ACTUALIZAR INFORMACIÓN', ['class'=>'btn btn-success']) }}
+                            {{-- {{ Form::submit('ACTUALIZAR INFORMACIÓN', ['class'=>'btn btn-success']) }} --}}
                         </div>
-                    </div>            
+                    </div>
                     @endcan
                    {!! Form::close() !!}
                 </div>
@@ -160,7 +160,7 @@ icono="fa fa-address-card"
                             {{ Form::submit('CAMBIAR CONTRASEÑA', ['class'=>'btn btn-success']) }}
                         </div>
                     </div>
-                    @endcan                    
+                    @endcan
                     {!! Form::close() !!}
                   </div>
             </div>
@@ -191,7 +191,7 @@ icono="fa fa-address-card"
   	botonUpload.addEventListener('click',e => {
     	$('#modal-logo').modal('show');
 	  });
-	  
+
   	Dropzone.options.miDropzone = {
 		paramName: "file",
 		dictDefaultMessage: 'Arrastre su fotografia aqui',
@@ -199,11 +199,11 @@ icono="fa fa-address-card"
 		addRemoveLinks: true,
 		autoProcessQueue:false,
         maxFiles:1,
-      
+
         resizeWidth: 260,
         resizeHeight: 260,
         resizeQuality: 0.8,
-        resizeMethod: 'crop',                
+        resizeMethod: 'crop',
 
 		acceptedFiles:'.png,.jpg,.gif,.jpeg',
 		init:function(){
@@ -212,7 +212,7 @@ icono="fa fa-address-card"
 			submitButton.addEventListener('click', function(){
 				myDropzone.processQueue();
 			});
-			
+
 			this.on('complete', function(){
 				if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0)
 				{

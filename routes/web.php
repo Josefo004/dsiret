@@ -134,6 +134,9 @@ Route::group(['prefix' => 'siret'], function () {
     Route::post('sempresas/store', [SempresaController::class, 'store'])->name('sempresas.store')->middleware('auth');
     Route::post('sempresas/editar', [SempresaController::class, 'actualizar'])->name('sempresas.actualizar')->middleware('auth');
 
+    Route::get('api/requerimiento/{id}', [SempresaController::class, 'apiRequerimiento'])->name('api.requerimiento')->middleware('auth');
+    Route::get('api/formulario/{id}', [SempresaController::class, 'apiFormulario'])->name('api.requerimiento')->middleware('auth');
+
     Route::get('sempresas/requ/{id}', [SempresaController::class, 'requ'])->name('sempresasRequerimiento')->middleware('auth');
     Route::post('sempresas/requ/store', [SempresaController::class, 'requStore'])->name('sempresasNuevoRequerimiento')->middleware('auth');
     Route::get('sempresas/requ/delete/{id}', [SempresaController::class, 'requDelete'])->name('sempresasEliminarRequerimiento')->middleware('auth');
@@ -146,12 +149,13 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('contratos', [ContratoController::class, 'index'])->name('contratos.index')->middleware('auth');
     Route::get('api/contratos', [ContratoController::class, 'apiContratos'])->name('api.contratos')->middleware('auth');
     Route::get('contratos/crear', [ContratoController::class, 'create'])->name('contratos.crear')->middleware('auth');
+    Route::post('contratos', [ContratoController::class, 'store'])->name('contratos.store')->middleware('auth');
 });
 
 /**
  * Perfil de Usuario
 */
-Route::get('perfil','UserController@perfil')->name('users.perfil');
+Route::get('perfil', [UserController::class, 'perfil'])->name('users.perfil');
 Route::put('perfil/{user}/password','UserController@updatepassword')->name('users.updatepassword')->middleware('permission:password-perfil');
 Route::put('perfil/update/{user}','UserController@updateperfil')->name('users.updateperfil')->middleware('permission:edit-perfil');
 Route::post('perfil/{user}/upload','UserController@upload')->name('users.upload')->middleware('permission:up-perfil');
