@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Fpdf;
 
 use App\Http\Controllers\Controller;
+use App\Models\Form;
 use App\Models\Lista;
 use App\Models\Person;
 use App\Models\Requerimiento;
@@ -230,11 +231,65 @@ class PDF extends PDF_MC_Table
     }
 }
 
+class PDF2 extends PDF_MC_Table // para imprimir los datos del formulario
+{
+    private $usuario;
+    private $fecha_hora;
+
+    function inicio( string $fh, string $usua){
+        $this->usuario = $usua;
+        $this->fecha_hora = $fh;
+    }
+
+    function mcelda($w1,$w2,$txt1,$txt2){
+        $t1=utf8_decode ($txt1);
+        $t2 = utf8_decode($txt2);
+        $this->SetFillColor(230,230,230);
+        $this->SetTextColor(0);
+        $this->SetDrawColor(10,10,10);
+        $this->SetLineWidth(.1);
+        $this->SetFont('Arial','B',12);
+        $this->Cell($w1,10,$t1,0,0,'L',false);
+        $this->SetFont('Arial','',12);
+        $this->MultiCell($w2,10,$t2.'kjhfd salsa dfh aslkdfj ñlsjdf ñlksjdf ñlkjF ÑLAKSDF LKad f',0,'L');
+    }
+
+    // Cabecera de página
+    function Header()
+    {
+
+        $this->Image('images/escudo.png',10,5,20);
+        $this->SetFont('Arial','',6);
+        $this->Cell(17);
+        $this->Cell(100,4, utf8_decode ('DIRECCION DE REACTIVACIÓN ECONÓMICA'),0,1,'L');
+        $this->Cell(17);
+        $this->Cell(100,4, utf8_decode ('GOBIERNO AUTÓNOMO DEPARTAMENTAL DE CHUQUISACA'),0,1,'L');
+        $title = "FORMULARIO REGISTRADO";
+        $this->SetFont('Arial','B',16);
+        $w = $this->GetStringWidth($title)+6;
+        $this->SetX((216-$w)/2);
+        $this->SetDrawColor(255,255,255);
+        $this->SetFillColor(255,255,255);
+        $this->SetTextColor(0,0,0);
+        $this->Cell($w,9,$title,1,1,'C',true);
+    }
+
+    // Pie de página
+    function Footer()
+    {
+
+        $this->SetY(-10);
+        $this->SetFont('Arial','',6);
+        $this->Cell(40,4,'Usuario: '.$this->usuario,0,0,'L');
+        $this->Cell(116,4,'Fecha Impresion: '.$this->fecha_hora,0,0,'C');
+        $this->Cell(40,4,'Pag. '.$this->PageNo().' de {nb}',0,0,'R');
+    }
+}
+
 class PdfController extends Controller
 {
-
     protected $fpdf;
-
+    protected $fpdf2;
     public function seleccionados(Request $request)
     {
         //dd($request->seleccionados);
@@ -366,6 +421,46 @@ class PdfController extends Controller
         }
 
         $this->fpdf->Output();
+        exit;
+    }
+
+    public function printFormulario($id)
+    {
+        // return "ID ".$id;
+        $person = Person::where('id', $id)
+            ->with('department')->with('gender')
+            ->with('forms')
+            ->with('forms.record')
+            ->with('forms.languages')
+            ->with('forms.professions')
+            ->first();
+        //dd($person);
+        if(!is_null($person)){
+            $person->edad=Carbon::parse($person->fecha_nac)->age;
+            // $f = Form::where('person_id', $person->id )->with('record')
+            // ->with('languages')
+            // ->with('professions')->first();
+
+            //return view( 'personas.infoperson', compact('person', 'f') );
+        }
+
+        $hoy = time();
+        $f = date('d-m-Y H:i:s',$hoy);
+        $usr = ucwords(strtolower( auth()->user()->name ));
+
+        $this->fpdf2 = new PDF2('P','mm','Letter');
+        $this->fpdf2->inicio($f, $usr);
+        $this->fpdf2->SetMargins(10,7,10);
+        $this->fpdf2->AliasNbPages();
+        $this->fpdf2->AddPage();
+        $this->fpdf2->Ln();
+
+        $nombrec = $person->paterno.' '.$person->materno.' '.$person->nombres;
+
+        $this->fpdf2->mcelda(40,100,'NOMBRE',$nombrec);
+        $this->fpdf2->mcelda(40,100,'NOMBRE',$nombrec);
+
+        $this->fpdf2->Output();
         exit;
     }
 }
