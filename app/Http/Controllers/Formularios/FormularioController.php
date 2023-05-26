@@ -176,7 +176,7 @@ class FormularioController extends Controller
             ->with('languages')
             ->with('professions')->first();
 
-            return view( 'formularios.infoperson', compact('person', 'f') );
+            return view('formularios.infoperson', compact('person', 'f') );
         }else{
             return "no se registro";
         }

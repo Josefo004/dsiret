@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Fpdf;
 
 use App\Http\Controllers\Controller;
-use App\Models\Form;
 use App\Models\Lista;
 use App\Models\Person;
 use App\Models\Requerimiento;
@@ -250,22 +249,70 @@ class PDF2 extends PDF_MC_Table // para imprimir los datos del formulario
         $this->SetLineWidth(.1);
         $this->SetFont('Arial','B',12);
         $this->Cell($w1,10,$t1,0,0,'L',false);
-        $this->SetFont('Arial','',12);
-        $this->MultiCell($w2,10,$t2.'kjhfd salsa dfh aslkdfj ñlsjdf ñlksjdf ñlkjF ÑLAKSDF LKad f',0,'L');
+        $this->SetFont('Arial','',11);
+        $this->MultiCell($w2,10,$t2,0,'L');
+    }
+
+    function celda($w1,$w2,$txt1,$txt2){
+        $t1=utf8_decode ($txt1);
+        $t2 = utf8_decode($txt2);
+        $this->SetFillColor(230,230,230);
+        $this->SetTextColor(0);
+        $this->SetDrawColor(10,10,10);
+        $this->SetLineWidth(.1);
+        $this->SetFont('Arial','B',12);
+        $this->Cell($w1,10,$t1,0,0,'L',false);
+        $this->SetFont('Arial','',11);
+        $this->Cell($w2,10,$t2,0,0,'L');
+    }
+
+    function cabecera($w1,$txt1){
+        $t1=utf8_decode ($txt1);
+        $this->SetFillColor(230,230,230);
+        $this->SetTextColor(0);
+        $this->SetDrawColor(10,10,10);
+        $this->SetLineWidth(.1);
+        $this->SetFont('Arial','B',11);
+        $this->Cell($w1,10,$t1,1,0,'L',true);
+    }
+
+    function printIdiomas($sx, $ww, $cabe, object $lista){
+        $this->SetX($sx);
+        $this->cabecera($ww,$cabe);
+        $this->Ln();
+        $this->SetFont('Arial','',11);
+        foreach ($lista as $item) {
+            $this->SetX($sx);
+            $t2 = chr(149).' '.utf8_decode($item->descripcion);
+            $this->MultiCell($ww,10,$t2,0,'L');
+        }
+    }
+
+    function printProfesiones($sx, $ww, $cabe, object $lista){
+        $this->SetX($sx);
+        $this->cabecera($ww,$cabe);
+        $this->Ln();
+        $this->SetFont('Arial','',11);
+        foreach ($lista as $item) {
+            $this->SetX($sx);
+            $t2 = chr(149).' '.utf8_decode($item->pro_descripcion);
+            $this->MultiCell($ww,10,$t2,0,'L');
+        }
     }
 
     // Cabecera de página
     function Header()
     {
 
-        $this->Image('images/escudo.png',10,5,20);
-        $this->SetFont('Arial','',6);
-        $this->Cell(17);
+        //$this->Image('images/escudo.png',10,5,20);
+        $this->SetFont('Arial','B',6);
+        //$this->Cell(17);
         $this->Cell(100,4, utf8_decode ('DIRECCION DE REACTIVACIÓN ECONÓMICA'),0,1,'L');
-        $this->Cell(17);
+        //$this->Cell(17);
         $this->Cell(100,4, utf8_decode ('GOBIERNO AUTÓNOMO DEPARTAMENTAL DE CHUQUISACA'),0,1,'L');
+        $this->Ln();
         $title = "FORMULARIO REGISTRADO";
-        $this->SetFont('Arial','B',16);
+        $this->SetFont('Arial','B',18);
         $w = $this->GetStringWidth($title)+6;
         $this->SetX((216-$w)/2);
         $this->SetDrawColor(255,255,255);
@@ -434,15 +481,8 @@ class PdfController extends Controller
             ->with('forms.languages')
             ->with('forms.professions')
             ->first();
-        //dd($person);
-        if(!is_null($person)){
-            $person->edad=Carbon::parse($person->fecha_nac)->age;
-            // $f = Form::where('person_id', $person->id )->with('record')
-            // ->with('languages')
-            // ->with('professions')->first();
-
-            //return view( 'personas.infoperson', compact('person', 'f') );
-        }
+        // @dump($person->forms->languages);
+        // @dump($person->forms->professions);
 
         $hoy = time();
         $f = date('d-m-Y H:i:s',$hoy);
@@ -453,12 +493,32 @@ class PdfController extends Controller
         $this->fpdf2->SetMargins(10,7,10);
         $this->fpdf2->AliasNbPages();
         $this->fpdf2->AddPage();
-        $this->fpdf2->Ln();
+        $this->fpdf2->Image('images/logo1_1.png',5,23,57);
 
+        $idf = $person->forms->id;
         $nombrec = $person->paterno.' '.$person->materno.' '.$person->nombres;
+        $sexo = $person->gender->gen_descripcion;
+        $carnet = $person->nro_documento.' '.$person->department->dep_codigo;
+        $fecha_n = date('d-m-Y', strtotime($person->fecha_nac));
+        $edad = Carbon::parse($person->fecha_nac)->age;
+        $direccion = $person->direccion;
+        $email = $person->email;
+        $fomacion = $person->forms->record->for_descripcion;
+        $idiomas = $person->forms->languages;
+        $profesiones = $person->forms->professions;
 
-        $this->fpdf2->mcelda(40,100,'NOMBRE',$nombrec);
-        $this->fpdf2->mcelda(40,100,'NOMBRE',$nombrec);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'ID Formulario:',$idf);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Nombre:',$nombrec);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Sexo:',$sexo);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Carnet de Identidad:',$carnet);
+        $this->fpdf2->Cell(50); $this->fpdf2->celda(50,25,'fecha de nacimiento:',$fecha_n); $this->fpdf2->celda(14,51,'Edad:',$edad); $this->fpdf2->Ln();
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Dirección:',$direccion);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Correo Electronico:',$email);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Formación Académica:',$fomacion);
+        $gy = $this->fpdf2->GetY();
+        $this->fpdf2->printIdiomas(60,70,'Idiomas', $idiomas);
+        $this->fpdf2->SetY($gy);
+        $this->fpdf2->printProfesiones(132,70,'Profesiones / Ocupaciones', $profesiones);
 
         $this->fpdf2->Output();
         exit;
