@@ -145,6 +145,7 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('fpdf', [PdfController::class, 'index'])->name('mipdf')->middleware('auth');
     Route::get('fpdf/seleccionados/{id}', [PdfController::class, 'lista'])->name('fpdf.seleccionadosById')->middleware('auth');
     Route::get('fpdf/showform/{id}', [PdfController::class, 'printFormulario'])->name('printFormulario')->middleware('auth');
+    Route::get('fpdf/showsempresa/{id}', [PdfController::class, 'printSempresa'])->name('printSempresa')->middleware('auth');
     Route::post('fpdf/seleccionados', [PdfController::class, 'seleccionados'])->name('fpdf.seleccionados')->middleware('auth');
 
     Route::get('contratos', [ContratoController::class, 'index'])->name('contratos.index')->middleware('auth');

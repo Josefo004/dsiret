@@ -234,10 +234,12 @@ class PDF2 extends PDF_MC_Table // para imprimir los datos del formulario
 {
     private $usuario;
     private $fecha_hora;
+    private $titulo;
 
-    function inicio( string $fh, string $usua){
+    function inicio( string $fh, string $usua, string $titu){
         $this->usuario = $usua;
         $this->fecha_hora = $fh;
+        $this->titulo = $titu;
     }
 
     function mcelda($w1,$w2,$txt1,$txt2){
@@ -311,7 +313,7 @@ class PDF2 extends PDF_MC_Table // para imprimir los datos del formulario
         //$this->Cell(17);
         $this->Cell(100,4, utf8_decode ('GOBIERNO AUTÓNOMO DEPARTAMENTAL DE CHUQUISACA'),0,1,'L');
         $this->Ln();
-        $title = "FORMULARIO REGISTRADO";
+        $title = $this->titulo;
         $this->SetFont('Arial','B',18);
         $w = $this->GetStringWidth($title)+6;
         $this->SetX((216-$w)/2);
@@ -487,9 +489,10 @@ class PdfController extends Controller
         $hoy = time();
         $f = date('d-m-Y H:i:s',$hoy);
         $usr = ucwords(strtolower( auth()->user()->name ));
+        $titu = 'FORMULARIO REGISTRADO';
 
         $this->fpdf2 = new PDF2('P','mm','Letter');
-        $this->fpdf2->inicio($f, $usr);
+        $this->fpdf2->inicio($f, $usr, $titu);
         $this->fpdf2->SetMargins(10,7,10);
         $this->fpdf2->AliasNbPages();
         $this->fpdf2->AddPage();
@@ -519,6 +522,69 @@ class PdfController extends Controller
         $this->fpdf2->printIdiomas(60,70,'Idiomas', $idiomas);
         $this->fpdf2->SetY($gy);
         $this->fpdf2->printProfesiones(132,70,'Profesiones / Ocupaciones', $profesiones);
+
+        $this->fpdf2->Output();
+        exit;
+    }
+
+    public function printSempresa($id)
+    {
+        $empresa = Sempresa::where('id', $id)
+            ->with('municipio')
+            ->with('regime')
+            ->with('eactividade')
+            ->with('person')
+            ->with('person.department')
+            ->with('person.gender')
+            ->first();
+        //dd($empresa);
+
+        $hoy = time();
+        $f = date('d-m-Y H:i:s',$hoy);
+        $usr = ucwords(strtolower( auth()->user()->name ));
+        $titu = 'FORMULARIO DE LA EMPRESA';
+
+        $this->fpdf2 = new PDF2('P','mm','Letter');
+        $this->fpdf2->inicio($f, $usr, $titu);
+        $this->fpdf2->SetMargins(10,7,10);
+        $this->fpdf2->AliasNbPages();
+        $this->fpdf2->AddPage();
+        $this->fpdf2->Image('images/logo1_1.png',5,23,57);
+
+        $emp['municipio'] = $empresa->municipio->mun_descripcion;
+        $emp['acti_econ'] = $empresa->eactividade->act_descripcion;
+        $emp['regi_impo'] = $empresa->regime->reg_descripcion;
+        $emp['direccion'] = $empresa->emp_direccion;
+        $emp['fono_empr'] = $empresa->emp_telefono;
+        $emp['razon_soc'] = $empresa->razon_social;
+        $emp['NIT'] = $empresa->NIT;
+
+        $rel['documento'] = $empresa->person->nro_documento;
+        $rel['expedido'] = $empresa->person->department->dep_descripcion;
+        $rel['sexo'] = $empresa->person->gender->gen_descripcion;
+        $rel['fono_resp'] = $empresa->person->nro_celular;
+        $rel['paterno'] = $empresa->person->paterno;
+        $rel['materno'] = $empresa->person->materno;
+        $rel['nombres'] = $empresa->person->nombres;
+
+        $this->fpdf2->Cell(55); $this->fpdf2->cabecera(141,'DATOS DE LA EMPRESA'); $this->fpdf2->Ln();
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Municipio:', $emp['municipio']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Actividad Económica:', $emp['acti_econ']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Régimen Impositivo:', $emp['regi_impo']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Dirección:', $emp['direccion']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Telefono Empresa:', $emp['fono_empr']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Razon Social:', $emp['razon_soc']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'NIT:', $emp['NIT']);
+        $this->fpdf2->Ln();
+
+        $this->fpdf2->Cell(55); $this->fpdf2->cabecera(141,'DATOS DEL RESPONSABLE LEGAL'); $this->fpdf2->Ln();
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Nro. Documento:', $rel['documento']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Expedido en:', $rel['expedido']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Sexo:', $rel['sexo']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Tel. Responsable:', $rel['fono_resp']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Apellido Paterno:', $rel['paterno']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Apellido Materno:', $rel['materno']);
+        $this->fpdf2->Cell(55); $this->fpdf2->mcelda(50,91,'Nombres:', $rel['nombres']);
 
         $this->fpdf2->Output();
         exit;
