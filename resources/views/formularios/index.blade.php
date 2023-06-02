@@ -47,7 +47,7 @@
             { data: 'birth', orderable: false, searchable: false},
             { data: 'edad', orderable: false, searchable: false},
             { data: 'nro_celular', orderable: false, searchable: false},
-            { data: 'direccion', orderable: false, searchable: false},
+            { data: 'direccion', name:'persons.direccion', orderable: false, searchable: true},
             { data: 'email', orderable: false, searchable: false},
             { data: 'regis', orderable: false, searchable: false},
             // { data: 'ver', orderable: false, searchable: false},
