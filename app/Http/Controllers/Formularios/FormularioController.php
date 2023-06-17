@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Form;
 use App\Models\Gender;
 use App\Models\Language;
+use App\Models\Municipio;
 use App\Models\Person;
 use App\Models\Profession;
 use App\Models\Record;
@@ -22,6 +23,7 @@ class FormularioController extends Controller
         $query = Person::query();
         $query->with('department');
         $query->with('gender');
+        $query->with('municipio');
         $query->with('forms');
         $query->orderBy('paterno', 'ASC');
         $query->orderBy('materno', 'ASC');
@@ -48,6 +50,9 @@ class FormularioController extends Controller
             ->editColumn('regis', function($person){
                 return Carbon::parse($person->created_at)->format('d-m-Y H:m');
             })
+            ->addColumn('municipio', function($person){
+                return $person->municipio->mun_descripcion;
+            })
             ->addColumn('action', function($person){
                 $person_id = $person->id;
                 return Blade::render('formularios.partials.acciones',compact('person_id'));
@@ -64,6 +69,7 @@ class FormularioController extends Controller
         $query = Person::query()
             ->with('department')
             ->with('gender')
+            ->with('municipio')
             ->with('forms')
             ->with('forms.record')
             ->with('forms.languages')
@@ -107,6 +113,9 @@ class FormularioController extends Controller
                     $re.=$pro->pro_descripcion.'<br>';
                 }
                 return $re;
+            })
+            ->addColumn('municipio', function($person){
+                return $person->municipio->mun_descripcion;
             })
             ->addColumn('action', function($person){
                 $person_id = $person->id;
@@ -196,9 +205,12 @@ class FormularioController extends Controller
         $profesions = Profession::get()->pluck('pro_descripcion','id');
         $departments = Department::get()->pluck('dep_descripcion', 'id');
         $genders = Gender::get()->pluck('gen_descripcion', 'id');
+        $municipios = Municipio::get()->pluck('mun_descripcion', 'id');
 
         $person = Person::where('id', $id)
-            ->with('department')->with('gender')
+            ->with('department')
+            ->with('gender')
+            ->with('municipio')
             ->with('forms')
             ->with('forms.record')
             ->with('forms.languages')
@@ -209,7 +221,7 @@ class FormularioController extends Controller
         // @dump($ff);
         // @dump($f);
 
-        return view( 'formularios.editar', compact('person','selectlanguages','selectprofessions','records','languages','profesions','departments','genders'));
+        return view( 'formularios.editar', compact('person','selectlanguages','selectprofessions','records','languages','profesions','departments','genders','municipios'));
     }
 
     /**
@@ -227,6 +239,7 @@ class FormularioController extends Controller
         //dd($persona);
         $persona->department_id = $request->department_id;
         $persona->gender_id = $request->gender_id;
+        $persona->municipio_id = $request->municipio_id;
         $persona->nombres = strtoupper($request->nombres);
         $persona->paterno = strtoupper($request->paterno);
         $persona->materno = strtoupper($request->materno);

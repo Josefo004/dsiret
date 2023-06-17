@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Contratos\ContratoController;
+use App\Http\Controllers\Estadisticas\EstadisticaController;
 use App\Http\Controllers\Formularios\FormularioController;
 use App\Http\Controllers\Fpdf\PdfController;
 use App\Http\Controllers\PersonController;
@@ -153,6 +154,8 @@ Route::group(['prefix' => 'siret'], function () {
     Route::get('contratos/crear', [ContratoController::class, 'create'])->name('contratos.crear')->middleware('auth');
     Route::post('contratos', [ContratoController::class, 'store'])->name('contratos.store')->middleware('auth');
     Route::get('contratos/delete/{id}', [ContratoController::class, 'destroy'])->name('contratosEliminar')->middleware('auth');
+
+    Route::get('estadistica', [EstadisticaController::class, 'index'])->name('estadistica.index')->middleware('auth');
 });
 
 /**

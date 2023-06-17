@@ -26,6 +26,7 @@ class FormulariosEditRequest extends FormRequest
         return [
             "department_id" => "required",
             "gender_id" => "required",
+            "municipio_id" => "required",
             "nombres" => "required|string",
             "paterno" => "",
             "materno" => "",
@@ -45,6 +46,7 @@ class FormulariosEditRequest extends FormRequest
             "department_id.required" => "El campo expedido es obligatorio",
             "department_id.exists" => "El valor del campo expedido no esta en la Base de Datos",
             "gender_id.required" => "El campo sexo es obligatorio",
+            "municipio_id.required" => "El campo municipio es obligatorio",
             "nombres.required" => "El campo nombres es obligatorio",
             "fecha_nac:required" => "La fecha de nacimiento es obligatoria",
             "fecha_nac:date" => "El formato de fecha es erroneo",

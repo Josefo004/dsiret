@@ -32,7 +32,7 @@
                         <div class="form-group{{ $errors->has('nombres') ? ' has-error' : '' }}">
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="">Nombres</label>
-                                {{ Form::text('nombres',null,['class'=> 'form-control','id'=>'form_nombres', 'maxlength'=>'40','name'=>'nombres','placeholder'=>'NOMBRE COMPLETO']) }}
+                                {{ Form::text('nombres',null,['class'=> 'form-control','id'=>'form_nombres', 'maxlength'=>'40','name'=>'nombres','placeholder'=>'NOMBRES']) }}
                             </div>
                             @if ($errors->has('nombres'))
                             <span class="text-danger">
@@ -108,7 +108,18 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-5">
+                        <div class="form-group{{ $errors->has('municipio_id') ? ' has-error' : '' }}">
+                            <label class="form-label" >Municipio de Residencia</label>
+                            {{ Form::select('municipio_id', $municipios, null,[ 'class'=> 'form-control text-uppercase','id'=>'form_municipio_id','name'=>'municipio_id' ,'placeholder'=>'SELECCIONE MUNICIPIO', 'style'=>'width:100%;','required' => 'required']) }}
+                            @if ($errors->has('municipio_id'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('municipio_id') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="col-md-7">
                         <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
                         <div class="form-outline mb-4">
                             <label class="form-label" for="form3Example4">Direccion</label>

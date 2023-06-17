@@ -198,13 +198,14 @@ class PDF extends PDF_MC_Table
         $this->Ln(1);
         $this->cabecera(10,'ID FRM.');
         $this->cabecera(20,'CARNET');
-        $this->cabecera(50,'NOMBRE COMPLETO');
+        $this->cabecera(40,'NOMBRE COMPLETO');
         $this->cabecera(17,'SEXO');
         $this->cabecera(18,'FECH. NAC.');
         $this->cabecera(10,'EDAD');
-        $this->cabecera(20,'CELULAR');
+        $this->cabecera(15,'CELULAR');
+        $this->cabecera(25,'MUNICIPIO');
         $this->cabecera(30,'NIV. ACADÉMICO');
-        $this->cabecera(30,'IDIOMAS');
+        $this->cabecera(20,'IDIOMAS');
         $this->cabecera(37,'PROFESIONES');
         $this->cabecera(18,'FECH. REG.');
         $this->Ln();
@@ -355,6 +356,7 @@ class PdfController extends Controller
         $candidatos = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
             ->with('department')
             ->with('gender')
+            ->with('municipio')
             ->with('forms')
             ->with('forms.record')
             ->with('forms.languages')
@@ -373,7 +375,7 @@ class PdfController extends Controller
         $this->fpdf->AliasNbPages();
         $this->fpdf->AddPage();
         $this->fpdf->SetFont('Arial','',7);
-        $this->fpdf->SetWidths(array(10,20,50,17,18,10,20,30,30,37,18));
+        $this->fpdf->SetWidths(array(10,20,40,17,18,10,15,25,30,20,37,18));
         if (!is_null($request->seleccionados)) {
             // Guardamos la lista
 
@@ -391,6 +393,7 @@ class PdfController extends Controller
                     $ci = $candidato->nro_documento.' '.$candidato->department->dep_codigo;
                     $noc = $candidato->paterno.' '.$candidato->materno.' '.$candidato->nombres;
                     $sex = $candidato->gender->gen_descripcion;
+                    $mun = $candidato->municipio->mun_descripcion;
                     $fen = date('d-m-Y', strtotime($candidato->fecha_nac));
                     $eda = Carbon::parse($candidato->fecha_nac)->age;
                     $cel = $candidato->nro_celular;
@@ -400,7 +403,7 @@ class PdfController extends Controller
                     $prf = '';
                     foreach ($candidato->forms->professions as $profesion) {$prf.=$profesion->pro_descripcion."\n";}
                     $frg = date('d-m-Y H:i', strtotime($candidato->forms->created_at));
-                    $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$nac,$idi,$prf,$frg));
+                    $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$mun,$nac,$idi,$prf,$frg));
                 }
             }
         }
@@ -448,7 +451,7 @@ class PdfController extends Controller
         $this->fpdf->AliasNbPages();
         $this->fpdf->AddPage();
         $this->fpdf->SetFont('Arial','',7);
-        $this->fpdf->SetWidths(array(10,20,50,17,18,10,20,30,30,37,18));
+        $this->fpdf->SetWidths(array(10,20,40,17,18,10,15,25,30,20,37,18));
 
         foreach ($candidatos as $candidato) {
             if (in_array($candidato->forms->id, $seleccionados)) {
@@ -456,6 +459,7 @@ class PdfController extends Controller
                 $ci = $candidato->nro_documento.' '.$candidato->department->dep_codigo;
                 $noc = $candidato->paterno.' '.$candidato->materno.' '.$candidato->nombres;
                 $sex = $candidato->gender->gen_descripcion;
+                $mun = $candidato->municipio->mun_descripcion;
                 $fen = date('d-m-Y', strtotime($candidato->fecha_nac));
                 $eda = Carbon::parse($candidato->fecha_nac)->age;
                 $cel = $candidato->nro_celular;
@@ -465,7 +469,7 @@ class PdfController extends Controller
                 $prf = '';
                 foreach ($candidato->forms->professions as $profesion) {$prf.=$profesion->pro_descripcion."\n";}
                 $frg = date('d-m-Y H:i', strtotime($candidato->forms->created_at));
-                $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$nac,$idi,$prf,$frg));
+                $this->fpdf->Row(array($idfm,$ci,$noc,$sex,$fen,$eda,$cel,$mun,$nac,$idi,$prf,$frg));
             }
         }
 
@@ -477,7 +481,9 @@ class PdfController extends Controller
     {
         // return "ID ".$id;
         $person = Person::where('id', $id)
-            ->with('department')->with('gender')
+            ->with('department')
+            ->with('gender')
+            ->with('municipio')
             ->with('forms')
             ->with('forms.record')
             ->with('forms.languages')
@@ -499,6 +505,7 @@ class PdfController extends Controller
         $this->fpdf2->Image('images/logo1_1.png',5,23,57);
 
         $idf = $person->forms->id;
+        $municipio = $person->municipio->mun_descripcion;
         $nombrec = $person->paterno.' '.$person->materno.' '.$person->nombres;
         $sexo = $person->gender->gen_descripcion;
         $carnet = $person->nro_documento.' '.$person->department->dep_codigo;
@@ -511,10 +518,11 @@ class PdfController extends Controller
         $profesiones = $person->forms->professions;
 
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'ID Formulario:',$idf);
+        $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Municipio Residencia:',$municipio);
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Nombre:',$nombrec);
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Sexo:',$sexo);
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Carnet de Identidad:',$carnet);
-        $this->fpdf2->Cell(50); $this->fpdf2->celda(50,25,'fecha de nacimiento:',$fecha_n); $this->fpdf2->celda(14,51,'Edad:',$edad); $this->fpdf2->Ln();
+        $this->fpdf2->Cell(50); $this->fpdf2->celda(50,25,'Fecha de nacimiento:',$fecha_n); $this->fpdf2->celda(14,51,'Edad:',$edad); $this->fpdf2->Ln();
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Dirección:',$direccion);
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Correo Electronico:',$email);
         $this->fpdf2->Cell(50); $this->fpdf2->mcelda(50,96,'Formación Académica:',$fomacion);

@@ -251,6 +251,7 @@ class SempresaController extends Controller
         $candidatos = Person::whereRelation('forms.professions', 'profession_id', '=', $requerimiento->profession_id)
             ->with('department')
             ->with('gender')
+            ->with('municipio')
             ->with('forms')
             ->with('forms.record')
             ->with('forms.languages')

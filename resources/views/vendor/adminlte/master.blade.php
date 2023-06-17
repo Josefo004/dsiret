@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     {{-- Custom Meta Tags --}}
     @yield('meta_tags')
 
@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
         <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.css') }}">
-   
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;900&display=swap" rel="stylesheet">
@@ -106,6 +106,13 @@
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
 
+    <div class="fixed-bottom bg-dark text-right text-white py-2">
+        <div class="row">
+            <div class="col-md-11">
+                <small>&copy; 2023 Todos los derechos reservados, Gobierno Autónomo Departamental de Chuquisaca - <strong>J.S.T.I.</strong> </small>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

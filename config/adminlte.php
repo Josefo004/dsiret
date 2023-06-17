@@ -242,18 +242,23 @@ return [
 
     'menu' => [
         [
-            'text'    => 'REPORTES',
+            'text'    => 'FORMULARIOS',
             'icon'    => 'fa fa-info',
             'submenu' => [
                 [
-                    'text' => 'personas',
+                    'text' => 'Buscar Personas',
                     'icon' => 'fa fa-users',
                     'url'  => 'siret/formularios'
                 ],
                 [
-                    'text' => 'Trabajos',
+                    'text' => 'Buscar por Trabajos',
                     'icon' => 'fa fa-folder',
                     'url'  => 'siret/trabajos'
+                ],
+                [
+                    'text' => 'Estadística',
+                    'icon' => 'fas fa-chart-bar',
+                    'url'  => 'siret/estadistica'
                 ],
             ],
         ],

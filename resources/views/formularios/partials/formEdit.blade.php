@@ -52,7 +52,14 @@
                 </div>
             </div>
             <div class="form-row">
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-5">
+                    {{ Form::label('municipio_id','Municipio de Residencia') }}
+                    {{ Form::select('municipio_id', $municipios, $person->municipio_id, [ 'class'=> 'form-control']) }}
+                    @error('municipio_id')
+                        <br><small class="text-danger">*{{$message}}</small><br>
+                    @enderror
+                </div>
+                <div class="form-group col-md-7">
                     {{ Form::label('direccion','Dirección del Beneficiario') }}
                     {{ Form::text('direccion',$person->direccion,['class'=> 'form-control text-uppercase']) }}
                     @error('direccion')

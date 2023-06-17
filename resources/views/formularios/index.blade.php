@@ -29,6 +29,7 @@
             <th>FECHA NAC.</th>
             <th>EDAD</th>
             <th>CELULAR</th>
+            <th>MUNICIPIO</th>
             <th>DIRECCION</th>
             <th>CORREO</th>
             <th>REGISTRO</th>
@@ -47,6 +48,7 @@
             { data: 'birth', orderable: false, searchable: false},
             { data: 'edad', orderable: false, searchable: false},
             { data: 'nro_celular', orderable: false, searchable: false},
+            { data: 'municipio', name:'municipio.mun_descripcion', orderable: false, searchable: true},
             { data: 'direccion', name:'persons.direccion', orderable: false, searchable: true},
             { data: 'email', orderable: false, searchable: false},
             { data: 'regis', orderable: false, searchable: false},

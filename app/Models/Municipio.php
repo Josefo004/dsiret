@@ -14,4 +14,10 @@ class Municipio extends Model
     {
         return $this->hasMany(Sempresa::class);
     }
+
+    public function persons()
+    {
+        return $this->hasMany(Person::class);
+    }
+
 }

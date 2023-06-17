@@ -29,6 +29,7 @@
             <th>FECHA NAC.</th>
             <th>EDAD</th>
             <th>CELULAR</th>
+            <th>MUNICIPIO</th>
             <th>FORM. ACADEMICA</th>
             <th>IDIOMAS</th>
             <th>PROFESIÓN U OCUPACIÓN</th>
@@ -43,10 +44,11 @@
         { data: 'idf', orderable: false, searchable: false},
         { data: 'cedula', orderable: false, searchable: false},
         { data: 'nombre_completo', searchable: false },
-        { data: 'sexo', name:'gender.gen_descripcion', orderable: false, searchable: true},
+        { data: 'sexo', orderable: false, searchable: false},
         { data: 'birth', orderable: false, searchable: false},
         { data: 'edad', orderable: false, searchable: false},
         { data: 'nro_celular', orderable: false, searchable: false},
+        { data: 'municipio', name:'municipio.mun_descripcion', orderable: false, searchable: true},
         { data: 'formacion', name:'forms.record.for_descripcion', orderable: false, searchable: true},
         { data: 'idiomas', name:'forms.languages.descripcion', orderable: false, searchable: true},
         { data: 'profesion', name:'forms.professions.pro_descripcion', orderable: false, searchable: true},

@@ -10,6 +10,7 @@ use App\Models\Form;
 use App\Models\Gender;
 use Illuminate\Http\Request;
 use App\Models\Language;
+use App\Models\Municipio;
 use App\Models\Profession;
 use Carbon\Carbon;
 
@@ -41,8 +42,9 @@ class PersonController extends Controller
         $profesions = Profession::get()->pluck('pro_descripcion','id');
         $departments = Department::get()->pluck('dep_descripcion', 'id');
         $genders = Gender::get()->pluck('gen_descripcion', 'id');
+        $municipios = Municipio::get()->pluck('mun_descripcion', 'id');
 
-        return view('personas.index', compact('records','languages','profesions','departments','genders'));
+        return view('personas.index', compact('records','languages','profesions','departments','genders','municipios'));
     }
     /**
      * Store a newly created resource in storage.
@@ -70,7 +72,9 @@ class PersonController extends Controller
             $form->professions()->attach($request->profession_id);
             //dd($form);
             $person = Person::where('nro_documento', $request->nro_documento)
-                ->with('department')->with('gender')
+                ->with('department')
+                ->with('gender')
+                ->with('municipio')
                 ->with('forms')
                 ->with('forms.record')
                 ->with('forms.languages')
@@ -110,7 +114,9 @@ class PersonController extends Controller
     {
         // return "ID ".$id;
         $person = Person::where('id', $id)
-            ->with('department')->with('gender')
+            ->with('department')
+            ->with('gender')
+            ->with('municipio')
             ->with('forms')
             ->with('forms.record')
             ->with('forms.languages')

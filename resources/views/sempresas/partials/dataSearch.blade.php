@@ -86,6 +86,7 @@
                                             <th><small>Fecha Nac.</small></th>
                                             <th><small>Edad</small></th>
                                             <th><small>Celular</small></th>
+                                            <th><small>Municipio</small></th>
                                             <th><small>Niv. Academico</small></th>
                                             <th><small>Idiomas</small></th>
                                             <th><small>Profesiones</small></th>
@@ -111,6 +112,7 @@
                                             <td> <small>{{ date('d-m-Y',strtotime($candidato->fecha_nac)) }}</small> </td>
                                             <td> <small>{{ \Carbon\Carbon::createFromTimeStamp(strtotime($candidato->fecha_nac))->age }}</small> </td>
                                             <td> <small>{{ $candidato->nro_celular }}</small> </td>
+                                            <td> <small>{{ $candidato->municipio->mun_descripcion }}</small> </td>
                                             <td> <small>{{ $candidato->forms->record->for_descripcion }}</small> </td>
                                             <td>
                                                 <small>
