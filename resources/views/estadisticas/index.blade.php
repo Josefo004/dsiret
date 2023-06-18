@@ -20,6 +20,11 @@
 </x-encabezado2-seccion>
 <hr>
 <div class="container-fluid">
+    <div class="container">
+        <div class="alert alert-dark text-center" role="alert">
+            <h2>Fomularios registrados: <strong>{{ $formsTotal }}</strong></h2>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <x-estadistica-card
@@ -31,22 +36,14 @@
         </div>
         <div class="col-md-6">
             <x-estadistica-card
-            titulo="FORMULARIOS POR MUNICIPIO"
-            total={{$formsTotal}}
-            :lista="$formsByMunicipio"
-            >
-            </x-estadistica-card>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <x-estadistica-card
             titulo="FORMULARIOS POR NIVEL DE EDUCACIÓN ALCANZADA"
             total={{$formsTotal}}
             :lista="$formsByNivelE"
             >
             </x-estadistica-card>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <x-estadistica-card
             titulo="FORMULARIOS POR 1ER IDIOMA QUE DOMINA"
@@ -55,13 +52,21 @@
             >
             </x-estadistica-card>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <x-estadistica-card
             titulo="FORMULARIOS POR RANGOS DE EDAD"
             total={{$formsTotal}}
             :lista="$formsByEdad"
+            >
+            </x-estadistica-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <x-estadistica-card
+            titulo="FORMULARIOS POR MUNICIPIO"
+            total={{$formsTotal}}
+            :lista="$formsByMunicipio"
             >
             </x-estadistica-card>
         </div>
